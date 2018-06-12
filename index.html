@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>underground</title>
+</head>
+
+<style>
+	html {
+		font-family: monospace;
+	}
+
+	.object,
+	.node {
+		border: 1px solid #888;
+		border-radius: 1px;
+		display: inline-block;
+		padding: 4px;
+		margin: 4px;
+	}
+
+	.object {
+		width: 240px;
+	}
+
+	.node {
+		width: 512px;
+		overflow: scroll;
+	}
+
+	.object h3,
+	.node h3 {
+		margin: 0;
+	}
+
+	.object h3+input,
+	.node h3+input {
+		float: right;
+	}
+
+	.object label,
+	.node label {
+		display: block;
+	}
+
+	form .container {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+	}
+
+	tbody {
+		vertical-align: baseline;
+	}
+
+	/* -------------- */
+
+	.search {
+		width: 50%;
+		margin: 0.5em 0;
+		display: block;
+	}
+
+	.select {
+		height: 256px;
+		overflow: scroll;
+	}
+
+	.select .results {
+		max-width: calc(30% - 1em);
+		display: inline-block;
+		vertical-align: top;
+		height: 100%;
+		overflow: scroll;
+		padding: 0 0.5em;
+	}
+
+	.select .description {
+		width: calc(70% - 1em);
+		display: inline-block;
+		vertical-align: top;
+		height: 100%;
+		overflow: scroll;
+		padding: 0 0.5em;
+	}
+
+	.select .description>h1 {
+		margin: 0;
+	}
+
+	.select .results .result {
+		cursor: pointer
+	}
+
+	.select .results .result .focus {
+		font-weight: bold;
+		text-decoration: underline;
+	}
+</style>
+
+<body>
+	<main></main>
+	<script src="./dist/bundle.js"></script>
+</body>
+
+</html>
