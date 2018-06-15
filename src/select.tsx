@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react"
 import { List } from "immutable"
 import Fuse from "fuse.js"
-import { nodes, LABEL, COMMENT } from "./schema"
+import { nodes, LABEL, COMMENT, RANGE, flattenValues } from "./schema"
 
 interface Entry {
 	id: string
@@ -98,6 +98,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 						}
 					}}
 				/>
+				{this.props.children}
 				{focused && (
 					<div className="select">
 						<div className="results">
@@ -140,7 +141,15 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 				<React.Fragment>
 					<h1>{entry.name}</h1>
 					{entry.category && (
-						<div>Inherited from {nodes[entry.category][LABEL]}</div>
+						<React.Fragment>
+							<div>Inherited from {nodes[entry.category][LABEL]}</div>
+							<div>
+								Range:{" "}
+								{flattenValues(nodes[entry.id][RANGE])
+									.map(type => nodes[type][LABEL])
+									.join(", ")}
+							</div>
+						</React.Fragment>
 					)}
 					<hr />
 					<div dangerouslySetInnerHTML={{ __html: entry.description }} />

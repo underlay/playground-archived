@@ -4,7 +4,7 @@ import { things, nodes, enumerateAncestry, enumerations, LABEL } from "./schema"
 
 interface PropertyViewProps {
 	autoFocus: boolean
-	objects: Map<string, string>
+	objects: Map<string, List<string>>
 	createObject: (type: string) => string
 	onChange: (entry: List<string>) => void
 	// Only two elements: [type, value]. Immutable.js doesn't have tuples.
@@ -85,7 +85,11 @@ export default function PropertyView(props: PropertyViewProps) {
 		const objects: List<[string, string]> = List(
 			props.objects
 				.entrySeq()
-				.filter(([id, type]) => enumerateAncestry(type).includes(entryType))
+				.filter(([id, types]) =>
+					types
+						.reduce((types, type) => types.concat(enumerateAncestry(type)), [])
+						.includes(entryType)
+				)
 		)
 		const hasObjects = objects.size > 0,
 			hasEnumerations = enumerations.hasOwnProperty(entryType)
