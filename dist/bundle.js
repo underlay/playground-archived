@@ -120037,7 +120037,8 @@ function PropertyView(props) {
         })), _react2.default.createElement("input", { type: "button", value: "Split into new object", autoFocus: autoFocus && objects.size === 0, onClick: function onClick(event) {
                 event.preventDefault();
                 var reference = createNode(type);
-                var props = { value: _form.Reference, reference: reference, inline: null };
+                var inline = (0, _immutable.Map)({});
+                var props = { value: _form.Reference, reference: reference, inline: inline };
                 _onChange(formValue.with(props), reference, formValue.inline);
             } }), value === _form.Inline && _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("br", null), _react2.default.createElement(_form2.default, { createNode: createNode, graph: graph, form: formValue.inline, id: null, focus: props.focus, path: props.path, types: [formValue.type], onChange: function onChange(inline) {
                 return _onChange(formValue.with({ inline: inline }));

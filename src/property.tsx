@@ -113,7 +113,8 @@ export default function PropertyView(props: PropertyViewProps) {
 					onClick={event => {
 						event.preventDefault()
 						const reference = createNode(type)
-						const props = { value: Reference, reference, inline: null }
+						const inline: FormValues = Map({})
+						const props = { value: Reference, reference, inline }
 						onChange(formValue.with(props), reference, formValue.inline)
 					}}
 				/>
