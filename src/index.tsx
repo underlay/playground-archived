@@ -1,30 +1,24 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Buffer } from "buffer"
-import multihashing from "multihashing"
-import multihash from "multihashes"
 
 import Underground from "./underground"
-import { Node } from "./schema"
+import { Assertion } from "./schema"
 
 const main = document.querySelector("main")
 ReactDOM.render(<Underground onSubmit={handleSubmit} />, main)
 
-function handleSubmit(graph: { "@graph": Node[] }) {
-	console.log(graph)
-	download(JSON.stringify(graph))
+function handleSubmit(assertion: Assertion, hash: string) {
+	console.log(assertion)
+	download(JSON.stringify(assertion), hash)
 }
 
-function download(json: string) {
+function download(data: string, name: string) {
 	const element = document.createElement("a")
 	element.setAttribute(
 		"href",
-		"data:application/json;charset=utf-8," + encodeURIComponent(json)
+		"data:application/json;charset=utf-8," + encodeURIComponent(data)
 	)
-	const bytes = Buffer.from(json, "utf8")
-	const hash = multihashing(bytes, "sha1")
-	const b58 = multihash.toB58String(hash)
-	element.setAttribute("download", `${b58}.json`)
+	element.setAttribute("download", `${name}.json`)
 	element.style.display = "none"
 	document.body.appendChild(element)
 	element.click()

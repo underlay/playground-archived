@@ -12,7 +12,7 @@
 	}
 
 	.object,
-	.node {
+	.form {
 		border: 1px solid #888;
 		border-radius: 1px;
 		display: inline-block;
@@ -24,23 +24,23 @@
 		width: 240px;
 	}
 
-	.node {
-		width: 512px;
+	.form {
 		overflow: scroll;
+		min-width: 512px;
 	}
 
 	.object h3,
-	.node h3 {
+	.form h3 {
 		margin: 0;
 	}
 
 	.object h3+input,
-	.node h3+input {
+	.form h3+input {
 		float: right;
 	}
 
 	.object label,
-	.node label {
+	.form label {
 		display: block;
 	}
 
@@ -64,7 +64,11 @@
 
 	.search+input[type="file"] {
 		margin: 0 1em;
-		width: calc(50% - 2em - 16px);
+		width: calc(50% - 2em - 40px);
+	}
+
+	.search+input+input[type="checkbox"] {
+		width: 24px;
 	}
 
 	.select {
@@ -101,6 +105,19 @@
 	.select .results .result .focus {
 		font-weight: bold;
 		text-decoration: underline;
+	}
+
+	.states {
+		fill: #aaa;
+	}
+
+	.state-borders {
+		fill: none;
+		stroke: #eee;
+		stroke-width: 0.5px;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+		pointer-events: none;
 	}
 </style>
 

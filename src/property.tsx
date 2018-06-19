@@ -1,118 +1,93 @@
-import React, { ChangeEvent } from "react"
-import { List, Map, Record } from "immutable"
-import { things, nodes, enumerateAncestry, enumerations, LABEL } from "./schema"
+import React, { Fragment } from "react"
+import { List, Map } from "immutable"
+import {
+	things,
+	nodes,
+	enumerations,
+	LABEL,
+	TYPE,
+	inheritance,
+	flattenValues,
+	SourcedNode,
+} from "./schema"
+
+import Form, {
+	FormValue,
+	Constant,
+	Reference,
+	Inline,
+	FormValueType,
+	FormValues,
+} from "./form"
+import { constants } from "./constants"
 
 interface PropertyViewProps {
-	autoFocus: boolean
-	objects: Map<string, List<string>>
-	createObject: (type: string) => string
-	onChange: (entry: List<string>) => void
-	// Only two elements: [type, value]. Immutable.js doesn't have tuples.
-	entry: List<string>
-}
-
-interface TypeParams {
-	getValue: (event: ChangeEvent<HTMLInputElement>) => string
-	setValue: (value: string) => Map<string, string>
-	props: Map<string, string>
-}
-
-const defaultGetValue = event => JSON.stringify(event.target.value)
-const defaultSetValue = value => Map({ value: value ? JSON.parse(value) : "" })
-const defaultProps = Map({ type: "text" })
-
-export class Type extends Record({
-	getValue: defaultGetValue,
-	setValue: defaultSetValue,
-	props: defaultProps,
-}) {
-	getValue: (event: ChangeEvent<HTMLInputElement>) => string
-	setValue: (value: string) => Map<string, string>
-	props: Map<string, string>
-
-	constructor(params?: Partial<TypeParams>) {
-		if (params) super(params)
-		else super()
-	}
-
-	with(values: Partial<TypeParams>) {
-		return this.merge(values) as this
-	}
-}
-
-const defaultType = new Type()
-const nameType: ((type: string) => Type) = (type: string) =>
-	defaultType.with({ props: Map({ type }) })
-const numberType = nameType("number")
-const floatType = numberType.with({
-	getValue: event => parseFloat(event.target.value).toString(),
-})
-const integerType = numberType.with({
-	getValue: event => parseInt(event.target.value).toString(),
-})
-const booleanType = nameType("checkbox").with({
-	getValue: event => JSON.stringify(event.target.checked),
-	setValue: value => Map({ checked: value ? JSON.parse(value) : false }),
-})
-
-export const types: { [type: string]: Type } = {
-	"http://schema.org/Text": defaultType,
-	"http://schema.org/URL": nameType("url"),
-	"http://schema.org/Number": floatType,
-	"http://schema.org/Float": floatType,
-	"http://schema.org/Integer": integerType,
-	"http://schema.org/Boolean": booleanType,
-	"http://schema.org/Date": nameType("date"),
-	"http://schema.org/Time": nameType("time"),
-	"http://schema.org/DateTime": nameType("datetime-local"),
+	path: string[]
+	focus: string
+	graph: Map<string, SourcedNode>
+	createNode: (type: string) => string
+	onChange: (value: FormValue, id?: string, formValues?: FormValues) => void
+	formValue: FormValue
 }
 
 export default function PropertyView(props: PropertyViewProps) {
-	const { createObject, entry, autoFocus, onChange } = props
-	const entryType = entry.get(0)
-	const entryValue = entry.get(1)
-
-	if (types.hasOwnProperty(entryType)) {
-		const { props, getValue, setValue } = types[entryType]
+	const { graph, createNode, formValue, focus, path, onChange } = props
+	const { value, type } = formValue
+	const autoFocus = focus === path.join("/")
+	if (constants.hasOwnProperty(type) && value === Constant) {
+		const { props, getValue, setValue } = constants[type]
 		return (
 			<input
-				{...props.merge(setValue(entryValue)).toJS()}
-				onChange={event => onChange(entry.set(1, getValue(event)))}
+				{...props.merge(setValue(formValue.constant)).toJS()}
+				onChange={event =>
+					onChange(formValue.with({ constant: getValue(event) }))
+				}
+				onKeyDown={event => event.keyCode === 13 && event.preventDefault()}
 				autoFocus={autoFocus}
 			/>
 		)
-	} else if (things.has(entryType)) {
-		const objects: List<[string, string]> = List(
-			props.objects
+	} else if (things.has(type)) {
+		const inherited = inheritance[type]
+		const objects: List<[string, string[]]> = List(
+			props.graph
 				.entrySeq()
-				.filter(([id, types]) =>
-					types
-						.reduce((types, type) => types.concat(enumerateAncestry(type)), [])
-						.includes(entryType)
+				.map(([id, node]) => [id, flattenValues(node[TYPE])])
+				.filter(([id, types]: [string, string[]]) =>
+					types.some(t => inherited.has(t))
 				)
 		)
-		const hasObjects = objects.size > 0,
-			hasEnumerations = enumerations.hasOwnProperty(entryType)
+		const hasObjects = objects.size > 0
+		const hasEnumerations = enumerations.hasOwnProperty(type)
 		const disabled = !hasObjects && !hasEnumerations
-		const label = nodes[entryType][LABEL]
+		const label = nodes[type][LABEL]
 		const defaultValue = hasObjects
 			? objects.get(0)[0]
 			: hasEnumerations
-				? Array.from(enumerations[entryType])[0]
+				? Array.from(enumerations[type])[0]
 				: ""
+		const radio = (valueType: FormValueType) => ({
+			type: "radio",
+			name: "value",
+			value: valueType.toString(),
+			checked: value === valueType,
+			onChange: ({ target: { value } }) => onChange(formValue.with({ value })),
+		})
 		return (
-			<React.Fragment>
+			<Fragment>
+				<input {...radio(Reference)} disabled={disabled} />
 				<select
 					disabled={disabled}
 					autoFocus={autoFocus}
-					value={entryValue || defaultValue}
+					value={formValue.reference || defaultValue}
 					onChange={event => {
 						event.preventDefault()
-						onChange(entry.set(1, event.target.value))
+						const reference = event.target.value
+						const props = { value: Reference, reference, inline: null }
+						onChange(formValue.with(props))
 					}}
 				>
 					{disabled && <option value="">No {label} objects found.</option>}
-					{Array.from(enumerations[entryType] || []).map((id, key) => (
+					{Array.from(enumerations[type] || []).map((id, key) => (
 						<option key={-(key + 1)} value={id}>
 							{nodes[id][LABEL]}
 						</option>
@@ -123,17 +98,41 @@ export default function PropertyView(props: PropertyViewProps) {
 						</option>
 					))}
 				</select>
+
 				<br />
+				<input {...radio(Inline)} />
+				<select disabled={inherited.size === 1}>
+					{Array.from(inherited).map((subtype, key) => (
+						<option key={key}>{nodes[subtype][LABEL]}</option>
+					))}
+				</select>
 				<input
 					type="button"
-					value={`Create new ${label}`}
+					value={`Split into new object`}
 					autoFocus={autoFocus && objects.size === 0}
 					onClick={event => {
 						event.preventDefault()
-						onChange(entry.set(1, createObject(entryType)))
+						const reference = createNode(type)
+						const props = { value: Reference, reference, inline: null }
+						onChange(formValue.with(props), reference, formValue.inline)
 					}}
 				/>
-			</React.Fragment>
+				{value === Inline && (
+					<Fragment>
+						<br />
+						<Form
+							createNode={createNode}
+							graph={graph}
+							form={formValue.inline}
+							id={null}
+							focus={props.focus}
+							path={props.path}
+							types={[formValue.type]}
+							onChange={inline => onChange(formValue.with({ inline }))}
+						/>
+					</Fragment>
+				)}
+			</Fragment>
 		)
 	} else {
 		return <span>"Cannot enter this kind of value yet"</span>

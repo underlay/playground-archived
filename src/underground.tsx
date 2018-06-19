@@ -1,41 +1,48 @@
 import React from "react"
 import uuid from "uuid/v4"
 import { Map, List } from "immutable"
+import { Buffer } from "buffer"
+import multihashing from "multihashing"
+import multihash from "multihashes"
+import niceware from "niceware"
 
 import {
-	Node,
+	Assertion,
+	SourcedNode,
 	ID,
 	TYPE,
+	TIME,
 	VALUE,
-	LABEL,
-	RANGE,
+	SOURCE,
 	things,
-	nodes,
 	flattenValues,
-	enumerateAncestry,
+	ancestry,
 	enumerateProperties,
+	GRAPH,
+	CONTEXT,
+	Values,
+	AssertionNode,
+	SourcedValues,
 } from "./schema"
 import Select from "./select"
 import ObjectView from "./object"
-import PropertyView, { types } from "./property"
+// import MapView from "./views/map"
+import FormView, { FormValue, Constant, Reference, Inline } from "./form"
 
 interface UndergroundProps {
-	onSubmit: (graph: { "@graph": Node[] }) => void
+	onSubmit: (assertion: Assertion, hash: string) => void
 }
 
-type Forms = Map<string, Map<string, List<List<string>>>>
 interface UndergroundState {
+	objects: boolean
 	focus: string
-	graph: List<Node>
-	forms: Forms
-	objects: Map<string, List<string>>
+	assertions: Map<string, Assertion>
+	graph: Map<string, SourcedNode>
+	forms: Map<string, Map<string, List<FormValue>>>
 	properties: Map<string, List<List<string>>>
 }
 
-type Value = string | number | boolean
-type Constant = { "@type": string; "@value": Value }
-type Reference = { "@type": string; "@id": string }
-type EntrySeq = [string, [string, string][]]
+type EntrySeq = [string, FormValue[]]
 
 export default class Underground extends React.Component<
 	UndergroundProps,
@@ -48,17 +55,12 @@ export default class Underground extends React.Component<
 		const set: Set<string> = new Set()
 		return List(
 			types.reduce((props: List<List<string>>, type) => {
-				const ancestry = enumerateAncestry(type)
 				return props.concat(
-					ancestry.reduce(
+					Array.from(ancestry[type]).reduce(
 						(props: List<List<string>>, type) =>
 							props.concat(
 								enumerateProperties(type)
-									.filter(prop => {
-										if (set.has(prop)) return false
-										set.add(prop)
-										return true
-									})
+									.filter(prop => !set.has(prop) && !!set.add(prop))
 									.map(prop => List([prop, type]))
 							),
 						List([])
@@ -67,21 +69,31 @@ export default class Underground extends React.Component<
 			}, List([]))
 		)
 	}
-	private enter: boolean
+	private static key = "https://underlay.mit.edu"
+	private source: string
 	constructor(props) {
 		super(props)
 		this.state = {
+			assertions: Map({}),
+			objects: true,
 			focus: null,
-			graph: List([]),
+			graph: Map({}),
 			forms: Map({}),
-			objects: Map({}),
 			properties: Map({}),
 		}
 		this.renderNode = this.renderNode.bind(this)
-		this.renderObject = this.renderObject.bind(this)
-		this.createObject = this.createObject.bind(this)
+		this.createNode = this.createNode.bind(this)
+		this.exportNode = this.exportNode.bind(this)
+		this.accumulateNode = this.accumulateNode.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		if (localStorage.hasOwnProperty(Underground.key)) {
+			this.source = localStorage[Underground.key]
+		} else {
+			this.source = niceware.generatePassphrase(4).join("-")
+			localStorage[Underground.key] = this.source
+		}
 	}
+
 	render() {
 		const disabled = this.state.graph.size === 0
 		return (
@@ -89,292 +101,204 @@ export default class Underground extends React.Component<
 				<Select
 					placeholder="Create a new object by type"
 					catalog={Underground.createCatalog}
-					onSubmit={this.createObject}
+					onSubmit={this.createNode}
 				>
 					<input
 						type="file"
 						accept="application/json"
 						onChange={event => this.readFile(event)}
 					/>
+					<input
+						type="checkbox"
+						checked={this.state.objects}
+						onChange={({ target: { checked: objects } }) =>
+							this.setState({ objects })
+						}
+					/>
 				</Select>
 
-				{this.state.objects.entrySeq().map(this.renderObject)}
+				{this.state.objects && this.state.graph.valueSeq().map(this.renderNode)}
 				<hr />
 				<header>Issue a new assertion</header>
 				<form onSubmit={this.handleSubmit}>
 					<div className="container">
-						{this.state.graph.map(this.renderNode)}
+						{this.state.forms
+							.keySeq()
+							.map(key => this.state.graph.get(key))
+							.map((node, key) => (
+								<FormView
+									key={key}
+									id={node[ID]}
+									types={flattenValues(node[TYPE])}
+									form={this.state.forms.get(node[ID])}
+									graph={this.state.graph}
+									focus={this.state.focus}
+									path={[node[ID]]}
+									createNode={this.createNode}
+									onRemove={() => this.removeForm(node[ID])}
+									onChange={(form, id, formValues) => {
+										const forms = this.state.forms.set(node[ID], form)
+										if (id && formValues) {
+											this.setState({ forms: forms.set(id, formValues) })
+										} else {
+											this.setState({ forms })
+										}
+									}}
+								/>
+							))}
 					</div>
 					<hr />
 					<input disabled={disabled} type="submit" value="Download" />
 				</form>
+				{/* <MapView objects={this.state.graph} /> */}
 			</div>
 		)
 	}
-	private renderObject([id, types]: [string, List<string>], key: number) {
+	private renderNode(node: SourcedNode, key: number) {
+		const { [ID]: id, [TYPE]: type } = node
+		const types = flattenValues(type)
 		return (
 			<ObjectView
 				key={key}
-				id={id}
-				types={types.toJS()}
+				node={node}
+				graph={this.state.graph}
 				focus={this.state.focus === id}
 				disabled={this.state.forms.has(id)}
 				onSubmit={() => {
-					const graph = this.state.graph.push({
-						"@id": id,
-						"@type": types.toJS(),
-					})
 					const forms = this.state.forms.set(id, Map())
-					const props = Underground.generateProperties(types.toJS())
+					const props = Underground.generateProperties(types)
 					const properties = this.state.properties.set(id, props)
-					this.setState({ graph, forms, properties, focus: `${id}/` })
+					this.setState({ forms, properties, focus: `${id}/` })
 				}}
 			/>
 		)
 	}
-	private removeNode(id: string, key: number) {
-		const graph = this.state.graph.delete(key)
+	private removeForm(id: string) {
 		const forms = this.state.forms.delete(id)
 		const properties = this.state.properties.delete(id)
-		this.setState({ graph, forms, properties })
+		this.setState({ forms, properties })
 	}
-	private renderNode(node: Node, key: number) {
-		const id = node["@id"]
-		const catalog = this.state.properties.get(id)
-		return (
-			<div className="node" key={key}>
-				<h3>{id}</h3>
-				{flattenValues(node["@type"])
-					.map(type => nodes[type][LABEL])
-					.join(", ")}
-				<input
-					value="Remove"
-					type="button"
-					// This also fires on enter, anywhere in the form, for some reason
-					onClick={event => this.removeNode(id, key)}
-				/>
-				<hr />
-				<Select
-					placeholder="Search for a property"
-					catalog={catalog}
-					onSubmit={property => {
-						const [type] = flattenValues(nodes[property][RANGE])
-						const value = this.defaultValues.hasOwnProperty(type)
-							? this.defaultValues[type]
-							: this.defaultValue
-						if (this.state.forms.get(id).has(property)) {
-							const v = this.state.forms
-								.get(id)
-								.get(property)
-								.push(List([type, value]))
-							const forms = this.state.forms.setIn([id, property], v)
-							const focus = [id, property, v.size - 1].join("/")
-							this.setState({ forms, focus })
-						} else {
-							const v = List([List([type, value])])
-							const forms = this.state.forms.setIn([id, property], v)
-							const focus = [id, property, 0].join("/")
-							this.setState({ forms, focus })
-						}
-					}}
-				/>
-				<hr />
-				<table>
-					<tbody>
-						{this.state.forms.get(id).size > 0 ? (
-							this.state.forms
-								.get(id)
-								.entrySeq()
-								.map(([property, entries], key) =>
-									this.renderProperty(id, [property, entries], key)
-								)
-						) : (
-							<tr>
-								<td>Select properties above to enter values</td>
-							</tr>
-						)}
-					</tbody>
-				</table>
-			</div>
-		)
-	}
-	private renderProperty(
-		id: string,
-		[property, entries]: [string, List<List<string>>],
-		key: number
-	) {
-		const range = flattenValues(nodes[property][RANGE])
-		return entries.map((entry, index) => (
-			<tr key={`${key}/${index}`}>
-				{index === 0 && (
-					<td rowSpan={entries.size}>{nodes[property]["rdfs:label"]}</td>
-				)}
-				<td>
-					<select
-						value={entry.get(0)}
-						disabled={range.length === 1}
-						onChange={({ target: { value } }) => {
-							if (value !== entry.get(0)) {
-								const path = [id, property, index]
-								const val = List([value, null])
-								const forms = this.state.forms.setIn(path, val)
-								this.setState({ forms })
-							}
-						}}
-					>
-						{range.map((type, key) => (
-							<option key={key} value={type}>
-								{nodes[type]["rdfs:label"]}
-							</option>
-						))}
-					</select>
-				</td>
-				<td>{this.renderValue(id, property, index, entry)}</td>
-				<td>
-					<input
-						type="button"
-						value="Remove"
-						onClick={event => {
-							const path = [id, property, index]
-							const forms = this.state.forms.deleteIn(path)
-							if (forms.get(id).get(property).size) {
-								this.setState({ forms })
-							} else {
-								const forms = this.state.forms.deleteIn([id, property])
-								this.setState({ forms })
-							}
-						}}
-					/>
-				</td>
-			</tr>
-		))
-	}
-	private renderValue(
-		id: string,
-		property: string,
-		index: number,
-		entry: List<string>
-	) {
-		const {
-			createObject,
-			state: { objects },
-		} = this
-		const autoFocus = this.state.focus === [id, property, index].join("/")
-		return (
-			<PropertyView
-				{...{ autoFocus, entry, objects, createObject }}
-				onChange={entry => {
-					const forms = this.state.forms.setIn([id, property, index], entry)
-					this.setState({ forms })
-				}}
-			/>
-		)
-	}
-	private createObject(type: string): string {
+	private createNode(type: string): string {
 		const id = uuid()
-		const objects = this.state.objects.set(id, List([type]))
-		this.setState({ objects, focus: id })
+		const date = new Date()
+		const time = date.toISOString()
+		const data = { [TIME]: time, [SOURCE]: this.source }
+		const node = { [ID]: id, [TYPE]: [type] }
+		const graph = this.state.graph.set(id, { ...node, ...data })
+		const assertion: Assertion = {
+			[ID]: id,
+			[CONTEXT]: {},
+			[GRAPH]: [node],
+			...data,
+		}
+		const assertions = this.state.assertions.set(id, assertion)
+		this.setState({ assertions, graph, focus: id })
+
 		return id
 	}
-	private accumulateNode(
-		acc,
-		elm: EntrySeq
-	): Map<string, (Constant | Reference)[]> {
+	private accumulateNode(acc: Map<string, Values>, elm: EntrySeq) {
 		const [property, values] = elm
-		const objects = values.map(
-			([type, value]) =>
-				types.hasOwnProperty(type)
-					? {
-							[TYPE]: type,
-							[VALUE]: value
-								? JSON.parse(value)
-								: this.defaultValues.hasOwnProperty(type)
-									? this.defaultValues[type]
-									: null,
-					  }
-					: { [TYPE]: type, [ID]: value || null }
-		)
-		return acc.set(property, objects)
+		const objects = values.map(formValue => {
+			const { value, type, constant, reference, inline } = formValue
+			const node = { [TYPE]: type }
+			if (value === Constant) {
+				const result = constant
+					? JSON.parse(constant)
+					: this.defaultValues.hasOwnProperty(formValue.type)
+						? this.defaultValues[formValue.type]
+						: null
+				node[VALUE] = result
+			} else if (value === Reference) {
+				node[ID] = reference || null
+			} else if (value === Inline) {
+				inline
+					.entrySeq()
+					.map(([prop, vals]) => [prop, vals.toArray()])
+					.reduce(this.accumulateNode, Map())
+					.forEach((value, key) => (node[key] = value))
+			}
+			return node
+		})
+		return acc.set(property, objects as Values)
 	}
-	private exportNode({ [ID]: id, [TYPE]: type }: Node) {
-		const properties = this.state.forms.get(id).entrySeq()
-		return {
-			[ID]: id,
-			[TYPE]: type,
-			...properties
-				.reduce((acc, elm: EntrySeq) => this.accumulateNode(acc, elm), Map())
-				.toJS(),
-		}
+	private exportNode([id, props]: [string, EntrySeq[]]): AssertionNode {
+		const type = this.state.graph.get(id)[TYPE]
+		const properties = props.reduce(this.accumulateNode, Map({}))
+		return { [ID]: id, [TYPE]: type, ...properties.toJS() }
 	}
 	private handleSubmit(event) {
 		event.preventDefault()
-		const graph: Node[] = this.state.graph
-			.map(node => this.exportNode(node))
-			.toJS()
-		this.props.onSubmit({ "@graph": graph })
+		const date = new Date()
+		const time = date.toISOString()
+		const data = { [TIME]: time, [SOURCE]: this.source }
+		const nodes = this.state.forms.map(props => props.entrySeq()).entrySeq()
+		const graph = nodes.map(this.exportNode).toJS()
+		const assertion: Assertion = { [CONTEXT]: {}, [GRAPH]: graph, ...data }
+		const json = JSON.stringify(assertion)
+		const bytes = Buffer.from(json, "utf8")
+		const mhash = multihashing(bytes, "sha1")
+		const hash = multihash.toB58String(mhash)
+		this.props.onSubmit(assertion, hash)
 	}
 	private readFile(event) {
 		event.preventDefault()
 		const { files } = event.target
 		console.log(files)
 		if (files && files.length > 0) {
-			Array.from(files).forEach((file: Blob) => {
-				const reader = new FileReader()
-				reader.onloadend = () => {
-					let data
-					try {
-						data = JSON.parse(reader.result)
-						this.importAssertion(data)
-					} catch (e) {
-						console.error("could not parse file", e)
+			Array.from(files).forEach((file: File) => {
+				const test = /^([0-9A-Za-z]+)\.json$/
+				if (file.type === "application/json" && test.test(file.name)) {
+					const [match, hash] = test.exec(file.name)
+					if (this.state.assertions.has(hash)) {
+						window.alert("You've already imported this assertion!")
+					} else {
+						this.importFile(hash, file)
 					}
-					console.log(data)
 				}
-				reader.readAsText(file)
 			})
 		}
 	}
-	private parseProperty(values: (Constant | Reference)[]): List<List<string>> {
-		return List(
-			values.map(node => {
-				if (node.hasOwnProperty("@value")) {
-					const { "@type": type, "@value": value } = node as Constant
-					return List([type, JSON.stringify(value)])
-				} else {
-					const { "@type": type, "@id": id } = node as Reference
-					return List([type, id])
-				}
-			})
-		)
+	private importFile(hash: string, file: File) {
+		const reader = new FileReader()
+		let data
+		reader.onloadend = () => {
+			const text = reader.result
+			try {
+				data = JSON.parse(text)
+			} catch (e) {
+				console.error("could not parse text", text, e)
+			}
+			this.importAssertion(data, hash)
+		}
+		reader.readAsText(file)
 	}
-	private importAssertion(data) {
-		const graph: Node[] = data["@graph"]
-		const state = graph.reduce(
-			(state: UndergroundState, node: Node): UndergroundState => {
-				const { "@id": id, "@type": types, ...rest } = node
-				const realTypes = flattenValues(types)
-				const props = rest as { [key: string]: (Constant | Reference)[] }
-				const properties: Set<string> = new Set()
-				Object.keys(props).forEach(property => properties.add(property))
-				state.objects = state.objects.set(id, List(realTypes))
-				state.forms = state.forms.set(
-					id,
-					Map(
-						Object.keys(props)
-							.filter(key => key !== ID && key !== TYPE)
-							.map(property => [property, this.parseProperty(props[property])])
-					)
-				)
-				state.properties = state.properties.set(
-					id,
-					Underground.generateProperties(realTypes)
-				)
-				state.graph = state.graph.push(node)
-				return state
-			},
-			this.state
-		)
-		this.setState(state)
+	private importAssertion(assertion: Assertion, hash: string) {
+		const assertions = this.state.assertions.set(hash, assertion)
+		const graph = assertion[GRAPH].reduce((graph, node) => {
+			const { [ID]: id, [TYPE]: type, ...rest } = node
+			const props: { [prop: string]: SourcedValues } = {}
+			Object.keys(rest).forEach(prop => {
+				const values = (Array.isArray(node[prop])
+					? node[prop]
+					: [node[prop]]) as Values
+				props[prop] = values.map(value => ({ ...value, [SOURCE]: hash }))
+			})
+			if (graph.has(id)) {
+				const sourced = graph.get(id)
+				Object.keys(props).forEach(prop => {
+					if (sourced.hasOwnProperty(prop)) {
+						const value = sourced[prop] as SourcedValues
+						sourced[prop] = value.concat(props[prop])
+					} else {
+						sourced[prop] = props[prop]
+					}
+				})
+				return graph.set(id, sourced)
+			} else {
+				return graph.set(id, { [ID]: id, [TYPE]: type, ...props })
+			}
+		}, this.state.graph)
+		this.setState({ graph, assertions })
 	}
 	private defaultValues = {
 		"http://schema.org/Boolean": false,

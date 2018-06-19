@@ -1,8 +1,11 @@
 export const ID = "@id"
 export const TYPE = "@type"
+export const DATA = "@data"
 export const VALUE = "@value"
 export const CONTEXT = "@context"
 export const GRAPH = "@graph"
+export const SOURCE = "http://underlay.mit.edu/source"
+export const TIME = "http://underlay.mit.edu/time"
 export const LABEL = "rdfs:label"
 export const COMMENT = "rdfs:comment"
 export const DOMAIN = "http://schema.org/domainIncludes"
@@ -10,9 +13,6 @@ export const RANGE = "http://schema.org/rangeIncludes"
 export const SUBPROPERTY = "rdfs:subPropertyOf"
 export const SUBCLASS = "rdfs:subClassOf"
 export const enumeration = "http://schema.org/Enumeration"
-
-type PropertyValue = string | Node
-type PropertyValues = PropertyValue | PropertyValue[]
 
 function flattenValue(propertyValue: PropertyValue): string {
 	if (typeof propertyValue === "object") {
@@ -32,24 +32,64 @@ export function flattenValues(propertyValues: PropertyValues): string[] {
 	}
 }
 
-export interface Node {
-	[ID]: string
-	[TYPE]: string | string[]
-	[property: string]: PropertyValues
+type Context = string | { [key: string]: string }
+type PropertyValue = string | Node<any>
+export type PropertyValues = PropertyValue | PropertyValue[]
+export interface Metadata {
+	[SOURCE]: string
+	[TIME]: string
 }
 
-export interface SchemaNode extends Node {
+export interface Value {
+	[TYPE]: string
+}
+interface SourcedValue extends Value {
+	[SOURCE]: string
+}
+
+export interface Constant extends Value {
+	"@value": string | number | boolean
+}
+export interface Reference extends Value {
+	"@id": string
+}
+
+export interface SourcedConstant extends Constant, SourcedValue {}
+export interface SourcedReference extends Reference, SourcedValue {}
+
+export type Values = Array<Constant | Reference>
+export type SourcedValues = Array<SourcedConstant | SourcedReference>
+
+interface Node<P> {
+	[ID]: string
+	[TYPE]: string | string[]
+	[property: string]: P | string | string[]
+}
+
+interface SchemaNode extends Node<PropertyValues> {
 	[LABEL]: string
 	[COMMENT]: string
 }
 
-interface Schema {
-	[ID]: string
-	[CONTEXT]: { [key: string]: string }
-	[GRAPH]: SchemaNode[]
+export type AssertionNode = Node<Values>
+export type SourcedNode = Node<SourcedValues>
+
+export interface Graph<T extends Node<any>> {
+	[ID]?: string
+	[CONTEXT]: Context
+	[GRAPH]: T[]
 }
 
-export const schema: Schema = require("./schema.json")
+export interface Assertion extends Graph<AssertionNode> {
+	[SOURCE]: string
+	[TIME]: string
+}
+
+interface SchemaGraph extends Graph<SchemaNode> {
+	[ID]: string
+}
+
+export const schema: SchemaGraph = require("./schema.json")
 ;(window as any).schema = schema
 
 export const nodes: { [id: string]: SchemaNode } = {}
@@ -79,20 +119,32 @@ function traverseThings(node: SchemaNode): boolean {
 schema[GRAPH].forEach(traverseThings)
 ;(window as any).things = things
 
-function traverseAncestry(type: string, history: string[]) {
-	history.push(type)
+export const ancestry: { [type: string]: Set<string> } = {}
+function traverseAncestry(type: string, history: Set<string>) {
+	history.add(type)
 	if (nodes.hasOwnProperty(type) && nodes[type].hasOwnProperty(SUBCLASS)) {
 		flattenValues(nodes[type][SUBCLASS]).forEach(value =>
 			traverseAncestry(value, history)
 		)
 	}
 }
-
-export function enumerateAncestry(type: string): string[] {
-	const history = []
+function enumerateAncestry(type: string) {
+	const history = new Set()
 	traverseAncestry(type, history)
 	return history
 }
+things.forEach(type => {
+	ancestry[type] = enumerateAncestry(type)
+})
+
+export const inheritance: { [type: string]: Set<string> } = {}
+const keys = Object.keys(ancestry)
+things.forEach(type => {
+	const types = keys.filter(key => ancestry[key].has(type))
+	const set = new Set()
+	things.forEach(epyt => ancestry[epyt].has(type) && set.add(epyt))
+	inheritance[type] = set
+})
 
 export function enumerateProperties(type: string): string[] {
 	return schema[GRAPH].filter(
@@ -105,7 +157,7 @@ export const enumerations: { [type: string]: Set<string> } = {}
 
 schema[GRAPH].forEach(node => {
 	const id = node[ID]
-	if (id !== enumeration && enumerateAncestry(id).includes(enumeration)) {
+	if (id !== enumeration && enumerateAncestry(id).has(enumeration)) {
 		enumerations[id] = new Set([])
 	}
 })
