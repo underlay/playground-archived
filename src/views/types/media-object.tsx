@@ -7,7 +7,6 @@ export default function MediaObject(props: ValueProps) {
 
 	const mime = getConstant(props.value[format]) as string
 	const src = getConstant(props.value[content]) as string
-	console.log(props.value, mime, src)
 	if (mime && src) {
 		return (
 			<object data={src} type={mime}>
