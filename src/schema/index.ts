@@ -47,18 +47,25 @@ interface SourcedValue extends Value {
 	[SOURCE]: string
 }
 
-export interface Constant extends Value {
+interface Constant extends Value {
 	"@value": string | number | boolean
 }
-export interface Reference extends Value {
+interface Reference extends Value {
 	"@id": string
+}
+
+interface Inline extends Value {
+	[prop: string]: string | Array<Constant | Reference | Inline>
 }
 
 export interface SourcedConstant extends Constant, SourcedValue {}
 export interface SourcedReference extends Reference, SourcedValue {}
+export interface SourcedInline extends Inline, SourcedValue {}
 
-export type Values = Array<Constant | Reference>
-export type SourcedValues = Array<SourcedConstant | SourcedReference>
+export type Values = Array<Constant | Reference | Inline>
+export type SourcedValues = Array<
+	SourcedConstant | SourcedReference | SourcedInline
+>
 
 interface Node<P> {
 	[ID]: string

@@ -1,0 +1,39 @@
+{
+	"@graph": [
+		{
+			"@id": "69a2e4e9-a592-4039-a13d-e54ee571d7bc",
+			"@type": "http://schema.org/City",
+			"http://schema.org/geo": {
+				"@type": "http://schema.org/GeoCoordinates",
+				"http://schema.org/latitude": {
+					"@type": "http://schema.org/Number",
+					"@value": 40.7127837
+				},
+				"http://schema.org/longitude": {
+					"@type": "http://schema.org/Number",
+					"@value": -74.0059413
+				}
+			},
+			"http://schema.org/name": {
+				"@type": "http://schema.org/Text",
+				"@value": "New York"
+			},
+			"http://schema.org/containedInPlace": {
+				"@type": "http://schema.org/State",
+				"@id": "b96ba408-6b4d-4748-adbf-8ceff37cce3c"
+			}
+		},
+		{
+			"@id": "b96ba408-6b4d-4748-adbf-8ceff37cce3c",
+			"@type": "http://schema.org/State",
+			"http://schema.org/name": {
+				"@type": "http://schema.org/Text",
+				"@value": "New York"
+			},
+			"http://schema.org/identifier": {
+				"@type": "http://schema.org/Text",
+				"@value": "NY"
+			}
+		}
+	]
+}

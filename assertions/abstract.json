@@ -1,0 +1,663 @@
+{
+	"@graph": [
+		{
+			"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8",
+			"@type": ["http://schema.org/ScholarlyArticle"],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://doi.org/10.7554/eLife.32822"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "10.7554/eLife.32822"
+				}
+			],
+			"http://schema.org/headline": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Sci-Hub provides access to nearly all scholarly literature"
+				}
+			],
+			"http://schema.org/author": [
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "634dd980-0adf-4823-a035-e32ed936f8da"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "d698e4e9-1f72-46ed-9d60-28b1e3b6e3e4"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "ca76f018-1e5d-4083-9055-46599cd1c0d8"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "81687735-563f-45a1-854f-a44e91225f23"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "905c342b-7a24-4bec-ac61-6705b32fca1a"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "fcc7b45d-ee66-4c81-b7a0-46d0d3a8e562"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "43e5d64a-b6a4-4c77-bae3-5704dbd85e81"
+				}
+			],
+			"http://schema.org/version": [
+				{
+					"@type": "http://schema.org/Number",
+					"@value": 3
+				}
+			],
+			"http://schema.org/description": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"The website Sci-Hub enables users to download PDF versions of scholarly articles, including many articles that are paywalled at their journal's site. Sci-Hub has grown rapidly since its creation in 2011, but the extent of its coverage was unclear. Here we report that, as of March 2017, Sci-Hub's database contains 68.9% of the 81.6 million scholarly articles registered with Crossref and 85.1% of articles published in toll access journals. We find that coverage varies by discipline and publisher, and that Sci-Hub preferentially covers popular, paywalled content. For toll access articles, we find that Sci-Hub provides greater coverage than the University of Pennsylvania, a major research university in the United States. Green open access to toll access articles via licit services, on the other hand, remains quite limited. Our interactive browser at https://greenelab.github.io/scihub allows users to explore these findings in more detail. For the first time, nearly all scholarly literature is available gratis to anyone with an Internet connection, suggesting the toll access business model may become unsustainable."
+				}
+			]
+		},
+		{
+			"@id": "634dd980-0adf-4823-a035-e32ed936f8da",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Daniel"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Himmelstein"
+				}
+			],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Daniel S. Himmelstein"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0002-3012-7446"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0002-3012-7446"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/dhimmel"
+				},
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://twitter.com/dhimmel"
+				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "58682bd6-6091-4714-b0bb-fa599705cd57"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": null
+				}
+			]
+		},
+		{
+			"@id": "58682bd6-6091-4714-b0bb-fa599705cd57",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Department of Systems Pharmacology and Translational Therapeutics"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "522e3ecc-2db3-4136-8f88-f75bca4f6702"
+				}
+			]
+		},
+		{
+			"@id": "522e3ecc-2db3-4136-8f88-f75bca4f6702",
+			"@type": ["http://schema.org/CollegeOrUniversity"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "University of Pennsylvania"
+				}
+			],
+			"http://schema.org/department": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": null
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "96fb36e4-1a41-49d8-a92c-0633c6965dbd"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "3a5910ce-a399-4b90-a229-87c383f40832"
+				}
+			]
+		},
+		{
+			"@id": "d698e4e9-1f72-46ed-9d60-28b1e3b6e3e4",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Ariel Rodriguez Romero"
+				}
+			],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Ariel"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Romero"
+				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "49df6920-a160-42ff-a4e2-ecb943799b42"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0003-2290-4927"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0003-2290-4927"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/arielsvn"
+				},
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://twitter.com/arielswn"
+				}
+			]
+		},
+		{
+			"@id": "49df6920-a160-42ff-a4e2-ecb943799b42",
+			"@type": ["http://schema.org/Corporation"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Bidwise"
+				}
+			],
+			"http://schema.org/legalName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Bidwise, Inc"
+				}
+			]
+		},
+		{
+			"@id": "ca76f018-1e5d-4083-9055-46599cd1c0d8",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Jacob G. Levernier"
+				}
+			],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Jacob"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Levernier"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0003-1563-7314"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0003-1563-7314"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/publicus"
+				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "522e3ecc-2db3-4136-8f88-f75bca4f6702"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "04d674bf-ad7f-4108-8263-e1d542d266b0"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "96fb36e4-1a41-49d8-a92c-0633c6965dbd"
+				}
+			]
+		},
+		{
+			"@id": "04d674bf-ad7f-4108-8263-e1d542d266b0",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Library Technology Services and Strategic Initiatives"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "96fb36e4-1a41-49d8-a92c-0633c6965dbd"
+				}
+			]
+		},
+		{
+			"@id": "96fb36e4-1a41-49d8-a92c-0633c6965dbd",
+			"@type": ["http://schema.org/Library"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "University of Pennsylvania Libraries"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "522e3ecc-2db3-4136-8f88-f75bca4f6702"
+				}
+			],
+			"http://schema.org/department": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "04d674bf-ad7f-4108-8263-e1d542d266b0"
+				}
+			]
+		},
+		{
+			"@id": "81687735-563f-45a1-854f-a44e91225f23",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Thomas Anthony Munro"
+				}
+			],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Thomas"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Munro"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0002-3366-7149"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0002-3366-7149"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/tamunro"
+				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "43ac269f-92f1-4e5e-8921-d481577bf95d"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "84986aca-d8c0-4b74-ba39-393b38e8562a"
+				}
+			]
+		},
+		{
+			"@id": "43ac269f-92f1-4e5e-8921-d481577bf95d",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "School of Life and Environmental Sciences"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "84986aca-d8c0-4b74-ba39-393b38e8562a"
+				}
+			]
+		},
+		{
+			"@id": "84986aca-d8c0-4b74-ba39-393b38e8562a",
+			"@type": ["http://schema.org/CollegeOrUniversity"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Deakin University"
+				}
+			],
+			"http://schema.org/location": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Melbourne, Australia"
+				}
+			],
+			"http://schema.org/department": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "43ac269f-92f1-4e5e-8921-d481577bf95d"
+				}
+			]
+		},
+		{
+			"@id": "905c342b-7a24-4bec-ac61-6705b32fca1a",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Stephen Reid McLaughlin"
+				}
+			],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Stephen"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "McLaughlin"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0002-9888-3168"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0002-9888-3168"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/stevemclaugh"
+				},
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://twitter.com/SteveMcLaugh"
+				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "0ca79685-0cd7-4db5-875b-04404b5f6c3f"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "5d7b5473-2eae-48fc-afad-74345de63b7b"
+				}
+			]
+		},
+		{
+			"@id": "0ca79685-0cd7-4db5-875b-04404b5f6c3f",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "School of Information"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "5d7b5473-2eae-48fc-afad-74345de63b7b"
+				}
+			]
+		},
+		{
+			"@id": "5d7b5473-2eae-48fc-afad-74345de63b7b",
+			"@type": ["http://schema.org/CollegeOrUniversity"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "University of Texas at Austin"
+				}
+			],
+			"http://schema.org/department": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "0ca79685-0cd7-4db5-875b-04404b5f6c3f"
+				}
+			]
+		},
+		{
+			"@id": "fcc7b45d-ee66-4c81-b7a0-46d0d3a8e562",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Bastian Greshake Tzovaras"
+				}
+			],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Bastian"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Tzovaras"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0002-9925-9623"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0002-9925-9623"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/gedankenstuecke"
+				},
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://twitter.com/gedankenstuecke"
+				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "930f3882-bd72-478e-8ccf-b391e77a3628"
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": null
+				},
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "6bc6803b-4b3b-483a-92c0-74294840a893"
+				}
+			]
+		},
+		{
+			"@id": "930f3882-bd72-478e-8ccf-b391e77a3628",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Department of Applied Bioinformatics"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": null
+				}
+			]
+		},
+		{
+			"@id": "066357b0-2af8-42ad-9b95-07182b80cc74",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Institute of Cell Biology and Neuroscience"
+				}
+			],
+			"http://schema.org/department": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "930f3882-bd72-478e-8ccf-b391e77a3628"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": "6bc6803b-4b3b-483a-92c0-74294840a893"
+				}
+			]
+		},
+		{
+			"@id": "6bc6803b-4b3b-483a-92c0-74294840a893",
+			"@type": ["http://schema.org/CollegeOrUniversity"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Goethe University Frankfurt"
+				}
+			],
+			"http://schema.org/subOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": null
+				}
+			]
+		},
+		{
+			"@id": "43e5d64a-b6a4-4c77-bae3-5704dbd85e81",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Casey S. Greene"
+				}
+			],
+			"http://schema.org/givenName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Casey"
+				}
+			],
+			"http://schema.org/familyName": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Greene"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "0000-0001-8713-9213"
+				}
+			],
+			"http://schema.org/sameAs": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://github.com/cgreene"
+				},
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://twitter.com/GreeneScientist"
+				}
+			]
+		},
+		{
+			"@id": "3a5910ce-a399-4b90-a229-87c383f40832",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Department of Systems Pharmacology and Translational Therapeutics"
+				}
+			],
+			"http://schema.org/parentOrganization": [
+				{
+					"@type": "http://schema.org/Organization",
+					"@id": null
+				}
+			]
+		}
+	]
+}

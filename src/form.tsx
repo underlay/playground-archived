@@ -70,8 +70,8 @@ interface FormState {
 }
 
 export default class FormView extends React.Component<FormProps, FormState> {
-	private static defaultValues = { "http://schema.org/Boolean": false }
-	private static defaultValue = ""
+	public static defaultValues = { "http://schema.org/Boolean": false }
+	public static defaultValue = ""
 	private static generateProperties(types: string[]): List<List<string>> {
 		const set: Set<string> = new Set()
 		const props = types.reduce((props: List<List<string>>, type) => {

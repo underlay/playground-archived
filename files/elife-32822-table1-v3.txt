@@ -1,0 +1,11 @@
+Journal	Sci-Hub	Crossref	Coverage
+The Lancet	457,650	458,580	99.8%
+Nature	385,619	399,273	96.6%
+British Medical Journal (Clinical Research Edition)	17,141	392,277	4.4%
+Lecture Notes in Computer Science	103,675	356,323	29.1%
+Science	230,649	251,083	91.9%
+Journal of the American Medical Association	191,950	248,369	77.3%
+Journal of the American Chemical Society	189,142	189,567	99.8%
+Scientific American	22,600	186,473	12.1%
+New England Journal of Medicine	180,321	180,467	99.9%
+PLOS ONE	4,731	177,260	2.7%

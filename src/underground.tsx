@@ -95,7 +95,7 @@ export default class Underground extends React.Component<
 	}
 
 	render() {
-		const disabled = this.state.graph.size === 0
+		const disabled = this.state.forms.size === 0
 		return (
 			<div>
 				<Select
@@ -148,6 +148,12 @@ export default class Underground extends React.Component<
 							))}
 					</div>
 					<hr />
+					<input
+						disabled={disabled}
+						type="button"
+						value="Submit"
+						onClick={event => this.handleSubmit(event, true)}
+					/>
 					<input disabled={disabled} type="submit" value="Download" />
 				</form>
 				{/* <MapView objects={this.state.graph} /> */}
@@ -204,8 +210,8 @@ export default class Underground extends React.Component<
 			if (value === Constant) {
 				const result = constant
 					? JSON.parse(constant)
-					: this.defaultValues.hasOwnProperty(formValue.type)
-						? this.defaultValues[formValue.type]
+					: FormView.defaultValues.hasOwnProperty(formValue.type)
+						? FormView.defaultValues[formValue.type]
 						: null
 				node[VALUE] = result
 			} else if (value === Reference) {
@@ -226,7 +232,7 @@ export default class Underground extends React.Component<
 		const properties = props.reduce(this.accumulateNode, Map({}))
 		return { [ID]: id, [TYPE]: type, ...properties.toJS() }
 	}
-	private handleSubmit(event) {
+	private handleSubmit(event, download?: boolean) {
 		event.preventDefault()
 		const date = new Date()
 		const time = date.toISOString()
@@ -238,7 +244,11 @@ export default class Underground extends React.Component<
 		const bytes = Buffer.from(json, "utf8")
 		const mhash = multihashing(bytes, "sha1")
 		const hash = multihash.toB58String(mhash)
-		this.props.onSubmit(assertion, hash)
+		this.importAssertion(assertion, hash)
+		this.setState({ forms: Map({}), properties: Map({}) })
+		if (!download) {
+			this.props.onSubmit(assertion, hash)
+		}
 	}
 	private readFile(event) {
 		event.preventDefault()
@@ -300,8 +310,4 @@ export default class Underground extends React.Component<
 		}, this.state.graph)
 		this.setState({ graph, assertions })
 	}
-	private defaultValues = {
-		"http://schema.org/Boolean": false,
-	}
-	private defaultValue = ""
 }

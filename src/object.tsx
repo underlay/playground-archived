@@ -1,6 +1,16 @@
-import React from "react"
-import { nodes, LABEL, SourcedNode, flattenValues, TYPE, ID } from "./schema"
-import View from "./view"
+import React, { Fragment } from "react"
+import {
+	nodes,
+	LABEL,
+	SourcedNode,
+	flattenValues,
+	TYPE,
+	ID,
+	SourcedValues,
+	TIME,
+	SOURCE,
+} from "./schema"
+import View from "./views"
 import { Map } from "immutable"
 
 interface ObjectProps {
@@ -11,24 +21,52 @@ interface ObjectProps {
 	onSubmit: () => void
 }
 
-export default function ObjectView(props: ObjectProps) {
-	const { node, focus, disabled, onSubmit, graph } = props
-	const types = flattenValues(node[TYPE])
-	const id = node[ID]
-	const labels = types.map(type => nodes[type][LABEL]).join(", ")
-	return (
-		<div className="object">
-			<h3>{id}</h3>
-			{labels}
-			<input
-				type="button"
-				value="Add"
-				autoFocus={focus}
-				disabled={disabled}
-				onClick={onSubmit}
-			/>
-			<hr />
-			<View node={node} graph={graph} />
-		</div>
-	)
+interface ObjectState {
+	type: string
+	types: string[]
+}
+
+export default class ObjectView extends React.Component<
+	ObjectProps,
+	ObjectState
+> {
+	constructor(props: ObjectProps) {
+		super(props)
+		const types = flattenValues(props.node[TYPE])
+		const [type] = types
+		this.state = { type, types }
+	}
+	render() {
+		const { node, focus, disabled, onSubmit, graph } = this.props
+		const { types, type } = this.state
+		const {
+			[ID]: id,
+			[TYPE]: _type,
+			[SOURCE]: _source,
+			[TIME]: _time,
+			...rest
+		} = node
+		const props = rest as { [prop: string]: SourcedValues }
+		const labels = types.map((type, key) => (
+			<Fragment key={key}>
+				{key ? <span> </span> : null}
+				<a>{nodes[type][LABEL]}</a>
+			</Fragment>
+		))
+		return (
+			<div className="object">
+				<h3>{id}</h3>
+				{labels}
+				<input
+					type="button"
+					value="Add"
+					autoFocus={focus}
+					disabled={disabled}
+					onClick={onSubmit}
+				/>
+				<hr />
+				<View type={type} props={props} graph={graph} />
+			</div>
+		)
+	}
 }
