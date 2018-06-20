@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import * as d3_geo from "d3-geo"
 import * as d3_selection from "d3-selection"
 import * as topojson from "topojson"
@@ -75,7 +75,12 @@ export default class GeoCoordinates extends React.Component<
 		if (this.state.coordinates) {
 			const width = GeoCoordinates.initialWidth / this.state.scale
 			const height = GeoCoordinates.initialHeight / this.state.scale
-			return <svg id="map" width={width} height={height} />
+			return (
+				<Fragment>
+					<h3>Location</h3>
+					<svg id="map" width={width} height={height} />
+				</Fragment>
+			)
 		} else {
 			return null
 		}

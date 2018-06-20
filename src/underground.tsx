@@ -34,7 +34,7 @@ interface UndergroundProps {
 }
 
 interface UndergroundState {
-	objects: boolean
+	hash: string
 	focus: string
 	assertions: Map<string, Assertion>
 	graph: Map<string, SourcedNode>
@@ -75,7 +75,7 @@ export default class Underground extends React.Component<
 		super(props)
 		this.state = {
 			assertions: Map({}),
-			objects: true,
+			hash: location.hash.slice(1),
 			focus: null,
 			graph: Map({}),
 			forms: Map({}),
@@ -93,9 +93,45 @@ export default class Underground extends React.Component<
 			localStorage[Underground.key] = this.source
 		}
 	}
-
+	componentDidMount() {
+		window.addEventListener("hashchange", event => {
+			if (location.hash !== this.state.hash) {
+				this.setState({ hash: location.hash.slice(1) })
+			}
+		})
+	}
 	render() {
-		const disabled = this.state.forms.size === 0
+		const { hash, graph } = this.state
+		if (this.state.hash === "") {
+			return this.renderGraph()
+		} else if (graph.has(hash)) {
+			return (
+				<div>
+					<a href="#">Back to graph</a> {this.renderFileInput()}
+					{this.renderNode(graph.get(hash), 0, false)}
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					<a href="#">Back to graph</a> {this.renderFileInput()}
+					<p>That id doesn't exist in the graph yet :-(</p>
+				</div>
+			)
+		}
+	}
+	renderFileInput() {
+		return (
+			<input
+				type="file"
+				accept="application/json"
+				onChange={event => this.readFile(event)}
+			/>
+		)
+	}
+	renderGraph() {
+		const { graph, forms } = this.state
+		const disabled = forms.size === 0
 		return (
 			<div>
 				<Select
@@ -103,21 +139,9 @@ export default class Underground extends React.Component<
 					catalog={Underground.createCatalog}
 					onSubmit={this.createNode}
 				>
-					<input
-						type="file"
-						accept="application/json"
-						onChange={event => this.readFile(event)}
-					/>
-					<input
-						type="checkbox"
-						checked={this.state.objects}
-						onChange={({ target: { checked: objects } }) =>
-							this.setState({ objects })
-						}
-					/>
+					{this.renderFileInput()}
 				</Select>
-
-				{this.state.objects && this.state.graph.valueSeq().map(this.renderNode)}
+				{graph.valueSeq().map(this.renderNode)}
 				<hr />
 				<header>Issue a new assertion</header>
 				<form onSubmit={this.handleSubmit}>
@@ -160,11 +184,13 @@ export default class Underground extends React.Component<
 			</div>
 		)
 	}
-	private renderNode(node: SourcedNode, key: number) {
+	private renderNode(node: SourcedNode, key: number, small: any) {
+		const large = !small
 		const { [ID]: id, [TYPE]: type } = node
 		const types = flattenValues(type)
 		return (
 			<ObjectView
+				large={large}
 				key={key}
 				node={node}
 				graph={this.state.graph}

@@ -10,60 +10,10 @@ import {
 	SOURCE,
 	SourcedReference,
 	SourcedInline,
+	Values,
 } from "../schema"
 import { Map } from "immutable"
 import GeoCoordinates from "./types/geo-coordinates"
-import MediaObject from "./types/media-object"
-
-const renderers: { [type: string]: (props: ViewProps) => JSX.Element } = {
-	["http://schema.org/Person"](props: ViewProps) {
-		return null
-	},
-	["http://schema.org/Place"](props: ViewProps) {
-		const geo = props.props["http://schema.org/geo"]
-		if (geo !== undefined) {
-			const values = Array.isArray(geo) ? geo : [geo]
-			return (
-				<Fragment>
-					{values.map((value, key) => (
-						<GeoCoordinates key={key} value={value} graph={props.graph} />
-					))}
-				</Fragment>
-			)
-		}
-	},
-	["http://schema.org/CreativeWork"](props: ViewProps) {
-		const media = props.props["http://schema.org/associatedMedia"]
-
-		let associatedMedia = null
-		if (media !== undefined) {
-			const values = Array.isArray(media) ? media : [media]
-			const position = "http://schema.org/position"
-
-			const hasPosition = !values.some(v =>
-				isNaN(getConstant(v[position]) as number)
-			)
-			const sorted = hasPosition
-				? values.sort(
-						(a, b) =>
-							(getConstant(a[position]) as number) -
-							(getConstant(b[position]) as number)
-				  )
-				: values
-			associatedMedia = (
-				<Fragment>
-					<h2>Associated Media</h2>
-					<div className="carosel">
-						{sorted.map((value, key) => (
-							<MediaObject key={key} value={value} graph={props.graph} />
-						))}
-					</div>
-				</Fragment>
-			)
-		}
-		return <Fragment>{associatedMedia}</Fragment>
-	},
-}
 
 export function getConstant(value: SourcedValues) {
 	if (value && value.length > 0 && value[0].hasOwnProperty(VALUE)) {
@@ -78,7 +28,6 @@ export function getNodeValues(
 	values: SourcedValues,
 	graph: Map<string, SourcedNode>
 ): { [prop: string]: SourcedValues } {
-	console.log("getting node values", values, graph)
 	if (values) {
 		const value = Array.isArray(values) ? values[0] : values
 		if (value.hasOwnProperty(ID)) {
@@ -105,72 +54,10 @@ export function getNodeValues(
 	return null
 }
 
-const ThingProps = {
-	name(value: SourcedValues) {
-		const name = getConstant(value) as string
-		if (name) {
-			return <h1>{name}</h1>
-		}
-	},
-	// TODO: `headline` is a property of CreativeWork, not Thing.
-	headline(value: SourcedValues) {
-		const headline = getConstant(value) as string
-		if (headline) {
-			return <h1>{headline}</h1>
-		}
-	},
-	url(value: SourcedValues) {
-		const url = getConstant(value) as string
-		if (url) {
-			return (
-				<div>
-					<a href={url}>{url}</a>
-				</div>
-			)
-		}
-	},
-	descrition(value: SourcedValues) {
-		const text = getConstant(value) as string
-		if (text) {
-			return <p>{text}</p>
-		}
-	},
-	sameAs(value: SourcedValues) {
-		if (!value) return null
-		// we expect there to be many sameAs links, so don't use getConstant
-		const values = Array.isArray(value) ? value : [value]
-		console.log("original value", value)
-		return values.map((value, key) => {
-			console.log("value", value)
-			if (value.hasOwnProperty(VALUE)) {
-				const url = value[VALUE]
-				return (
-					<Fragment key={key}>
-						{key ? ", " : null}
-						<a href={url}>{url}</a>
-					</Fragment>
-				)
-			}
-		})
-	},
-}
-
-function Thing(props: ViewProps) {
-	const name = props.props["http://schema.org/name"]
-	const headline = props.props["http://schema.org/headline"]
-	return (
-		<div>
-			{ThingProps.name(name) || ThingProps.headline(headline)}
-			{ThingProps.url(props.props["http://schema.org/url"])}
-			{ThingProps.sameAs(props.props["http://schema.org/sameAs"])}
-			{ThingProps.descrition(props.props["http://schema.org/description"])}
-			{props.children}
-		</div>
-	)
-}
-
 export interface ViewProps {
 	children?: any
+	key?: number
+	depth: number
 	graph: Map<string, SourcedNode>
 	type: string
 	props: { [prop: string]: SourcedValues }
@@ -178,11 +65,148 @@ export interface ViewProps {
 
 export interface ValueProps {
 	graph: Map<string, SourcedNode>
+	depth: number
 	value: SourcedConstant | SourcedReference | SourcedInline
 }
 
-export default function View(props: ViewProps) {
-	const ancestors = Array.from(ancestry[props.type])
-	const type = ancestors.find(type => renderers.hasOwnProperty(type))
-	return <Thing {...props}>{type ? renderers[type](props) : null}</Thing>
+type ResolvedValue = [{ [prop: string]: SourcedValues }, SourcedInline]
+
+function resolve(
+	value: SourcedReference | SourcedInline,
+	graph: Map<string, SourcedNode>
+): { [prop: string]: SourcedValues } {
+	const { [TYPE]: type, [SOURCE]: source, ...rest } = value
+	if (rest.hasOwnProperty(ID)) {
+		// reference
+		if (graph.has(rest[ID])) {
+			const { [ID]: id, [TYPE]: type, ...props } = graph.get(rest[ID])
+			return props as { [prop: string]: SourcedValues }
+		}
+	} else {
+		// inline
+		const props: { [prop: string]: SourcedValues } = {}
+		Object.keys(rest).forEach(key => {
+			const value: Values = rest[key]
+			const values: Values = Array.isArray(value) ? value : [value]
+			const sourcedValues: SourcedValues = values.map(value => ({
+				[SOURCE]: source,
+				...value,
+			}))
+			props[key] = sourcedValues
+		})
+		return props
+	}
+	return null
+}
+
+const renderers = {
+	"http://schema.org/Thing"({ depth, props, children }: ViewProps) {
+		const name = getConstant(props["http://schema.org/name"])
+		const alternateName = getConstant(props["http://schema.org/alternateName"])
+		const url = getConstant(props["http://schema.org/url"]) as string
+		const description = getConstant(props["http://schema.org/description"])
+		const header = `h${Math.min(6, depth)}`
+		const properties = depth > 1 ? { className: "max-width" } : {}
+		return (
+			<Fragment>
+				{name && React.createElement(header, properties, [name])}
+				{alternateName && depth < 2 && <h3>{alternateName}</h3>}
+				{url && depth < 2 && <a href={url}>{url}</a>}
+				{description && depth < 2 && <p>{description}</p>}
+				{children}
+			</Fragment>
+		)
+	},
+	"http://schema.org/CreativeWork"({
+		graph,
+		depth,
+		props,
+		children,
+	}: ViewProps) {
+		// media
+		let associatedMedia = null
+		const value = props["http://schema.org/associatedMedia"]
+		const position = "http://schema.org/position"
+		if (value) {
+			const values = Array.isArray(value) ? value : [value]
+			let resolvedValues: ResolvedValue[] = values.map(
+				(value: SourcedInline) => {
+					const props = resolve(value, graph)
+					return [props, value] as ResolvedValue
+				}
+			)
+			if (resolvedValues.every(([props]) => props.hasOwnProperty(position))) {
+				resolvedValues = resolvedValues.sort(
+					(a: ResolvedValue, b: ResolvedValue) =>
+						(getConstant(a[1][position] as SourcedValues) as number) -
+						(getConstant(b[1][position] as SourcedValues) as number)
+				)
+			}
+			associatedMedia = resolvedValues.map(
+				([props, value]: ResolvedValue, key) => {
+					const type = value[TYPE]
+					const properties = { key, type, graph, props, depth: depth + 1 }
+					return <RealView {...properties} />
+				}
+			)
+		}
+		const header = `h${Math.min(6, depth + 1)}`
+		return (
+			<Fragment>
+				{associatedMedia && (
+					<Fragment>
+						{React.createElement(header, {}, ["Associated media"])}
+						<div className="carousel">{associatedMedia}</div>
+					</Fragment>
+				)}
+				{children}
+			</Fragment>
+		)
+	},
+	"http://schema.org/MediaObject"({ props, children }: ViewProps) {
+		const content = "http://schema.org/contentUrl"
+		const format = "http://schema.org/encodingFormat"
+		const mime = getConstant(props[format]) as string
+		const src = getConstant(props[content]) as string
+		const display = mime && src
+		return (
+			<Fragment>
+				{display &&
+					(mediaRenderers.hasOwnProperty(mime) &&
+						mediaRenderers[mime](mime, src))}
+				{children}
+			</Fragment>
+		)
+	},
+	"http://schema.org/Place"({ children }: ViewProps) {
+		return (
+			<Fragment>
+				<p>And i'm a place</p>
+				{children}
+			</Fragment>
+		)
+	},
+}
+
+export function RealView({ depth, graph, type, props }: ViewProps) {
+	const ancestors = Array.from(ancestry[type])
+	const children = ancestors.reduce((child, type, key) => {
+		if (renderers.hasOwnProperty(type)) {
+			const properties = { key, graph, props, type, depth: depth + 1 }
+			return React.createElement(renderers[type], properties, [child])
+		} else {
+			return child
+		}
+	}, null)
+	return <div>{children}</div>
+}
+
+const mediaRenderers = {
+	"text/csv"(encodingFormat: string, contentUrl: string) {},
+	"application/pdf"(encodingFormat: string, contentUrl: string) {
+		return <object data={contentUrl} type={encodingFormat} />
+	},
+	"image/jpeg"(encodingFormat: string, contentUrl: string) {
+		return <img className="image" src={contentUrl} />
+	},
 }

@@ -35,15 +35,11 @@ export function flattenValues(propertyValues: PropertyValues): string[] {
 type Context = string | { [key: string]: string }
 type PropertyValue = string | Node<any>
 export type PropertyValues = PropertyValue | PropertyValue[]
-export interface Metadata {
-	[SOURCE]: string
-	[TIME]: string
-}
 
 export interface Value {
 	[TYPE]: string
 }
-interface SourcedValue extends Value {
+export interface SourcedValue extends Value {
 	[SOURCE]: string
 }
 
@@ -135,6 +131,7 @@ function traverseAncestry(type: string, history: Set<string>) {
 		)
 	}
 }
+
 function enumerateAncestry(type: string) {
 	const history = new Set()
 	traverseAncestry(type, history)

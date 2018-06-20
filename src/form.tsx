@@ -99,9 +99,19 @@ export default class FormView extends React.Component<FormProps, FormState> {
 			<div className="form">
 				{id && (
 					<Fragment>
-						<h3>{id}</h3>
-						{types.map(type => nodes[type][LABEL]).join(", ")}
-						<input value="Remove" type="button" onClick={onRemove} />
+						<h3 className="mono">{id}</h3>
+						{types.map((type, key) => (
+							<Fragment key={key}>
+								{key ? ", " : null}
+								<span className="mono">{nodes[type][LABEL]}</span>
+							</Fragment>
+						))}
+						<input
+							className="float"
+							value="Remove"
+							type="button"
+							onClick={onRemove}
+						/>
 						<hr />
 					</Fragment>
 				)}
@@ -145,7 +155,11 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		const label = nodes[property]["rdfs:label"]
 		return values.map((formValue, index) => (
 			<tr key={`${key}/${index}`}>
-				{index === 0 && <td rowSpan={values.size}>{label}</td>}
+				{index === 0 && (
+					<td className="mono" rowSpan={values.size}>
+						{label}
+					</td>
+				)}
 				<td>{this.renderType(property, index, formValue)}</td>
 				<td>{this.renderValue(property, index, formValue)}</td>
 				<td>
@@ -176,7 +190,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 			>
 				{range.map((type, key) => (
 					<option key={key} value={type}>
-						{nodes[type]["rdfs:label"]}
+						{nodes[type][LABEL]}
 					</option>
 				))}
 			</select>

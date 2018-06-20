@@ -7,7 +7,7 @@
 </head>
 
 <style>
-	html {
+	.mono {
 		font-family: monospace;
 	}
 
@@ -25,6 +25,12 @@
 		vertical-align: top;
 	}
 
+	.large.object {
+		display: block;
+		min-width: 330px;
+		max-width: 1024px;
+	}
+
 	.form {
 		overflow: scroll;
 		min-width: 512px;
@@ -35,8 +41,7 @@
 		margin: 0;
 	}
 
-	.object a+input,
-	.form h3+input {
+	.float {
 		float: right;
 	}
 
@@ -65,11 +70,7 @@
 
 	.search+input[type="file"] {
 		margin: 0 1em;
-		width: calc(50% - 2em - 40px);
-	}
-
-	.search+input+input[type="checkbox"] {
-		width: 24px;
+		width: calc(50% - 2em - 6px);
 	}
 
 	.select {
@@ -121,19 +122,29 @@
 		pointer-events: none;
 	}
 
-	.carosel {
+	.carousel {
 		display: flex;
 		flex-direction: row;
 		align-items: flex-start;
 		overflow-x: scroll;
 	}
 
-	.carosel div+div {
+	.carousel div+div {
 		margin-left: 1em;
+	}
+
+	.max-width {
+		width: max-content;
 	}
 
 	object {
 		width: 320px;
+		height: 320px;
+	}
+
+	.image {
+		max-height: 320px;
+		max-width: 320px;
 	}
 </style>
 

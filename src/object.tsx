@@ -10,10 +10,11 @@ import {
 	TIME,
 	SOURCE,
 } from "./schema"
-import View from "./views"
+import { RealView } from "./views"
 import { Map } from "immutable"
 
 interface ObjectProps {
+	large: boolean
 	node: SourcedNode
 	focus: boolean
 	graph: Map<string, SourcedNode>
@@ -55,14 +56,17 @@ export default class ObjectView extends React.Component<
 		const labels = types.map((type, key) => (
 			<Fragment key={key}>
 				{key ? <span> </span> : null}
-				<a>{nodes[type][LABEL]}</a>
+				<span className="mono">{nodes[type][LABEL]}</span>
 			</Fragment>
 		))
 		return (
-			<div className="object">
-				<h3>{id}</h3>
+			<div className={this.props.large ? "large object" : "object"}>
+				<h3 className="mono">
+					<a href={`#${id}`}>{id}</a>
+				</h3>
 				{labels}
 				<input
+					className="float"
 					type="button"
 					value="Add"
 					autoFocus={focus}
@@ -70,7 +74,8 @@ export default class ObjectView extends React.Component<
 					onClick={onSubmit}
 				/>
 				<hr />
-				<View type={type} props={props} graph={graph} />
+				<RealView {...{ type, props, graph, depth: 0 }} />
+				{/* <View type={type} props={props} graph={graph, depth: 0} /> */}
 			</div>
 		)
 	}

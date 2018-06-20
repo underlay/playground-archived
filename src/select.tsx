@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react"
+import React, { ChangeEvent, Fragment } from "react"
 import { List } from "immutable"
 import Fuse from "fuse.js"
 import { nodes, LABEL, COMMENT, RANGE, flattenValues } from "./schema"
@@ -115,7 +115,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		)
 	}
 	renderResult(entry: Entry, key: number) {
-		const focus = key === this.state.focus ? "focus" : ""
+		const focus = key === this.state.focus ? "focus mono" : "mono"
 		const handleFocus = (event: React.MouseEvent<HTMLDivElement>) =>
 			this.state.focus !== key && this.setState({ focus: key })
 		return (
@@ -139,15 +139,21 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 			const entry = results.get(focus)
 			return (
 				<React.Fragment>
-					<h1>{entry.name}</h1>
+					<h1 className="mono">{entry.name}</h1>
 					{entry.category && (
 						<React.Fragment>
-							<div>Inherited from {nodes[entry.category][LABEL]}</div>
+							<div>
+								Inherited from{" "}
+								<span className="mono">{nodes[entry.category][LABEL]}</span>
+							</div>
 							<div>
 								Range:{" "}
-								{flattenValues(nodes[entry.id][RANGE])
-									.map(type => nodes[type][LABEL])
-									.join(", ")}
+								{flattenValues(nodes[entry.id][RANGE]).map((type, key) => (
+									<Fragment key={key}>
+										{key ? ", " : null}
+										<span className="mono">{nodes[type][LABEL]}</span>
+									</Fragment>
+								))}
 							</div>
 						</React.Fragment>
 					)}
