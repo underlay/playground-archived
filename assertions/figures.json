@@ -30,10 +30,10 @@
 						}
 					],
 					"http://schema.org/encodingFormat": [
-						{
-							"@type": "http://schema.org/Text",
-							"@value": "application/pdf"
-						}
+						{ "@type": "http://schema.org/Text", "@value": "application/pdf" }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 0 }
 					]
 				},
 				{
@@ -44,7 +44,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Coverage for the ten journals with the most articles."
@@ -75,10 +75,13 @@
 						}
 					],
 					"http://schema.org/encodingFormat": [
-						{
-							"@type": "http://schema.org/Text",
-							"@value": "text/csv"
-						}
+						{ "@type": "http://schema.org/Text", "@value": "text/csv" }
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Table 1." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 4 }
 					]
 				},
 				{
@@ -89,7 +92,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value":
@@ -122,6 +125,15 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmdeCNb8aSNevHByXgfjiGRuWCceStkBxa1mQZubrh2XYX"
 						}
+					],
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Figure 1—figure supplement 1."
+						}
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 2 }
 					]
 				},
 				{
@@ -132,7 +144,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "The history of Sci-Hub."
@@ -164,6 +176,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmdGzmf9KGjWgfanyM8joquSsMpwKS7wXg6XZuW6ifBTh9"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 1." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 1 }
 					]
 				},
 				{
@@ -174,7 +192,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Bitcoin donations to Sci-Hub per month."
@@ -206,6 +224,15 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmTK9U8hMpB7fwp8GXtS7htcVdExaXWEh4jCiU9p23mtc9"
 						}
+					],
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Figure 10—figure supplement 1."
+						}
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 16 }
 					]
 				},
 				{
@@ -216,7 +243,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Number of bitcoin donations per month."
@@ -248,6 +275,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmZTkpopb6DToKHJXYMQNvYv2oCfw9RYeQ3du12Hn3AX8s"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 10." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 15 }
 					]
 				},
 				{
@@ -258,7 +291,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Lag-time from publication to LibGen upload."
@@ -290,6 +323,15 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmaorVStsfAANsUomu9LUkPvzsAgW2UNemJBpsRtjSzRCv"
 						}
+					],
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Figure 11—figure supplement 1."
+						}
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 18 }
 					]
 				},
 				{
@@ -300,7 +342,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Number of articles in LibGen scimag over time."
@@ -332,6 +374,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmYfzxzjKZgZtvuP2ygeGnpGvq1g4wrHDmexmJkNGkeNGs"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 11." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 17 }
 					]
 				},
 				{
@@ -342,7 +390,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Coverage by article type."
@@ -374,6 +422,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmPJEiACEiL56Az9sak11CSbcDf6bj4REXmqWxwBVDawrU"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 2." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 3 }
 					]
 				},
 				{
@@ -384,7 +438,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Distributions of journal & publisher coverages."
@@ -416,6 +470,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmWkdKgVouxkGiyJEKFEgWdKaZyKbrQRFhnMS4KzPMkzks"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 3." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 5 }
 					]
 				},
 				{
@@ -426,7 +486,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Coverage by country of publication."
@@ -458,6 +518,15 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmeCEcVSTtBjcNvAKiRydW179VGAZ239KS42boCHUPxfRT"
 						}
+					],
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Figure 4—figure supplement 1."
+						}
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 7 }
 					]
 				},
 				{
@@ -468,7 +537,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Coverage by journal attributes."
@@ -500,6 +569,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmaWh2egUiT96iY8ZfsrGQ4tF7WwN7deGfzJhTtPdbWgTk"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 4." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 6 }
 					]
 				},
 				{
@@ -510,7 +585,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Coverage by publisher."
@@ -542,6 +617,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmbjUiK5FpNPdBNit2tqKfAXRPTpZtaUAWgjtujVBoudGd"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 5." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 8 }
 					]
 				},
 				{
@@ -552,7 +633,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value":
@@ -585,6 +666,15 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmWaVuvKCaJWve7U31aZ6pPeozpWPAbBZfT3orVJbU3rev"
 						}
+					],
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Figure 6—figure supplement 1."
+						}
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 10 }
 					]
 				},
 				{
@@ -595,7 +685,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Coverage of articles by year published."
@@ -627,6 +717,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmcxFX2skEehFoFkQKKFtQAPRU9P3tcWTVivKkNBg4Qp4e"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 6." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 9 }
 					]
 				},
 				{
@@ -637,7 +733,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value":
@@ -670,6 +766,15 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmPJF7fe2sdbd5wAMqsGQS8r67BqdBAW29kKk6R4E2KETq"
 						}
+					],
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Figure 7—figure supplement 1."
+						}
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 12 }
 					]
 				},
 				{
@@ -680,7 +785,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Sci-Hub’s coverage by oaDOI access status."
@@ -712,6 +817,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmSeXEHvPRu1MrAi8bkTiCU3cBzzpC6RJCxediH25MXNMx"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 7." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 11 }
 					]
 				},
 				{
@@ -722,7 +833,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value":
@@ -755,6 +866,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmdEErbVNzmV8ScEX5LwChpe8fMkHsvXUo3PcMRenasUri"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 8." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 13 }
 					]
 				},
 				{
@@ -765,7 +882,7 @@
 							"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8"
 						}
 					],
-					"http://schema.org/name": [
+					"http://schema.org/alternateName": [
 						{
 							"@type": "http://schema.org/Text",
 							"@value": "Relation to journal impact."
@@ -797,6 +914,12 @@
 							"@type": "http://schema.org/Text",
 							"@value": "QmXk82VMaF8sdgXvbPhJQQ6ruawWr8sbKnsMM6koMdnFC7"
 						}
+					],
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Figure 9." }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 14 }
 					]
 				}
 			]

@@ -36,6 +36,11 @@ export default class ObjectView extends React.Component<
 		const [type] = types
 		this.state = { type, types }
 	}
+	static getDerivedStateFromProps(props: ObjectProps, state: ObjectState) {
+		const types = flattenValues(props.node[TYPE])
+		const [type] = types
+		return { type, types }
+	}
 	render() {
 		const { node, focus, disabled, onSubmit, graph } = this.props
 		const { types, type } = this.state

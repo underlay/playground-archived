@@ -34,16 +34,34 @@ const renderers: { [type: string]: (props: ViewProps) => JSX.Element } = {
 	},
 	["http://schema.org/CreativeWork"](props: ViewProps) {
 		const media = props.props["http://schema.org/associatedMedia"]
+
+		let associatedMedia = null
 		if (media !== undefined) {
 			const values = Array.isArray(media) ? media : [media]
-			return (
+			const position = "http://schema.org/position"
+
+			const hasPosition = !values.some(v =>
+				isNaN(getConstant(v[position]) as number)
+			)
+			const sorted = hasPosition
+				? values.sort(
+						(a, b) =>
+							(getConstant(a[position]) as number) -
+							(getConstant(b[position]) as number)
+				  )
+				: values
+			associatedMedia = (
 				<Fragment>
-					{values.map((value, key) => (
-						<MediaObject key={key} value={value} graph={props.graph} />
-					))}
+					<h2>Associated Media</h2>
+					<div className="carosel">
+						{sorted.map((value, key) => (
+							<MediaObject key={key} value={value} graph={props.graph} />
+						))}
+					</div>
 				</Fragment>
 			)
 		}
+		return <Fragment>{associatedMedia}</Fragment>
 	},
 }
 
@@ -94,10 +112,21 @@ const ThingProps = {
 			return <h1>{name}</h1>
 		}
 	},
+	// TODO: `headline` is a property of CreativeWork, not Thing.
+	headline(value: SourcedValues) {
+		const headline = getConstant(value) as string
+		if (headline) {
+			return <h1>{headline}</h1>
+		}
+	},
 	url(value: SourcedValues) {
 		const url = getConstant(value) as string
 		if (url) {
-			return <a href={url}>{url}</a>
+			return (
+				<div>
+					<a href={url}>{url}</a>
+				</div>
+			)
 		}
 	},
 	descrition(value: SourcedValues) {
@@ -106,13 +135,34 @@ const ThingProps = {
 			return <p>{text}</p>
 		}
 	},
+	sameAs(value: SourcedValues) {
+		if (!value) return null
+		// we expect there to be many sameAs links, so don't use getConstant
+		const values = Array.isArray(value) ? value : [value]
+		console.log("original value", value)
+		return values.map((value, key) => {
+			console.log("value", value)
+			if (value.hasOwnProperty(VALUE)) {
+				const url = value[VALUE]
+				return (
+					<Fragment key={key}>
+						{key ? ", " : null}
+						<a href={url}>{url}</a>
+					</Fragment>
+				)
+			}
+		})
+	},
 }
 
 function Thing(props: ViewProps) {
+	const name = props.props["http://schema.org/name"]
+	const headline = props.props["http://schema.org/headline"]
 	return (
 		<div>
-			{ThingProps.name(props.props["http://schema.org/name"])}
+			{ThingProps.name(name) || ThingProps.headline(headline)}
 			{ThingProps.url(props.props["http://schema.org/url"])}
+			{ThingProps.sameAs(props.props["http://schema.org/sameAs"])}
 			{ThingProps.descrition(props.props["http://schema.org/description"])}
 			{props.children}
 		</div>
