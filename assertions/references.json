@@ -1,0 +1,362 @@
+{
+	"@context": {},
+	"@graph": [
+		{
+			"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8",
+			"http://schema.org/citation": [
+				{
+					"@id": "42a2bfbc-175c-42d3-beba-f630f752fd21",
+					"@type": "http://schema.org/ScholarlyArticle"
+				},
+				{
+					"@id": "64b07b18-78f4-49be-91c7-c426e7a2bc61",
+					"@type": "http://schema.org/ScholarlyArticle"
+				},
+				{
+					"@id": "d93bd5d8-7ad4-4664-b698-fdf08c50e0f6",
+					"@type": "http://schema.org/ScholarlyArticle"
+				}
+			]
+		},
+		{
+			"@id": "4a64c15b-cbab-4b1f-81c5-69ed411fa131",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Medical Biotechnology Center, VIB, Ghent, Belgium"
+				}
+			]
+		},
+		{
+			"@id": "f3cb5329-2b18-4748-a2ef-179548cf71c2",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"University Library System, University of Pittsburgh, Pittsburgh, PA, USA"
+				}
+			]
+		},
+		{
+			"@id": "be3805e7-c630-4bac-b129-fbbbaa8d7edf",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Earth and Life Institute, Université catholique de Louvain, Louvain-la-Neuve, Belgium"
+				}
+			]
+		},
+		{
+			"@id": "42a2bfbc-175c-42d3-beba-f630f752fd21",
+			"@type": ["http://schema.org/ScholarlyArticle"],
+			"http://schema.org/headline": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"The academic, economic and societal impacts of Open Access: an evidence-based review"
+				}
+			],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"The academic, economic and societal impacts of Open Access: an evidence-based review"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "http://dx.doi.org/10.12688/f1000research.8460.3"
+				}
+			],
+			"http://schema.org/associatedMedia": [
+				{
+					"@type": "http://schema.org/MediaObject",
+					"http://schema.org/encodesCreativeWork": [
+						{
+							"@type": "http://schema.org/ScholarlyArticle",
+							"@id": "42a2bfbc-175c-42d3-beba-f630f752fd21"
+						}
+					],
+					"http://schema.org/contentUrl": [
+						{
+							"@type": "http://schema.org/URL",
+							"@value": "/files/f1000research.8460.3.pdf"
+						}
+					],
+					"http://schema.org/encodingFormat": [
+						{ "@type": "http://schema.org/Text", "@value": "application/pdf" }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 0 }
+					]
+				}
+			],
+			"http://schema.org/author": [
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Jonathan P. Tennant"
+						}
+					],
+					"http://schema.org/affiliation": [
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "33c0c81b-2fca-46e3-a3c7-d2ab5e55f893"
+						}
+					]
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "François Waldner" }
+					],
+					"http://schema.org/affiliation": [
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "be3805e7-c630-4bac-b129-fbbbaa8d7edf"
+						}
+					]
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Damien C. Jacques" }
+					],
+					"http://schema.org/affiliation": [
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "be3805e7-c630-4bac-b129-fbbbaa8d7edf"
+						}
+					]
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "Paola Masuzzo" }
+					],
+					"http://schema.org/affiliation": [
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "4a64c15b-cbab-4b1f-81c5-69ed411fa131"
+						},
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "a2a1bb30-e6e8-4a47-a53a-0cccbf60ef95"
+						}
+					]
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Lauren B. Collister"
+						}
+					],
+					"http://schema.org/affiliation": [
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "f3cb5329-2b18-4748-a2ef-179548cf71c2"
+						}
+					]
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Chris. H. J. Hartgerink"
+						}
+					],
+					"http://schema.org/affiliation": [
+						{
+							"@type": "http://schema.org/Organization",
+							"@id": "e8098e15-f8ea-4f94-9bc6-27f492b62846"
+						}
+					]
+				}
+			]
+		},
+		{
+			"@id": "52110db4-344c-4da2-9be0-0e30ae997f5a",
+			"@type": ["http://schema.org/Person"],
+			"http://schema.org/name": [
+				{ "@type": "http://schema.org/Text", "@value": "Alice Meadows" }
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"http://schema.org/name": [
+						{ "@type": "http://schema.org/Text", "@value": "ORCID" }
+					]
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "https://orcid.org/0000-0003-2161-3781"
+				}
+			]
+		},
+		{
+			"@id": "33c0c81b-2fca-46e3-a3c7-d2ab5e55f893",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Imperial College London, London, UK"
+				}
+			]
+		},
+		{
+			"@id": "a2a1bb30-e6e8-4a47-a53a-0cccbf60ef95",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Department of Biochemistry, Ghent University, Ghent, Belgium"
+				}
+			]
+		},
+		{
+			"@id": "e8098e15-f8ea-4f94-9bc6-27f492b62846",
+			"@type": ["http://schema.org/Organization"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Department of Methodology and Statistics, Tilburg University, Tilburg, Netherlands"
+				}
+			]
+		},
+		{
+			"@id": "64b07b18-78f4-49be-91c7-c426e7a2bc61",
+			"@type": ["http://schema.org/ScholarlyArticle"],
+			"http://schema.org/headline": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Beyond Open: Expanding Access to Scholarly Content"
+				}
+			],
+			"http://schema.org/identifier": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "10.3998/3336451.0018.301"
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "http://dx.doi.org/10.3998/3336451.0018.301"
+				}
+			],
+			"http://schema.org/associatedMedia": [
+				{
+					"@type": "http://schema.org/MediaObject",
+					"http://schema.org/encodesCreativeWork": [
+						{
+							"@type": "http://schema.org/ScholarlyArticle",
+							"@id": "64b07b18-78f4-49be-91c7-c426e7a2bc61"
+						}
+					],
+					"http://schema.org/contentUrl": [
+						{
+							"@type": "http://schema.org/URL",
+							"@value": "/files/3336451.0018.301.pdf"
+						}
+					],
+					"http://schema.org/encodingFormat": [
+						{ "@type": "http://schema.org/Text", "@value": "application/pdf" }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 0 }
+					]
+				}
+			],
+			"http://schema.org/author": [
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "52110db4-344c-4da2-9be0-0e30ae997f5a"
+				}
+			],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value": "Beyond Open: Expanding Access to Scholarly Content"
+				}
+			]
+		},
+		{
+			"@id": "d93bd5d8-7ad4-4664-b698-fdf08c50e0f6",
+			"@type": ["http://schema.org/ScholarlyArticle"],
+			"http://schema.org/name": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Reproducibility of computational workflows is automated using continuous analysis"
+				}
+			],
+			"http://schema.org/description": [
+				{
+					"@type": "http://schema.org/Text",
+					"@value":
+						"Replication, validation and extension of experiments are crucial for scientific progress. Computational experiments are scriptable and should be easy to reproduce. However, computational analyses are designed and run in a specific computing environment, which may be difficult or impossible to match using written instructions. We report the development of continuous analysis, a workflow that enables reproducible computational analyses. Continuous analysis combines Docker, a container technology akin to virtual machines, with continuous integration, a software development technique, to automatically rerun a computational analysis whenever updates or improvements are made to source code or data. This enables researchers to reproduce results without contacting the study authors. Continuous analysis allows reviewers, editors or readers to verify reproducibility without manually downloading and rerunning code and can provide an audit trail for analyses of data that cannot be shared."
+				}
+			],
+			"http://schema.org/url": [
+				{
+					"@type": "http://schema.org/URL",
+					"@value": "http://dx.doi.org/10.1038/nbt.3780"
+				}
+			],
+			"http://schema.org/associatedMedia": [
+				{
+					"@type": "http://schema.org/MediaObject",
+					"http://schema.org/encodesCreativeWork": [
+						{
+							"@type": "http://schema.org/ScholarlyArticle",
+							"@id": "d93bd5d8-7ad4-4664-b698-fdf08c50e0f6"
+						}
+					],
+					"http://schema.org/contentUrl": [
+						{
+							"@type": "http://schema.org/URL",
+							"@value": "/files/nbt.3780.pdf"
+						}
+					],
+					"http://schema.org/encodingFormat": [
+						{ "@type": "http://schema.org/Text", "@value": "application/pdf" }
+					],
+					"http://schema.org/position": [
+						{ "@type": "http://schema.org/Number", "@value": 0 }
+					]
+				}
+			],
+			"http://schema.org/author": [
+				{
+					"@type": "http://schema.org/Person",
+					"@id": "43e5d64a-b6a4-4c77-bae3-5704dbd85e81"
+				},
+				{
+					"@type": "http://schema.org/Person",
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value": "Brett K Beaulieu-Jones"
+						}
+					]
+				}
+			]
+		}
+	],
+	"http://underlay.mit.edu/time": "2018-06-21T16:36:57.914Z",
+	"http://underlay.mit.edu/source": "reflexologist-reporter"
+}

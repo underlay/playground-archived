@@ -166,14 +166,26 @@
 		height: 480px;
 	}
 
-	header .header {
-		display: inline-block;
+	header {
 		max-width: 100%;
 		width: max-content;
 	}
 
+	h4.header.max-width+button.float {
+		margin-top: 1.5em;
+	}
+
+	header .header {
+		display: inline-block;
+		max-width: 100%;
+		/* width: max-content; */
+	}
+
 	.carousel-item {
 		margin: 0.5em;
+		padding: 0.5em;
+		border: 1px solid #888;
+		border-radius: 1px;
 	}
 
 	/* header.opened {

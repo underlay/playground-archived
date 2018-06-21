@@ -151,6 +151,7 @@ const renderers = {
 		children,
 		onExplore,
 		explorer,
+		graph,
 		root,
 		focused,
 		onFocus,
@@ -169,6 +170,51 @@ const renderers = {
 		const isOpened = !!exp
 		const go = root || !isOpened || true
 
+		let citations = null
+		const position = "http://schema.org/position"
+		const citationProperty = "http://schema.org/citation"
+		if (props.hasOwnProperty(citationProperty)) {
+			const value = props["http://schema.org/citation"]
+			const values = Array.isArray(value) ? value : [value]
+			citations = values.map((value, key) => {})
+			let resolveIndex = (number: number) => number
+			let resolvedValues: ResolvedValue[] = values.map(
+				(value: SourcedInline) => {
+					const props = resolve(value, graph)
+					return [props, value] as ResolvedValue
+				}
+			)
+			if (resolvedValues.every(([props]) => props.hasOwnProperty(position))) {
+				resolvedValues = resolvedValues.sort(
+					(a: ResolvedValue, b: ResolvedValue) =>
+						(getConstant(a[1][position] as SourcedValues) as number) -
+						(getConstant(b[1][position] as SourcedValues) as number)
+				)
+				resolveIndex = number =>
+					values.findIndex(value => getConstant(value[position]) === number)
+			}
+			citations = resolvedValues.map(([props, value]: ResolvedValue, key) => {
+				const type = value[TYPE]
+				const properties = {
+					path: value.hasOwnProperty(ID)
+						? [value[ID]]
+						: path.concat([citationProperty, resolveIndex(key).toString()]),
+					key,
+					type,
+					graph,
+					props,
+					depth: depth + 1,
+					root: false,
+					explorer,
+					onExplore,
+					focused,
+					onFocus,
+				}
+				return <View {...properties} />
+			})
+		}
+
+		const header = `h${Math.min(6, depth + 1)}`
 		return (
 			<div
 				onMouseEnter={event => onFocus(realId)}
@@ -182,6 +228,12 @@ const renderers = {
 				{go && description && depth < 3 && <p>{description}</p>}
 				{/* {go && renderSource(source)} */}
 				{go && children}
+				{citations && (
+					<Fragment>
+						{React.createElement(header, {}, ["References"])}
+						<div className="carousel">{citations}</div>
+					</Fragment>
+				)}
 			</div>
 		)
 	},
@@ -285,12 +337,13 @@ const renderers = {
 						<div className="carousel">{author}</div>
 					</Fragment>
 				)}
-				{associatedMedia && (
-					<Fragment>
-						{React.createElement(header, {}, ["Associated media"])}
-						<div className="carousel">{associatedMedia}</div>
-					</Fragment>
-				)}
+				{associatedMedia &&
+					depth < 3 && (
+						<Fragment>
+							{React.createElement(header, {}, ["Associated media"])}
+							<div className="carousel">{associatedMedia}</div>
+						</Fragment>
+					)}
 				{children}
 			</Fragment>
 		)

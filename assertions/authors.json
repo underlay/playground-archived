@@ -609,6 +609,18 @@
 					"@type": "http://schema.org/URL",
 					"@value": "https://twitter.com/GreeneScientist"
 				}
+			],
+			"http://schema.org/affiliation": [
+				{
+					"@type": "http://schema.org/Organization",
+					"http://schema.org/name": [
+						{
+							"@type": "http://schema.org/Text",
+							"@value":
+								"Department of Systems Pharmacology and Translational Therapeutics, Perelman School of Medicine, University of Pennsylvania"
+						}
+					]
+				}
 			]
 		},
 		{

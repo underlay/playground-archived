@@ -1,0 +1,1797 @@
+[
+	{
+		"@id": "eb07b3ea-a739-4903-b993-f619ff129071",
+		"@type": "Organization",
+		"http://schema.org/name": "University of Michigan Library"
+	},
+	{
+		"@id": "f2182058-1311-4b2f-80a2-b2d8a062059d",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Alice Meadows"
+		}
+	},
+	{
+		"@id": "4fb4ae3c-144a-4f85-bd5b-2605e0a3d081",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "eb07b3ea-a739-4903-b993-f619ff129071"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value": "Beyond Open: Expanding Access to Scholarly Content"
+			}
+		],
+		"http://schema.org/identifier": "10.3998/3336451.0018.301",
+		"http://schema.org/url": "http://dx.doi.org/10.3998/3336451.0018.301",
+		"http://schema.org/dateCreated": "2015-06-17T15:23:13Z",
+		"http://schema.org/dateModified": "2018-04-13T18:38:34Z",
+		"http://schema.org/datePublished": "2015-06-17",
+		"alternativeHeadline": [],
+		"http://schema.org/author": [
+			{
+				"@id": "f2182058-1311-4b2f-80a2-b2d8a062059d",
+				"@type": "http://schema.org/Person"
+			}
+		]
+	},
+	{
+		"@id": "fca6acfc-2fd2-4f5a-a26b-d5a87547ee0d",
+		"@type": "Organization",
+		"http://schema.org/name": "F1000 Research, Ltd."
+	},
+	{
+		"@id": "16a27c99-2478-4e20-8365-12607c9f3cb0",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Jonathan P. Tennant"
+		}
+	},
+	{
+		"@id": "16b3348d-9946-4e9e-80a0-ce29c80fe4c2",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "François Waldner"
+		}
+	},
+	{
+		"@id": "6709c2a6-f48e-429a-bff1-a9149412728d",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Damien C. Jacques"
+		}
+	},
+	{
+		"@id": "ee3dc54c-7ef8-485f-88b1-b4870768afb5",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Paola Masuzzo"
+		}
+	},
+	{
+		"@id": "8120cc7a-c26a-40be-9e44-9e39c41eaad3",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Lauren B. Collister"
+		}
+	},
+	{
+		"@id": "88d2040a-c578-4d61-8d47-25c96065f5f3",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Chris. H. J. Hartgerink"
+		}
+	},
+	{
+		"@id": "40613738-4bfc-40cb-aa46-6548d2ecb000",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "fca6acfc-2fd2-4f5a-a26b-d5a87547ee0d"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value":
+					"The academic, economic and societal impacts of Open Access: an evidence-based review"
+			}
+		],
+		"http://schema.org/identifier": "10.12688/f1000research.8460.3",
+		"http://schema.org/url": "http://dx.doi.org/10.12688/f1000research.8460.3",
+		"http://schema.org/dateCreated": "2016-09-21T10:50:06Z",
+		"http://schema.org/dateModified": "2016-09-21T10:50:06Z",
+		"http://schema.org/datePublished": "2016-09-21",
+		"alternativeHeadline": [],
+		"pagination": "632",
+		"http://schema.org/author": [
+			{
+				"@id": "16a27c99-2478-4e20-8365-12607c9f3cb0",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "16b3348d-9946-4e9e-80a0-ce29c80fe4c2",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "6709c2a6-f48e-429a-bff1-a9149412728d",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "ee3dc54c-7ef8-485f-88b1-b4870768afb5",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "8120cc7a-c26a-40be-9e44-9e39c41eaad3",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "88d2040a-c578-4d61-8d47-25c96065f5f3",
+				"@type": "http://schema.org/Person"
+			}
+		]
+	},
+	{
+		"@id": "3481a696-476b-4dc7-bf45-5d005705b44c",
+		"@type": "Organization",
+		"http://schema.org/name": "Public Library of Science (PLoS)"
+	},
+	{
+		"@id": "af42ff38-b296-442f-9331-daf05377af6b",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Madian Khabsa"
+		}
+	},
+	{
+		"@id": "8fcc130a-10cb-491e-959e-23354b5b963d",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "C. Lee Giles"
+		}
+	},
+	{
+		"@id": "02c2eb68-84ea-4ddd-8ea2-80aa39dc01c8",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Ren Zhang"
+		}
+	},
+	{
+		"@id": "7642d673-c202-4cd3-839d-2549cf81b2bc",
+		"@type": "ScholarlyArticle"
+	},
+	{
+		"@id": "e9fa7f57-0d9f-4861-ab2b-bd7025c13ad7",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "b1326968-94cd-493f-864a-ea565c91c3e7",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-008-0216-y",
+		"http://schema.org/pageStart": "257",
+		"http://schema.org/author": {
+			"@id": "d6ba020a-7d1e-42ec-b771-75cc77cb87f3"
+		}
+	},
+	{
+		"@id": "1d05f385-5aeb-4d0f-baea-55fb6598b88b",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-010-0185-9",
+		"http://schema.org/pageStart": "495",
+		"http://schema.org/author": {
+			"@id": "d6ba020a-7d1e-42ec-b771-75cc77cb87f3"
+		}
+	},
+
+	{
+		"@id": "47b5416b-4dd2-4704-8e96-2c28ada5e835",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "391",
+		"http://schema.org/author": {
+			"@id": "576812e6-5f3d-4236-bbd1-cd26b769ed0e"
+		}
+	},
+
+	{
+		"@id": "c6aad6d8-a736-482d-9e70-b846829a4218",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/495426a",
+		"http://schema.org/pageStart": "426",
+		"http://schema.org/author": {
+			"@id": "e27935bb-b01f-4fa4-a88d-e48e0801c97d"
+		}
+	},
+
+	{
+		"@id": "eb6151f8-f9f7-4ab0-8ff8-c49b1defa486",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1126/science.280.5360.98",
+		"http://schema.org/pageStart": "98",
+		"http://schema.org/author": {
+			"@id": "3233ef16-040b-4bd5-96f7-79c696ae69e8"
+		}
+	},
+	{
+		"@id": "a75d830f-dbb1-4827-a11c-72afa912de90",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/21987",
+		"http://schema.org/pageStart": "107",
+		"http://schema.org/author": {
+			"@id": "3233ef16-040b-4bd5-96f7-79c696ae69e8"
+		}
+	},
+
+	{
+		"@id": "b3d731e7-ebf2-457e-ad8b-b6c18f895c39",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/S0169-7552(98)00127-5",
+		"http://schema.org/pageStart": "379",
+		"http://schema.org/author": {
+			"@id": "4e5393d4-776b-4fa3-908c-11d5843c757b"
+		}
+	},
+	{
+		"@id": "bbefd95f-ccf4-4015-8aaa-06a83c6b8912",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/978-3-662-10874-1_2"
+	},
+	{
+		"@id": "79333834-52ee-4f67-a623-16881f587e82",
+		"@type": "ScholarlyArticle"
+	},
+	{
+		"@id": "ccf70d46-f19a-4475-9580-d1121803c3ed",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0013636",
+		"http://schema.org/pageStart": "e13636",
+		"http://schema.org/author": {
+			"@id": "0289a1df-572b-412c-9a8f-a7a03dc43a5e"
+		}
+	},
+	{
+		"@id": "8da0349c-cc67-40ff-bb97-0693feab9c3f",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0011273",
+		"http://schema.org/pageStart": "e11273",
+		"http://schema.org/author": {
+			"@id": "f71f6e4d-1742-491d-97db-64ce9efa6a3a"
+		}
+	},
+	{
+		"@id": "89d87ea0-336b-455e-bb37-e368d5ce27a5",
+		"@type": "ScholarlyArticle"
+	},
+	{
+		"@id": "ccf78d57-3523-4ba3-a900-73aa47850c34",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "3481a696-476b-4dc7-bf45-5d005705b44c"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value": "The Number of Scholarly Documents on the Public Web"
+			}
+		],
+		"http://schema.org/identifier": "10.1371/journal.pone.0093949",
+		"http://schema.org/url": "http://dx.doi.org/10.1371/journal.pone.0093949",
+		"http://schema.org/dateCreated": "2014-05-09T21:02:06Z",
+		"http://schema.org/dateModified": "2017-06-22T12:59:23Z",
+		"http://schema.org/datePublished": "2014-05-09",
+		"alternativeHeadline": [],
+		"pagination": "e93949",
+		"http://schema.org/license": [
+			"http://creativecommons.org/licenses/by/4.0/"
+		],
+		"http://schema.org/author": [
+			{
+				"@id": "af42ff38-b296-442f-9331-daf05377af6b",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "8fcc130a-10cb-491e-959e-23354b5b963d",
+				"@type": "http://schema.org/Person"
+			}
+		],
+		"editor": [{ "@id": "02c2eb68-84ea-4ddd-8ea2-80aa39dc01c8" }],
+		"citation": [
+			{ "@id": "7642d673-c202-4cd3-839d-2549cf81b2bc" },
+			{ "@id": "e9fa7f57-0d9f-4861-ab2b-bd7025c13ad7" },
+			{ "@id": "b1326968-94cd-493f-864a-ea565c91c3e7" },
+			{ "@id": "1d05f385-5aeb-4d0f-baea-55fb6598b88b" },
+			{ "@id": "47b5416b-4dd2-4704-8e96-2c28ada5e835" },
+			{ "@id": "c6aad6d8-a736-482d-9e70-b846829a4218" },
+			{ "@id": "eb6151f8-f9f7-4ab0-8ff8-c49b1defa486" },
+			{ "@id": "a75d830f-dbb1-4827-a11c-72afa912de90" },
+			{ "@id": "b3d731e7-ebf2-457e-ad8b-b6c18f895c39" },
+			{ "@id": "bbefd95f-ccf4-4015-8aaa-06a83c6b8912" },
+			{ "@id": "79333834-52ee-4f67-a623-16881f587e82" },
+			{ "@id": "ccf70d46-f19a-4475-9580-d1121803c3ed" },
+			{ "@id": "8da0349c-cc67-40ff-bb97-0693feab9c3f" },
+			{ "@id": "89d87ea0-336b-455e-bb37-e368d5ce27a5" }
+		]
+	},
+	{
+		"@id": "3835f243-899c-4dc2-898f-66caa61afcbc",
+		"@type": "Organization",
+		"http://schema.org/name": "Springer Nature"
+	},
+	{
+		"@id": "e3aec168-5e76-4300-b8b4-c3d3d1fcf272",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Brett K Beaulieu-Jones"
+		}
+	},
+	{
+		"@id": "5dac5b27-49a2-4475-be7d-8996267477e8",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/nbt.3202",
+		"http://schema.org/pageStart": "319"
+	},
+	{
+		"@id": "13eb9a38-dcfe-4a7c-a6c2-7fb8110b95c0",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/nmeth.2880",
+		"http://schema.org/pageStart": "211"
+	},
+
+	{
+		"@id": "c258cfab-6b6d-428c-9029-4be8b3401cd9",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1126/science.1213847",
+		"http://schema.org/pageStart": "1226",
+		"http://schema.org/author": {
+			"@id": "f3d8d4ef-0ce3-4b98-8099-f0600b6cf3b4"
+		}
+	},
+
+	{
+		"@id": "adda8a76-cfcc-49c6-a361-fe7888e16fbe",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1126/science.1250475",
+		"http://schema.org/pageStart": "229",
+		"http://schema.org/author": {
+			"@id": "ea597d60-f513-43f0-8722-416e52c24c48"
+		}
+	},
+	{
+		"@id": "7d6916b1-9c55-448f-a4b8-afce1f875d19",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/442001a",
+		"http://schema.org/pageStart": "1"
+	},
+
+	{
+		"@id": "e11fce1f-f57d-4953-b520-7fe60fecb898",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/533452a",
+		"http://schema.org/pageStart": "452",
+		"http://schema.org/author": {
+			"@id": "b0bc649c-2435-404e-a06c-d4996232014f"
+		}
+	},
+
+	{
+		"@id": "e3ff32f3-284e-490a-8e70-a98592f379ef",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0080278",
+		"http://schema.org/pageStart": "e80278",
+		"http://schema.org/author": {
+			"@id": "98881cda-6e9e-469a-aa1d-ea3afd762c53"
+		}
+	},
+
+	{
+		"@id": "f6eaf999-2f13-49ba-953c-ec9e11402841",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pcbi.1000976",
+		"http://schema.org/pageStart": "e1000976",
+		"http://schema.org/author": {
+			"@id": "044dd674-7142-433d-9dcf-988595f6f145"
+		}
+	},
+
+	{
+		"@id": "db5d26bd-0799-4f1f-841f-6cab2a547903",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/ng.295",
+		"http://schema.org/pageStart": "149",
+		"http://schema.org/author": {
+			"@id": "1dbbac5d-d1d6-44d1-be38-f41297f03a8f"
+		}
+	},
+
+	{
+		"@id": "44087850-0462-475c-b27e-22ada29cfb65",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1093/bib/bbq084",
+		"http://schema.org/pageStart": "288",
+		"http://schema.org/author": {
+			"@id": "560ef00a-4fab-42a7-b47a-763174918702"
+		}
+	},
+
+	{
+		"@id": "99c25a64-35f3-48d4-8afe-4ead75c744f7",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1136/bmj.e4383",
+		"http://schema.org/pageStart": "e4383",
+		"http://schema.org/author": {
+			"@id": "a3b144ef-343b-482a-8312-37fbeaf79d54"
+		}
+	},
+
+	{
+		"@id": "46af216b-39d6-45b7-ba1e-e5cbf3762b8a",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1145/2723872.2723882",
+		"http://schema.org/pageStart": "71",
+		"http://schema.org/author": {
+			"@id": "c87dea8d-854c-4e2d-8b3c-1b99e00a5904"
+		}
+	},
+
+	{
+		"@id": "1113f495-87af-4931-96db-280de4344665",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1093/nar/gni179",
+		"http://schema.org/pageStart": "e175",
+		"http://schema.org/author": {
+			"@id": "28df58ae-b636-455c-a53b-aafaacc8b1a3"
+		}
+	},
+
+	{
+		"@id": "6e627512-411b-4e84-86b2-a3a6b277f60d",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0113141",
+		"http://schema.org/pageStart": "e113141",
+		"http://schema.org/author": {
+			"@id": "df3b5b90-7520-4fe0-b6a8-9f5d090fd400"
+		}
+	},
+	{
+		"@id": "eb449cf3-1b18-4f78-964a-76209896580d",
+		"@type": "ScholarlyArticle"
+	},
+	{
+		"@id": "4f8473b3-a5c7-4b50-86f2-1f37b6950f2a",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "b08ebe6b-08be-4ba7-a71c-a8727f3c23b9",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "21",
+		"http://schema.org/author": {
+			"@id": "26ccd260-bcf4-4ff9-a936-61a756add424"
+		}
+	},
+	{
+		"@id": "cf666103-5e8e-437e-ba5a-06fe06e6c8a0",
+		"@type": "ScholarlyArticle"
+	},
+	{
+		"@id": "9673c3e9-6e1d-4595-b863-e97f7d6844d2",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "c0ea634e-ddec-44d5-9ad8-0910616106b1",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "uclastat_c",
+		"http://schema.org/author": {
+			"@id": "3df47e5c-55a1-4ed3-81f5-fb0baebd8a6e"
+		}
+	},
+	{
+		"@id": "fde02bc7-dbf5-4cfa-8b7b-0390c71b6949",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "575"
+	},
+
+	{
+		"@id": "f9701db2-c98c-4328-bb6e-4657dbc7a613",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.jbi.2016.10.007",
+		"http://schema.org/pageStart": "168",
+		"http://schema.org/author": {
+			"@id": "b7cecfa2-954a-49c0-8e11-205f78b8116c"
+		}
+	},
+
+	{
+		"@id": "11cd557b-5644-4f42-8c53-fd727e6df00c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1093/nar/gkf436",
+		"http://schema.org/pageStart": "3059",
+		"http://schema.org/author": {
+			"@id": "87852e72-d82c-44da-8d58-c08f698de4f7"
+		}
+	},
+
+	{
+		"@id": "c9ce33e1-19d7-4e69-a1cd-6ae00eba7d59",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "164",
+		"http://schema.org/author": {
+			"@id": "07f87dc7-772e-47ab-b047-f7aaae5dd863"
+		}
+	},
+
+	{
+		"@id": "41bcedd6-7228-4226-8820-df75af37a9d9",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.cell.2014.12.021",
+		"http://schema.org/pageStart": "324",
+		"http://schema.org/author": {
+			"@id": "0fde0e45-5b3e-4a65-bbb6-390f14571550"
+		}
+	},
+
+	{
+		"@id": "9c81f905-5a76-4bf6-96b9-92836befc38b",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/nbt.3519",
+		"http://schema.org/pageStart": "525",
+		"http://schema.org/author": {
+			"@id": "cd5f66eb-b640-4584-af77-7b2e44eaa579"
+		}
+	},
+
+	{
+		"@id": "b609c7f2-9d46-425a-8ae8-77c651f7e1d5",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1093/nar/gkv007",
+		"http://schema.org/pageStart": "e47",
+		"http://schema.org/author": {
+			"@id": "d19ea9ca-7ff7-4603-8f94-ca312988d958"
+		}
+	},
+
+	{
+		"@id": "ba716e7a-c165-4c68-a1ee-0a37ee12b07f",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "e3",
+		"http://schema.org/author": {
+			"@id": "24cf1778-b546-4a25-80b6-4824edd5e48a"
+		}
+	},
+	{
+		"@id": "87d3657e-dfd5-4ce5-b897-eef67c959f45",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "d19c6db0-6d5b-4c13-a219-1752ab16a38a",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1186/s12920-015-0134-9",
+		"http://schema.org/pageStart": "64",
+		"http://schema.org/author": {
+			"@id": "9960de83-b91b-493f-a401-f3067ada03a9"
+		}
+	},
+
+	{
+		"@id": "59b4b112-0fb2-433d-a8d1-7895abff15c7",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1126/science.aah6168",
+		"http://schema.org/pageStart": "1240",
+		"http://schema.org/author": {
+			"@id": "90584142-5a40-4993-bec3-9af73ba30897"
+		}
+	},
+	{
+		"@id": "8ab57af2-73a1-4647-8f3d-5706153e948c",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "96e86779-d7c5-4d7b-aac1-d719606a2092",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/S0168-9525(00)02024-2",
+		"http://schema.org/pageStart": "276",
+		"http://schema.org/author": {
+			"@id": "0b0b56c3-e5be-4d84-a5b1-26ae2fa29f52"
+		}
+	},
+	{
+		"@id": "803b08b5-9209-4f6f-a4a1-bb20683f13b6",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "3835f243-899c-4dc2-898f-66caa61afcbc"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value":
+					"Reproducibility of computational workflows is automated using continuous analysis"
+			}
+		],
+		"http://schema.org/identifier": "10.1038/nbt.3780",
+		"http://schema.org/url": "http://dx.doi.org/10.1038/nbt.3780",
+		"http://schema.org/dateCreated": "2017-03-13T16:03:33Z",
+		"http://schema.org/dateModified": "2017-12-27T15:37:33Z",
+		"http://schema.org/datePublished": "2017-03-13",
+		"alternativeHeadline": [],
+		"pagination": "342-346",
+		"http://schema.org/license": ["http://www.springer.com/tdm"],
+		"http://schema.org/author": [
+			{
+				"@id": "e3aec168-5e76-4300-b8b4-c3d3d1fcf272",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "43e5d64a-b6a4-4c77-bae3-5704dbd85e81",
+				"@type": "http://schema.org/Person"
+			}
+		],
+		"citation": [
+			{ "@id": "5dac5b27-49a2-4475-be7d-8996267477e8" },
+			{ "@id": "13eb9a38-dcfe-4a7c-a6c2-7fb8110b95c0" },
+			{ "@id": "c258cfab-6b6d-428c-9029-4be8b3401cd9" },
+			{ "@id": "adda8a76-cfcc-49c6-a361-fe7888e16fbe" },
+			{ "@id": "7d6916b1-9c55-448f-a4b8-afce1f875d19" },
+			{ "@id": "e11fce1f-f57d-4953-b520-7fe60fecb898" },
+			{ "@id": "e3ff32f3-284e-490a-8e70-a98592f379ef" },
+			{ "@id": "f6eaf999-2f13-49ba-953c-ec9e11402841" },
+			{ "@id": "db5d26bd-0799-4f1f-841f-6cab2a547903" },
+			{ "@id": "44087850-0462-475c-b27e-22ada29cfb65" },
+			{ "@id": "99c25a64-35f3-48d4-8afe-4ead75c744f7" },
+			{ "@id": "46af216b-39d6-45b7-ba1e-e5cbf3762b8a" },
+			{ "@id": "1113f495-87af-4931-96db-280de4344665" },
+			{ "@id": "6e627512-411b-4e84-86b2-a3a6b277f60d" },
+			{ "@id": "eb449cf3-1b18-4f78-964a-76209896580d" },
+			{ "@id": "4f8473b3-a5c7-4b50-86f2-1f37b6950f2a" },
+			{ "@id": "b08ebe6b-08be-4ba7-a71c-a8727f3c23b9" },
+			{ "@id": "cf666103-5e8e-437e-ba5a-06fe06e6c8a0" },
+			{ "@id": "9673c3e9-6e1d-4595-b863-e97f7d6844d2" },
+			{ "@id": "c0ea634e-ddec-44d5-9ad8-0910616106b1" },
+			{ "@id": "fde02bc7-dbf5-4cfa-8b7b-0390c71b6949" },
+			{ "@id": "f9701db2-c98c-4328-bb6e-4657dbc7a613" },
+			{ "@id": "11cd557b-5644-4f42-8c53-fd727e6df00c" },
+			{ "@id": "c9ce33e1-19d7-4e69-a1cd-6ae00eba7d59" },
+			{ "@id": "41bcedd6-7228-4226-8820-df75af37a9d9" },
+			{ "@id": "9c81f905-5a76-4bf6-96b9-92836befc38b" },
+			{ "@id": "b609c7f2-9d46-425a-8ae8-77c651f7e1d5" },
+			{ "@id": "ba716e7a-c165-4c68-a1ee-0a37ee12b07f" },
+			{ "@id": "87d3657e-dfd5-4ce5-b897-eef67c959f45" },
+			{ "@id": "d19c6db0-6d5b-4c13-a219-1752ab16a38a" },
+			{ "@id": "59b4b112-0fb2-433d-a8d1-7895abff15c7" },
+			{ "@id": "8ab57af2-73a1-4647-8f3d-5706153e948c" },
+			{ "@id": "96e86779-d7c5-4d7b-aac1-d719606a2092" }
+		]
+	},
+	{
+		"@id": "e4e8044e-920f-4d17-8319-b4a1b30d7f45",
+		"@type": "Organization",
+		"http://schema.org/name": "PeerJ"
+	},
+	{
+		"@id": "55a4c73c-b90b-49ce-80b3-5611d655b05b",
+		"@type": "Organization",
+		"http://schema.org/name": "Impactstory, Sanford, NC, USA"
+	},
+	{
+		"@id": "ab009e08-ca11-42b3-b6c8-197b660eb9c4",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "55a4c73c-b90b-49ce-80b3-5611d655b05b" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Heather Piwowar"
+		}
+	},
+	{
+		"@id": "8dc2afa9-81a9-416d-811c-ca9dbfbe9326",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "55a4c73c-b90b-49ce-80b3-5611d655b05b" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Jason Priem"
+		}
+	},
+	{
+		"@id": "6e9bb9e3-236f-46a8-b611-b6d31509fc25",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"École de bibliothéconomie et des sciences de l’information, Université de Montréal, Montréal, QC, Canada"
+	},
+	{
+		"@id": "8c18de7a-b409-4a11-8304-9b2e3704f25e",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"Observatoire des Sciences et des Technologies (OST), Centre Interuniversitaire de Recherche sur la Science et la Technologie (CIRST), Université du Québec à Montréal, Montréal, QC, Canada"
+	},
+	{
+		"@id": "e486d2de-b83e-452a-a696-772212ba9189",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "6e9bb9e3-236f-46a8-b611-b6d31509fc25" },
+			{ "@id": "8c18de7a-b409-4a11-8304-9b2e3704f25e" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Vincent Larivière"
+		}
+	},
+	{
+		"@id": "381c8abb-1195-4a1b-82cd-f4c52678476a",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"Canadian Institute for Studies in Publishing, Simon Fraser University, Vancouver, BC, Canada"
+	},
+	{
+		"@id": "b6059893-513a-4d18-9bd3-27a4a4cf1e04",
+		"@type": "Organization",
+		"http://schema.org/name": "Public Knowledge Project, Canada"
+	},
+	{
+		"@id": "19db632a-7f17-412a-890b-2eba6d2ed1ac",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "381c8abb-1195-4a1b-82cd-f4c52678476a" },
+			{ "@id": "b6059893-513a-4d18-9bd3-27a4a4cf1e04" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Juan Pablo Alperin"
+		}
+	},
+	{
+		"@id": "7d5edaf2-800e-46bd-bc1b-d8ebb9feafd2",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"Scholarly Communications Lab, Simon Fraser University, Vancouver, Canada"
+	},
+	{
+		"@id": "1a014efe-debb-469f-a6ab-26b482eae86b",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "7d5edaf2-800e-46bd-bc1b-d8ebb9feafd2" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Lisa Matthias"
+		}
+	},
+	{
+		"@id": "02021ee5-7dad-49bd-a409-937f24a4696f",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"Information School, University of Washington, Seattle, USA"
+	},
+	{
+		"@id": "059d5c53-9c51-4f78-b667-7b122923e2c6",
+		"@type": "Organization",
+		"http://schema.org/name": "FlourishOA, USA"
+	},
+	{
+		"@id": "d7734dfe-0d72-4c3f-898e-56c7fcf6c0d0",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "02021ee5-7dad-49bd-a409-937f24a4696f" },
+			{ "@id": "059d5c53-9c51-4f78-b667-7b122923e2c6" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Bree Norlander"
+		}
+	},
+	{
+		"@id": "4114dd5f-3f27-429d-aab9-3ec7eac2b227",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "02021ee5-7dad-49bd-a409-937f24a4696f" },
+			{ "@id": "059d5c53-9c51-4f78-b667-7b122923e2c6" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Ashley Farley"
+		}
+	},
+	{
+		"@id": "18f3c896-9602-4968-8fad-9d8671b4ebfa",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "02021ee5-7dad-49bd-a409-937f24a4696f" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Jevin West"
+		}
+	},
+	{
+		"@id": "84a28a40-5bdb-46b2-810e-9acc53b1a15f",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"School of Information Studies, University of Ottawa, Ottawa, ON, Canada"
+	},
+	{
+		"@id": "273be9c3-8237-4f1f-ad56-2b89672c927b",
+		"@type": "Person",
+		"http://schema.org/affiliation": [
+			{ "@id": "8c18de7a-b409-4a11-8304-9b2e3704f25e" },
+			{ "@id": "84a28a40-5bdb-46b2-810e-9acc53b1a15f" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Stefanie Haustein"
+		}
+	},
+
+	{
+		"@id": "ed0595a0-9646-4f50-a88f-33be9ec14ac7",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "fa0a231a-ed42-439a-a45d-101ecbf0f452"
+		}
+	},
+	{
+		"@id": "d8017bc2-71e7-4513-a7bd-c6b47db0d4ff",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "fa0a231a-ed42-439a-a45d-101ecbf0f452"
+		}
+	},
+
+	{
+		"@id": "fbf18783-e2a2-4475-b637-5fe8b044068d",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "25532ae7-bd2f-4e05-a613-f751fcc2be1f"
+		}
+	},
+
+	{
+		"@id": "fdf41881-652b-4ff5-ac09-4dcc63e07298",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "f0739cac-e3a3-4d9a-907e-2a0c28fd4b80"
+		}
+	},
+	{
+		"@id": "6878c824-65d1-4d25-aff7-ee7583679e65",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "f0739cac-e3a3-4d9a-907e-2a0c28fd4b80"
+		}
+	},
+	{
+		"@id": "0143624c-8de8-4da2-9315-e6e5cbf33a04",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "f0739cac-e3a3-4d9a-907e-2a0c28fd4b80"
+		}
+	},
+
+	{
+		"@id": "991b1013-10a5-4b93-aba0-fd9f00e0ec29",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "8e42164d-f47f-43fb-bd62-e7bf1b9d1f35"
+		}
+	},
+
+	{
+		"@id": "67d98510-30a9-4d9a-a922-9db0aaf0c606",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.joi.2016.08.002",
+		"http://schema.org/pageStart": "919",
+		"http://schema.org/author": {
+			"@id": "f71f6e4d-1742-491d-97db-64ce9efa6a3a"
+		}
+	},
+	{
+		"@id": "483a6407-57b3-4c90-9241-424fb8003320",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/leap.1021",
+		"http://schema.org/pageStart": "131",
+		"http://schema.org/author": {
+			"@id": "f71f6e4d-1742-491d-97db-64ce9efa6a3a"
+		}
+	},
+	{
+		"@id": "476ee716-351e-459f-82b0-83e699c1f02d",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/leap.1096",
+		"http://schema.org/pageStart": "173",
+		"http://schema.org/author": {
+			"@id": "f71f6e4d-1742-491d-97db-64ce9efa6a3a"
+		}
+	},
+	{
+		"@id": "f3ecdcdf-49b5-47b2-9b6c-628cc98d082e",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/asi.22963",
+		"http://schema.org/pageStart": "237",
+		"http://schema.org/author": {
+			"@id": "f71f6e4d-1742-491d-97db-64ce9efa6a3a"
+		}
+	},
+
+	{
+		"@id": "da01ac9c-1062-40a2-aa5d-d9393ab4d341",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1126/science.352.6285.508",
+		"http://schema.org/pageStart": "508",
+		"http://schema.org/author": {
+			"@id": "8fa6a398-8d5b-4694-b61c-44b94fb25dbe"
+		}
+	},
+
+	{
+		"@id": "0fc7a279-0e22-4513-823d-a62a453767ba",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-016-2225-6",
+		"http://schema.org/pageStart": "1453",
+		"http://schema.org/author": {
+			"@id": "a246f0e6-e07e-44a9-87d4-a77c268fd5a7"
+		}
+	},
+
+	{
+		"@id": "29a32bf7-3658-48f7-861a-dce45ca67c62",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "af642192-5597-4745-a8ba-bdec4fba10e8"
+		}
+	},
+
+	{
+		"@id": "7e34a9e6-b8d3-473f-a531-bd9d48a12b17",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1080/19322909.2013.795426",
+		"http://schema.org/pageStart": "243",
+		"http://schema.org/author": {
+			"@id": "88b39914-398e-41c9-936c-be585f860973"
+		}
+	},
+	{
+		"@id": "d361f7c9-0545-48d5-9f18-5280792ce7aa",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1080/00987913.2016.1182672",
+		"http://schema.org/pageStart": "108",
+		"http://schema.org/author": {
+			"@id": "88b39914-398e-41c9-936c-be585f860973"
+		}
+	},
+
+	{
+		"@id": "74f9e8a1-7cd4-494f-9575-03b250f933db",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.joi.2007.04.001",
+		"http://schema.org/pageStart": "239",
+		"http://schema.org/author": {
+			"@id": "a2a58e87-12f5-4170-ae7c-60998836f0fc"
+		}
+	},
+
+	{
+		"@id": "32bf48a4-5938-4a5e-ad85-31fa47f37aff",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "cfbccda4-89e6-4d60-9b99-2847f465b3ba"
+		}
+	},
+
+	{
+		"@id": "2e7fcf69-3d60-4f54-a4d6-1c7dca051f6f",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1096/fj.11-183988",
+		"http://schema.org/pageStart": "2129",
+		"http://schema.org/author": {
+			"@id": "cc4851d9-a9c2-4fd6-8d0e-cf67d6674853"
+		}
+	},
+	{
+		"@id": "41f00df8-3469-4a57-a552-21e45ac947ae",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.3163/1536-5050.99.3.008",
+		"http://schema.org/pageStart": "208",
+		"http://schema.org/author": {
+			"@id": "cc4851d9-a9c2-4fd6-8d0e-cf67d6674853"
+		}
+	},
+
+	{
+		"@id": "09dd9a67-825d-42f9-bc1d-0cb5da84bb0c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "3ed1676f-70f3-4e00-80c0-a14b1235ca96"
+		}
+	},
+
+	{
+		"@id": "e00793af-7bc9-4d59-9382-020b2a3ada6b",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "0289a1df-572b-412c-9a8f-a7a03dc43a5e"
+		}
+	},
+
+	{
+		"@id": "81ccc447-98c9-43fb-9f29-2883fbc9df52",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.joi.2015.11.008",
+		"http://schema.org/pageStart": "98",
+		"http://schema.org/author": {
+			"@id": "5870b306-aa45-4f9d-b37e-d566efdb2253"
+		}
+	},
+
+	{
+		"@id": "acc36aa6-ed77-427f-8451-4cdac9b18eca",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.12688/f1000research.11366.1",
+		"http://schema.org/author": {
+			"@id": "b5529063-b1e1-45fb-a1bf-002eaf6ab2cc"
+		}
+	},
+
+	{
+		"@id": "04ed171d-e00d-4997-8c1c-8af7e091100b",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "7f00fcb9-bbb4-464e-8c58-9a2774e56900"
+		}
+	},
+
+	{
+		"@id": "91c4bc7c-690e-47f0-8242-6232e568365c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1080/00987913.2008.10765150",
+		"http://schema.org/pageStart": "36",
+		"http://schema.org/author": {
+			"@id": "0a86dd08-8f32-4186-a507-cb49fd5dc0c7"
+		}
+	},
+
+	{
+		"@id": "de8c0a14-bff7-4550-b50a-2ced068bf372",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-017-2291-4",
+		"http://schema.org/pageStart": "241",
+		"http://schema.org/author": {
+			"@id": "8113f2b7-76a2-40bc-b41b-2fc446671472"
+		}
+	},
+
+	{
+		"@id": "b735615a-58d5-43a0-9302-22626a4ee0ed",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1186/1741-7015-10-124",
+		"http://schema.org/author": {
+			"@id": "940b3cc6-1371-4f3b-949b-d126f0c404b0"
+		}
+	},
+	{
+		"@id": "65021561-a537-41bd-84d5-3bd6562ac706",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/asi.22856",
+		"http://schema.org/pageStart": "1323",
+		"http://schema.org/author": {
+			"@id": "940b3cc6-1371-4f3b-949b-d126f0c404b0"
+		}
+	},
+	{
+		"@id": "c614a81e-2c17-44ab-9831-a2569ccc492c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0020961",
+		"http://schema.org/pageStart": "e20961",
+		"http://schema.org/author": {
+			"@id": "940b3cc6-1371-4f3b-949b-d126f0c404b0"
+		}
+	},
+
+	{
+		"@id": "cc36245d-ddd7-4aec-97b6-5b91935cd264",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.3163/1536-5050.97.1.002",
+		"http://schema.org/pageStart": "4",
+		"http://schema.org/author": {
+			"@id": "84dc9c7f-31a5-4700-a896-2c9f832ac93a"
+		}
+	},
+
+	{
+		"@id": "3dddf458-8cc1-45bc-afab-2283a723a68d",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1111/ecin.12064",
+		"http://schema.org/pageStart": "1284",
+		"http://schema.org/author": {
+			"@id": "fff7bfe1-9ee1-4818-91f0-e1d7347c2670"
+		}
+	},
+
+	{
+		"@id": "1352644e-cff1-4f06-a332-cb7bbe0eedae",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.7554/eLife.16800",
+		"http://schema.org/pageStart": "e16800",
+		"http://schema.org/author": {
+			"@id": "2ffdb0eb-2ce7-4a9c-b6f1-89e263cf3eb4"
+		}
+	},
+
+	{
+		"@id": "ad43946f-7023-4d74-8bbb-2bb2533a811f",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0159614",
+		"http://schema.org/pageStart": "e0159614",
+		"http://schema.org/author": {
+			"@id": "7cf1b43b-d0dc-46df-a75b-6d645d92e0c1"
+		}
+	},
+
+	{
+		"@id": "ed9e4dea-b7da-43ba-8c4c-db7db4f84f85",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "111",
+		"http://schema.org/author": {
+			"@id": "3414e2c5-ed03-472c-8114-c0720b0aa7ee"
+		}
+	},
+
+	{
+		"@id": "1bde434b-3d9f-4a27-9121-5b01b2c29395",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "04236fa8-279b-439a-ad58-290261d3bd86"
+		}
+	},
+
+	{
+		"@id": "c86b6c96-9acc-46c5-bf6c-b3346590dc9c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1038/nature.2016.21223",
+		"http://schema.org/pageStart": "13",
+		"http://schema.org/author": {
+			"@id": "8d8bb075-918f-4bc2-a1c9-a280b70bc895"
+		}
+	},
+
+	{
+		"@id": "3f6bd885-e801-4883-944a-872dc083e1c0",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "3b89493f-c91a-42fc-9969-e11de615b90c"
+		}
+	},
+
+	{
+		"@id": "01527178-4498-4d64-84ae-5de84311d7eb",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "4d16b61d-ddb4-456d-a5c7-ac8ab7b0f717"
+		}
+	},
+
+	{
+		"@id": "25002065-f7b1-461f-bcb4-a731d18d6f11",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "4a9dce5f-8aae-4c59-831b-763a8e73217d"
+		}
+	},
+
+	{
+		"@id": "03584cd0-df29-4fbc-8e20-4a93bf09085c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "77cf876d-3509-4da3-a7d7-f164cd8a20b8"
+		}
+	},
+
+	{
+		"@id": "cefeb664-e1d5-422e-ad1a-d5751bd9e74e",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "ff04a080-378d-4a6c-b0c9-023be5035777"
+		}
+	},
+
+	{
+		"@id": "5c6eb3e2-b0a3-4816-84ca-33a62cc7d6b4",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "b890dc31-efc7-4e1b-8268-b2398ba0d985"
+		}
+	},
+
+	{
+		"@id": "bb610a23-95b3-42a6-a1ce-d65df91e9de0",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.5062/F4Q81B0W",
+		"http://schema.org/pageStart": "2",
+		"http://schema.org/author": {
+			"@id": "99bcbf39-2dfc-4129-a5a7-4ad7372fa9c3"
+		}
+	},
+
+	{
+		"@id": "240d6add-c04d-431b-951a-8cf064946ba1",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1241/johokanri.41.678",
+		"http://schema.org/pageStart": "678",
+		"http://schema.org/author": {
+			"@id": "973ed121-4e6b-42ba-bea0-9fb8fb13c057"
+		}
+	},
+
+	{
+		"@id": "3b815b86-bd90-4015-9923-6fe48f5d5a7e",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "263",
+		"http://schema.org/author": {
+			"@id": "45a89335-a347-448c-bf03-13c866c3ddf1"
+		}
+	},
+	{
+		"@id": "32b14b62-4a03-4b16-a443-d556f75f8245",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "45a89335-a347-448c-bf03-13c866c3ddf1"
+		}
+	},
+	{
+		"@id": "8025c78f-4839-4475-97c5-25af660038b3",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "e4e8044e-920f-4d17-8319-b4a1b30d7f45"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value":
+					"The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles"
+			}
+		],
+		"description":
+			"<jats:p>Despite growing interest in Open Access (OA) to scholarly literature, there is an unmet need for large-scale, up-to-date, and reproducible studies assessing the prevalence and characteristics of OA. We address this need using oaDOI, an open online service that determines OA status for 67 million articles. We use three samples, each of 100,000 articles, to investigate OA in three populations: (1) all journal articles assigned a Crossref DOI, (2) recent journal articles indexed in Web of Science, and (3) articles viewed by users of Unpaywall, an open-source browser extension that lets users find OA articles using oaDOI. We estimate that at least 28% of the scholarly literature is OA (19M in total) and that this proportion is growing, driven particularly by growth in Gold and Hybrid. The most recent year analyzed (2015) also has the highest percentage of OA (45%). Because of this growth, and the fact that readers disproportionately access newer articles, we find that Unpaywall users encounter OA quite frequently: 47% of articles they view are OA. Notably, the most common mechanism for OA is not Gold, Green, or Hybrid OA, but rather an under-discussed category we dub Bronze: articles made free-to-read on the publisher website, without an explicit Open license. We also examine the citation impact of OA articles, corroborating the so-called open-access citation advantage: accounting for age and discipline, OA articles receive 18% more citations than average, an effect driven primarily by Green and Hybrid OA. We encourage further research using the free oaDOI service, as a way to inform OA policy and practice.</jats:p>",
+		"http://schema.org/identifier": "10.7717/peerj.4375",
+		"http://schema.org/url": "http://dx.doi.org/10.7717/peerj.4375",
+		"http://schema.org/dateCreated": "2018-02-13T08:54:31Z",
+		"http://schema.org/dateModified": "2018-02-13T08:54:43Z",
+		"http://schema.org/datePublished": "2018-02-13",
+		"alternativeHeadline": [],
+		"pagination": "e4375",
+		"http://schema.org/license": [
+			"http://creativecommons.org/licenses/by/4.0/"
+		],
+		"http://schema.org/author": [
+			{
+				"@id": "ab009e08-ca11-42b3-b6c8-197b660eb9c4",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "8dc2afa9-81a9-416d-811c-ca9dbfbe9326",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "e486d2de-b83e-452a-a696-772212ba9189",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "19db632a-7f17-412a-890b-2eba6d2ed1ac",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "1a014efe-debb-469f-a6ab-26b482eae86b",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "d7734dfe-0d72-4c3f-898e-56c7fcf6c0d0",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "4114dd5f-3f27-429d-aab9-3ec7eac2b227",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "18f3c896-9602-4968-8fad-9d8671b4ebfa",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "273be9c3-8237-4f1f-ad56-2b89672c927b",
+				"@type": "http://schema.org/Person"
+			}
+		],
+		"citation": [
+			{ "@id": "ed0595a0-9646-4f50-a88f-33be9ec14ac7" },
+			{ "@id": "d8017bc2-71e7-4513-a7bd-c6b47db0d4ff" },
+			{ "@id": "fbf18783-e2a2-4475-b637-5fe8b044068d" },
+			{ "@id": "fdf41881-652b-4ff5-ac09-4dcc63e07298" },
+			{ "@id": "6878c824-65d1-4d25-aff7-ee7583679e65" },
+			{ "@id": "0143624c-8de8-4da2-9315-e6e5cbf33a04" },
+			{ "@id": "991b1013-10a5-4b93-aba0-fd9f00e0ec29" },
+			{ "@id": "67d98510-30a9-4d9a-a922-9db0aaf0c606" },
+			{ "@id": "483a6407-57b3-4c90-9241-424fb8003320" },
+			{ "@id": "476ee716-351e-459f-82b0-83e699c1f02d" },
+			{ "@id": "f3ecdcdf-49b5-47b2-9b6c-628cc98d082e" },
+			{ "@id": "8da0349c-cc67-40ff-bb97-0693feab9c3f" },
+			{ "@id": "da01ac9c-1062-40a2-aa5d-d9393ab4d341" },
+			{ "@id": "0fc7a279-0e22-4513-823d-a62a453767ba" },
+			{ "@id": "29a32bf7-3658-48f7-861a-dce45ca67c62" },
+			{ "@id": "7e34a9e6-b8d3-473f-a531-bd9d48a12b17" },
+			{ "@id": "d361f7c9-0545-48d5-9f18-5280792ce7aa" },
+			{ "@id": "74f9e8a1-7cd4-494f-9575-03b250f933db" },
+			{ "@id": "32bf48a4-5938-4a5e-ad85-31fa47f37aff" },
+			{ "@id": "2e7fcf69-3d60-4f54-a4d6-1c7dca051f6f" },
+			{ "@id": "41f00df8-3469-4a57-a552-21e45ac947ae" },
+			{ "@id": "09dd9a67-825d-42f9-bc1d-0cb5da84bb0c" },
+			{ "@id": "ccf70d46-f19a-4475-9580-d1121803c3ed" },
+			{ "@id": "e00793af-7bc9-4d59-9382-020b2a3ada6b" },
+			{ "@id": "81ccc447-98c9-43fb-9f29-2883fbc9df52" },
+			{ "@id": "acc36aa6-ed77-427f-8451-4cdac9b18eca" },
+			{ "@id": "04ed171d-e00d-4997-8c1c-8af7e091100b" },
+			{ "@id": "91c4bc7c-690e-47f0-8242-6232e568365c" },
+			{ "@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8" },
+			{ "@id": "de8c0a14-bff7-4550-b50a-2ced068bf372" },
+			{ "@id": "b735615a-58d5-43a0-9302-22626a4ee0ed" },
+			{ "@id": "65021561-a537-41bd-84d5-3bd6562ac706" },
+			{ "@id": "c614a81e-2c17-44ab-9831-a2569ccc492c" },
+			{ "@id": "cc36245d-ddd7-4aec-97b6-5b91935cd264" },
+			{ "@id": "3dddf458-8cc1-45bc-afab-2283a723a68d" },
+			{ "@id": "1352644e-cff1-4f06-a332-cb7bbe0eedae" },
+			{ "@id": "86a18e99-416e-4cc7-8106-10842e2565a3" },
+			{ "@id": "ad43946f-7023-4d74-8bbb-2bb2533a811f" },
+			{ "@id": "ed9e4dea-b7da-43ba-8c4c-db7db4f84f85" },
+			{ "@id": "1bde434b-3d9f-4a27-9121-5b01b2c29395" },
+			{ "@id": "c86b6c96-9acc-46c5-bf6c-b3346590dc9c" },
+			{ "@id": "3f6bd885-e801-4883-944a-872dc083e1c0" },
+			{ "@id": "01527178-4498-4d64-84ae-5de84311d7eb" },
+			{ "@id": "25002065-f7b1-461f-bcb4-a731d18d6f11" },
+			{ "@id": "03584cd0-df29-4fbc-8e20-4a93bf09085c" },
+			{ "@id": "40613738-4bfc-40cb-aa46-6548d2ecb000" },
+			{ "@id": "cefeb664-e1d5-422e-ad1a-d5751bd9e74e" },
+			{ "@id": "5c6eb3e2-b0a3-4816-84ca-33a62cc7d6b4" },
+			{ "@id": "bb610a23-95b3-42a6-a1ce-d65df91e9de0" },
+			{ "@id": "240d6add-c04d-431b-951a-8cf064946ba1" },
+			{ "@id": "3b815b86-bd90-4015-9923-6fe48f5d5a7e" },
+			{ "@id": "32b14b62-4a03-4b16-a443-d556f75f8245" }
+		]
+	},
+	{
+		"@id": "a8361a8d-1ccf-414b-807e-c345783c9bd8",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "e4e8044e-920f-4d17-8319-b4a1b30d7f45"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value": "Sci-Hub provides access to nearly all scholarly literature"
+			}
+		],
+		"http://schema.org/dateCreated": "2018-01-13T14:11:34Z",
+		"http://schema.org/dateModified": "2018-01-13T14:11:34Z",
+		"http://schema.org/datePublished": "2017-07-20",
+		"http://schema.org/license": [
+			"http://creativecommons.org/licenses/by/4.0/"
+		],
+		"citation": [
+			{
+				"@type": "ScholarlyArticle",
+				"@id": "803b08b5-9209-4f6f-a4a1-bb20683f13b6"
+			},
+			{
+				"@type": "ScholarlyArticle",
+				"@id": "4fb4ae3c-144a-4f85-bd5b-2605e0a3d081"
+			},
+			{
+				"@type": "ScholarlyArticle",
+				"@id": "40613738-4bfc-40cb-aa46-6548d2ecb000"
+			},
+			{
+				"@id": "8025c78f-4839-4475-97c5-25af660038b3",
+				"@type": "ScholarlyArticle"
+			},
+			{
+				"@id": "b252c4b9-70d6-4611-88cc-a9b957a6e1dd",
+				"@type": "ScholarlyArticle"
+			},
+			{
+				"@id": "86a18e99-416e-4cc7-8106-10842e2565a3",
+				"@type": "ScholarlyArticle"
+			}
+		]
+	},
+	{
+		"@id": "fb771d68-3521-4d89-98d0-6d6c893042a4",
+		"@type": "Organization",
+		"http://schema.org/name":
+			"Library, Utrecht University, Utrecht, The Netherlands"
+	},
+	{
+		"@id": "b6fbf0f3-603b-4e95-835c-d880f166c3bf",
+		"@type": "Person",
+		"http://schema.org/identifier": "http://orcid.org/0000-0001-5796-2727",
+		"http://schema.org/affiliation": [
+			{ "@id": "fb771d68-3521-4d89-98d0-6d6c893042a4" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Jeroen Bosman"
+		}
+	},
+	{
+		"@id": "3148653e-8195-439f-af5f-794b4f471560",
+		"@type": "Person",
+		"http://schema.org/identifier": "http://orcid.org/0000-0002-5965-6560",
+		"http://schema.org/affiliation": [
+			{ "@id": "fb771d68-3521-4d89-98d0-6d6c893042a4" }
+		],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Bianca Kramer"
+		}
+	},
+	{
+		"@id": "b252c4b9-70d6-4611-88cc-a9b957a6e1dd",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "e4e8044e-920f-4d17-8319-b4a1b30d7f45"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value":
+					"Open access levels: a quantitative exploration using Web of Science and oaDOI data"
+			}
+		],
+		"description":
+			"<jats:p>Across the world there is growing interest in open access publishing among researchers, institutions, funders and publishers alike. It is assumed that open access levels are growing, but hitherto the exact levels and patterns of open access have been hard to determine and detailed quantitative studies are scarce. Using newly available open access status data from oaDOI in Web of Science we are now able to explore year-on-year open access levels across research fields, languages, countries, institutions, funders and topics, and try to relate the resulting patterns to disciplinary, national and institutional contexts. With data from the oaDOI API we also look at the detailed breakdown of open access by types of gold open access (pure gold, hybrid and bronze), using universities in the Netherlands as an example. There is huge diversity in open access levels on all dimensions, with unexpected levels for e.g. Portuguese as language, Astronomy &amp; Astrophysics as research field, countries like Tanzania, Peru and Latvia, and Zika as topic. We explore methodological issues and offer suggestions to improve conditions for tracking open access status of research output. Finally, we suggest potential future applications for research and policy development. We have shared all data and code openly.</jats:p>",
+		"http://schema.org/identifier": "10.7287/peerj.preprints.3520v1",
+		"http://schema.org/url": "http://dx.doi.org/10.7287/peerj.preprints.3520v1",
+		"http://schema.org/dateCreated": "2018-01-11T02:55:48Z",
+		"http://schema.org/dateModified": "2018-01-11T02:55:49Z",
+		"http://schema.org/datePublished": "2018-01-11",
+		"alternativeHeadline": [],
+		"http://schema.org/license": [
+			"http://creativecommons.org/licenses/by/4.0/"
+		],
+		"http://schema.org/author": [
+			{
+				"@id": "b6fbf0f3-603b-4e95-835c-d880f166c3bf",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "3148653e-8195-439f-af5f-794b4f471560",
+				"@type": "http://schema.org/Person"
+			}
+		]
+	},
+	{
+		"@id": "606fec05-3ed6-4440-8e79-060389fcdaf9",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Philippe Mongeon"
+		}
+	},
+	{
+		"@id": "270d40be-1311-41bb-a39f-decff0e2e3c7",
+		"@type": "Person",
+		"http://schema.org/affiliation": [],
+		"http://schema.org/name": {
+			"@type": "http://schema.org/Text",
+			"@value": "Adèle Paul-Hus"
+		}
+	},
+
+	{
+		"@id": "ae7a2e77-c974-4d4b-9b1d-3019694c76da",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-012-0813-7",
+		"http://schema.org/pageStart": "721",
+		"http://schema.org/author": {
+			"@id": "271561d4-8e84-4005-8ed6-3d29fdeea240"
+		}
+	},
+
+	{
+		"@id": "946df048-f9c7-49a3-8454-2f0b3ab01d6e",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/asi.21062",
+		"http://schema.org/pageStart": "1320",
+		"http://schema.org/author": {
+			"@id": "b8d7c393-7142-4052-a934-eaa776a55a37"
+		}
+	},
+	{
+		"@id": "44806a60-fb80-4416-92ca-9569c4013fa0",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-006-0115-z",
+		"http://schema.org/pageStart": "329",
+		"http://schema.org/author": {
+			"@id": "b8d7c393-7142-4052-a934-eaa776a55a37"
+		}
+	},
+
+	{
+		"@id": "3fc6b73f-abf6-4e97-90d1-46d1ff1896ab",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "5e0883d4-f6c2-469e-8032-e89aff859a82"
+		}
+	},
+	{
+		"@id": "19442240-07c5-4d94-999f-7582f6bbab5f",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "1393cb9f-5437-4160-b0f7-790291c902f5",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.outlook.2012.04.007",
+		"http://schema.org/pageStart": "391",
+		"http://schema.org/author": {
+			"@id": "330a16d3-7235-4e1d-b36e-f96cd06cfc9b"
+		}
+	},
+
+	{
+		"@id": "792ca013-9597-4f83-8bc1-d89f9a1d4de9",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-009-0021-2",
+		"http://schema.org/pageStart": "243",
+		"http://schema.org/author": {
+			"@id": "ab1df9ee-890c-4cca-953e-205d60293acb"
+		}
+	},
+
+	{
+		"@id": "abb0d667-7dd6-4ed9-b4d5-a2563b028e58",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1108/14684520810865958",
+		"http://schema.org/pageStart": "8",
+		"http://schema.org/author": {
+			"@id": "7400a6bb-071b-4ed2-9749-e631d2f953bb"
+		}
+	},
+
+	{
+		"@id": "25f19593-f8f8-4e95-902c-9f81ec6bfdea",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "750fe688-f8c6-45ee-ae45-a7b627295315"
+		}
+	},
+
+	{
+		"@id": "914eb99e-ded1-48d9-b3aa-1b7275d76a87",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/S0306-4573(98)00028-4",
+		"http://schema.org/pageStart": "31",
+		"http://schema.org/author": {
+			"@id": "18fff7ac-befc-4d62-b806-d608b03c74e3"
+		}
+	},
+
+	{
+		"@id": "2793da1c-a84d-4390-a6f3-d19e8640702a",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/asi.21458",
+		"http://schema.org/pageStart": "284",
+		"http://schema.org/author": {
+			"@id": "dec8431d-5722-4919-8852-4a62084efd8f"
+		}
+	},
+
+	{
+		"@id": "fe7021d6-c980-4fa3-9e7b-80bd1a626a6e",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1215/00182702-23-1-105",
+		"http://schema.org/pageStart": "105",
+		"http://schema.org/author": {
+			"@id": "d9fa591c-9815-4ecf-adff-fdc5be228d77"
+		}
+	},
+
+	{
+		"@id": "6f6376af-005d-4cc8-a867-d5168908d24d",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-008-0217-x",
+		"http://schema.org/pageStart": "273",
+		"http://schema.org/author": {
+			"@id": "fec3d684-c88c-4090-87d8-8aef7f537074"
+		}
+	},
+
+	{
+		"@id": "bf0a14de-6f3f-4b1e-9f6b-25217ceeb966",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/asi.20349",
+		"http://schema.org/pageStart": "997",
+		"http://schema.org/author": {
+			"@id": "847b13c5-1936-46fe-a40d-1cc136413709"
+		}
+	},
+	{
+		"@id": "9a097e14-66c4-406b-a6b8-37c36e10d3f9",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1371/journal.pone.0127502",
+		"http://schema.org/pageStart": "e0127502",
+		"http://schema.org/author": {
+			"@id": "847b13c5-1936-46fe-a40d-1cc136413709"
+		}
+	},
+
+	{
+		"@id": "21d6878b-3a70-4168-9386-a9d7855e078c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1016/j.joi.2008.08.001",
+		"http://schema.org/pageStart": "304",
+		"http://schema.org/author": {
+			"@id": "278c6a7a-b3ba-42e8-a6d9-e29b37f8dc63"
+		}
+	},
+
+	{
+		"@id": "16f1b39c-5a84-4dca-95b0-f344241e826c",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1002/asi.20677",
+		"http://schema.org/pageStart": "2105",
+		"http://schema.org/author": {
+			"@id": "b1b748d8-6aa4-4668-91f5-24eccf889db9"
+		}
+	},
+
+	{
+		"@id": "f88fee89-f4b1-4c79-bfd8-944606b519f6",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-009-0038-6",
+		"http://schema.org/pageStart": "321",
+		"http://schema.org/author": {
+			"@id": "7bd6decf-7246-4c70-aff8-a46c3d05142a"
+		}
+	},
+
+	{
+		"@id": "3363ebd2-302b-4e31-8fcf-8dca2530460e",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-010-0270-0",
+		"http://schema.org/pageStart": "613",
+		"http://schema.org/author": {
+			"@id": "dad3415e-753e-489a-bf47-8921efce570e"
+		}
+	},
+	{
+		"@id": "e07e1efb-07bc-4b58-ab7a-c5ad29303643",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "584083f2-eabe-419b-ab2b-118391775e86",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1007/s11192-006-0007-2",
+		"http://schema.org/pageStart": "81",
+		"http://schema.org/author": {
+			"@id": "ab9b2273-f4e6-4453-b992-2afdf4c96c91"
+		}
+	},
+
+	{
+		"@id": "876bb100-25bb-4dbf-8dec-35c927a6c1cc",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/author": {
+			"@id": "cd2b759c-45f3-4e46-913b-892a61b65c8c"
+		}
+	},
+	{
+		"@id": "38628a80-e5e4-4749-b2fc-970feb1a278d",
+		"@type": "ScholarlyArticle"
+	},
+
+	{
+		"@id": "9b8469d8-521e-4a81-a781-0bfb6e7bd157",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/identifier": "10.1023/A:1010549719484",
+		"http://schema.org/pageStart": "335",
+		"http://schema.org/author": {
+			"@id": "3c616547-1399-4fe0-a480-cc201090311f"
+		}
+	},
+
+	{
+		"@id": "2a50977d-a90e-4d75-91a0-adbcb2fd93e2",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/pageStart": "10",
+		"http://schema.org/author": {
+			"@id": "5815e677-d3dc-42b7-9b98-af85ae34ee64"
+		}
+	},
+	{
+		"@id": "b9b66eaa-cd8f-429c-affe-1cbc05d4640e",
+		"@type": "ScholarlyArticle"
+	},
+	{
+		"@id": "86a18e99-416e-4cc7-8106-10842e2565a3",
+		"@type": "ScholarlyArticle",
+		"http://schema.org/publisher": {
+			"@id": "3835f243-899c-4dc2-898f-66caa61afcbc"
+		},
+		"http://schema.org/headline": [
+			{
+				"@type": "http://schema.org/Text",
+				"@value":
+					"The journal coverage of Web of Science and Scopus: a comparative analysis"
+			}
+		],
+		"http://schema.org/identifier": "10.1007/s11192-015-1765-5",
+		"http://schema.org/url": "http://dx.doi.org/10.1007/s11192-015-1765-5",
+		"http://schema.org/dateCreated": "2015-10-19T07:28:21Z",
+		"http://schema.org/dateModified": "2017-06-23T21:33:38Z",
+		"http://schema.org/datePublished": "2015-10-19",
+		"alternativeHeadline": [],
+		"pagination": "213-228",
+		"http://schema.org/license": ["http://www.springer.com/tdm"],
+		"http://schema.org/author": [
+			{
+				"@id": "606fec05-3ed6-4440-8e79-060389fcdaf9",
+				"@type": "http://schema.org/Person"
+			},
+			{
+				"@id": "270d40be-1311-41bb-a39f-decff0e2e3c7",
+				"@type": "http://schema.org/Person"
+			}
+		],
+		"citation": [
+			{ "@id": "ae7a2e77-c974-4d4b-9b1d-3019694c76da" },
+			{ "@id": "946df048-f9c7-49a3-8454-2f0b3ab01d6e" },
+			{ "@id": "44806a60-fb80-4416-92ca-9569c4013fa0" },
+			{ "@id": "3fc6b73f-abf6-4e97-90d1-46d1ff1896ab" },
+			{ "@id": "19442240-07c5-4d94-999f-7582f6bbab5f" },
+			{ "@id": "1393cb9f-5437-4160-b0f7-790291c902f5" },
+			{ "@id": "792ca013-9597-4f83-8bc1-d89f9a1d4de9" },
+			{ "@id": "abb0d667-7dd6-4ed9-b4d5-a2563b028e58" },
+			{ "@id": "25f19593-f8f8-4e95-902c-9f81ec6bfdea" },
+			{ "@id": "914eb99e-ded1-48d9-b3aa-1b7275d76a87" },
+			{ "@id": "2793da1c-a84d-4390-a6f3-d19e8640702a" },
+			{ "@id": "fe7021d6-c980-4fa3-9e7b-80bd1a626a6e" },
+			{ "@id": "6f6376af-005d-4cc8-a867-d5168908d24d" },
+			{ "@id": "bf0a14de-6f3f-4b1e-9f6b-25217ceeb966" },
+			{ "@id": "9a097e14-66c4-406b-a6b8-37c36e10d3f9" },
+			{ "@id": "21d6878b-3a70-4168-9386-a9d7855e078c" },
+			{ "@id": "16f1b39c-5a84-4dca-95b0-f344241e826c" },
+			{ "@id": "f88fee89-f4b1-4c79-bfd8-944606b519f6" },
+			{ "@id": "3363ebd2-302b-4e31-8fcf-8dca2530460e" },
+			{ "@id": "e07e1efb-07bc-4b58-ab7a-c5ad29303643" },
+			{ "@id": "584083f2-eabe-419b-ab2b-118391775e86" },
+			{ "@id": "876bb100-25bb-4dbf-8dec-35c927a6c1cc" },
+			{ "@id": "38628a80-e5e4-4749-b2fc-970feb1a278d" },
+			{ "@id": "9b8469d8-521e-4a81-a781-0bfb6e7bd157" },
+			{ "@id": "2a50977d-a90e-4d75-91a0-adbcb2fd93e2" },
+			{ "@id": "b9b66eaa-cd8f-429c-affe-1cbc05d4640e" }
+		]
+	}
+]
