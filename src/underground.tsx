@@ -1,6 +1,6 @@
 import React from "react"
 import uuid from "uuid/v4"
-import { Map, List } from "immutable"
+import { Map, List, Set as ImmutableSet } from "immutable"
 import { Buffer } from "buffer"
 import multihashing from "multihashing"
 import multihash from "multihashes"
@@ -23,11 +23,16 @@ import {
 	Values,
 	AssertionNode,
 	SourcedValues,
+	SourcedInline,
+	SourcedReference,
+	nodes,
+	LABEL,
 } from "./schema"
 import Select from "./select"
-import ObjectView from "./object"
+import ObjectView, { ObjectProps } from "./object"
 // import MapView from "./views/map"
 import FormView, { FormValue, Constant, Reference, Inline } from "./form"
+import colors from "./views/colors"
 
 interface UndergroundProps {
 	onSubmit: (assertion: Assertion, hash: string) => void
@@ -40,6 +45,7 @@ interface UndergroundState {
 	graph: Map<string, SourcedNode>
 	forms: Map<string, Map<string, List<FormValue>>>
 	properties: Map<string, List<List<string>>>
+	explorer: ImmutableSet<List<string>>
 }
 
 type EntrySeq = [string, FormValue[]]
@@ -80,6 +86,7 @@ export default class Underground extends React.Component<
 			graph: Map({}),
 			forms: Map({}),
 			properties: Map({}),
+			explorer: ImmutableSet([]),
 		}
 		this.renderNode = this.renderNode.bind(this)
 		this.createNode = this.createNode.bind(this)
@@ -105,12 +112,7 @@ export default class Underground extends React.Component<
 		if (this.state.hash === "") {
 			return this.renderGraph()
 		} else if (graph.has(hash)) {
-			return (
-				<div>
-					<a href="#">Back to graph</a> {this.renderFileInput()}
-					{this.renderNode(graph.get(hash), 0, false)}
-				</div>
-			)
+			return this.renderExplorer()
 		} else {
 			return (
 				<div>
@@ -127,6 +129,20 @@ export default class Underground extends React.Component<
 				accept="application/json"
 				onChange={event => this.readFile(event)}
 			/>
+		)
+	}
+	renderExplorer() {
+		const { graph, hash, explorer } = this.state
+		return (
+			<div>
+				<a href="#">Back to graph</a> {this.renderFileInput()}
+				<hr />
+				{this.renderNode(graph.get(hash), 0, false)}
+				{explorer.toArray().map((path, key) => {
+					const node = this.resolvePath(path.slice(1).toArray())
+					return this.renderNode(node, key, false)
+				})}
+			</div>
 		)
 	}
 	renderGraph() {
@@ -148,6 +164,7 @@ export default class Underground extends React.Component<
 					<div className="container">
 						{this.state.forms
 							.keySeq()
+							.filter(key => this.state.graph.has(key))
 							.map(key => this.state.graph.get(key))
 							.map((node, key) => (
 								<FormView
@@ -184,26 +201,115 @@ export default class Underground extends React.Component<
 			</div>
 		)
 	}
+	private resolveInlinePath(
+		id: string,
+		value: SourcedInline | SourcedReference,
+		path: string[]
+	): SourcedNode {
+		if (value.hasOwnProperty(ID)) {
+			return this.resolvePath([value[ID], ...path])
+		} else if (path.length === 0) {
+			return { [ID]: id, ...value }
+		} else {
+			const [prop, index, ...next] = path
+			if (value.hasOwnProperty(prop)) {
+				const isArray = Array.isArray(value[prop])
+				const isNumber = !isNaN(+index)
+				if (isArray && isNumber && +index < value[prop].length) {
+					const newId = [id, nodes[prop][LABEL], index].join("/")
+					return this.resolveInlinePath(newId, value[prop][index], next)
+				} else if (!isArray && !isNumber) {
+					const newId = [id, nodes[prop][LABEL]].join("/")
+					return this.resolveInlinePath(newId, value[prop], [index, ...next])
+				}
+			}
+		}
+		return null
+	}
+	private resolvePath(path: string[]): SourcedNode {
+		const [id, ...rest] = path
+		if (this.state.graph.has(id)) {
+			const node = this.state.graph.get(id)
+			if (rest.length > 0) {
+				const [prop, index, ...next] = rest
+				if (node.hasOwnProperty(prop)) {
+					const isArray = Array.isArray(node[prop])
+					const isNumber = !isNaN(+index)
+					if (
+						isArray &&
+						isNumber &&
+						+index < (node[prop] as SourcedValues).length
+					) {
+						const value = node[prop][index]
+						const newId = [id, nodes[prop][LABEL], index].join("/")
+						return this.resolveInlinePath(newId, value, next)
+					} else if (!isArray && !isNumber) {
+						// const value = node[prop] as SourcedInline | SourcedReference
+						const value = node[prop] as any
+						const newId = [id, nodes[prop][LABEL]].join("/")
+						return this.resolveInlinePath(newId, value, [index, ...next])
+					}
+				}
+			} else {
+				return node
+			}
+		}
+		return null
+	}
 	private renderNode(node: SourcedNode, key: number, small: any) {
+		const { explorer, graph, focus } = this.state
 		const large = !small
 		const { [ID]: id, [TYPE]: type } = node
 		const types = flattenValues(type)
-		return (
-			<ObjectView
-				large={large}
-				key={key}
-				node={node}
-				graph={this.state.graph}
-				focus={this.state.focus === id}
-				disabled={this.state.forms.has(id)}
-				onSubmit={() => {
-					const forms = this.state.forms.set(id, Map())
-					const props = Underground.generateProperties(types)
-					const properties = this.state.properties.set(id, props)
-					this.setState({ forms, properties, focus: `${id}/` })
-				}}
-			/>
-		)
+		const onExplore = (path: string[]) => {
+			const color = colors[Math.floor(Math.random() * colors.length)]
+			const explorer = this.state.explorer.add(List([color, ...path]))
+			this.setState({ explorer })
+		}
+		const disabled =
+			this.state.hash === ""
+				? this.state.forms.has(id)
+				: this.state.hash === node[ID]
+		const onSubmit = () => {
+			const forms = this.state.forms.set(id, Map())
+			const props = Underground.generateProperties(types)
+			const properties = this.state.properties.set(id, props)
+			this.setState({ forms, properties, focus: `${id}/` })
+		}
+		const properties: ObjectProps = {
+			onExplore,
+			className: "",
+			explorer,
+			node,
+			graph,
+			disabled,
+			focus: focus === id,
+			onSubmit,
+			depth: 0,
+		}
+		if (this.state.hash !== "") {
+			properties.depth = this.state.hash === id ? 0 : 1
+			if (this.state.hash === id) {
+				properties.depth = 0
+				properties.className = "large "
+			} else {
+				properties.depth = 1
+				properties.className = "medium "
+			}
+			properties.onExploreRemove = () => {
+				const element = this.state.explorer.find(
+					value =>
+						value
+							.slice(1)
+							.toArray()
+							.map(v => (nodes.hasOwnProperty(v) ? nodes[v][LABEL] : v))
+							.join("/") === id
+				)
+				const explorer = this.state.explorer.delete(element)
+				this.setState({ explorer })
+			}
+		}
+		return <ObjectView key={key} {...properties} />
 	}
 	private removeForm(id: string) {
 		const forms = this.state.forms.delete(id)

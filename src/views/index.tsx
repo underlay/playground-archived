@@ -11,9 +11,12 @@ import {
 	SourcedReference,
 	SourcedInline,
 	Values,
+	nodes,
+	LABEL,
 } from "../schema"
-import { Map } from "immutable"
-import GeoCoordinates from "./types/geo-coordinates"
+import { Map, List, Set } from "immutable"
+import MapView from "./types/map"
+import TableView from "./types/table"
 
 export function getConstant(value: SourcedValues) {
 	if (value && value.length > 0 && value[0].hasOwnProperty(VALUE)) {
@@ -56,9 +59,13 @@ export function getNodeValues(
 
 export interface ViewProps {
 	children?: any
+	root: boolean
+	path: string[]
 	key?: number
 	depth: number
 	graph: Map<string, SourcedNode>
+	explorer: Set<List<string>>
+	onExplore: (path: string[]) => void
 	type: string
 	props: { [prop: string]: SourcedValues }
 }
@@ -69,7 +76,10 @@ export interface ValueProps {
 	value: SourcedConstant | SourcedReference | SourcedInline
 }
 
-type ResolvedValue = [{ [prop: string]: SourcedValues }, SourcedInline]
+type ResolvedValue = [
+	{ [prop: string]: SourcedValues },
+	SourcedInline | SourcedReference
+]
 
 function resolve(
 	value: SourcedReference | SourcedInline,
@@ -99,36 +109,87 @@ function resolve(
 	return null
 }
 
+function renderHeader(
+	name: string,
+	depth: number,
+	onClick: () => void,
+	open: boolean,
+	opened: boolean,
+	color: string
+) {
+	const className = open ? "header max-width" : "header"
+	const tag = `h${Math.min(6, depth)}`
+	const element = name && React.createElement(tag, { className }, [name])
+	if (open) {
+		return (
+			<header className={opened ? "opened" : null} style={{ color }}>
+				{element}
+				<button className="float" onClick={onClick} disabled={opened}>
+					Open
+				</button>
+			</header>
+		)
+	} else {
+		return element
+	}
+}
+
+function renderSource(source: string) {
+	return <div className="source">{source}</div>
+}
+
 const renderers = {
-	"http://schema.org/Thing"({ depth, props, children }: ViewProps) {
-		const name = getConstant(props["http://schema.org/name"])
+	"http://schema.org/Thing"({
+		path,
+		depth,
+		props,
+		children,
+		onExplore,
+		explorer,
+		root,
+	}: ViewProps) {
+		const name = getConstant(props["http://schema.org/name"]) as string
 		const alternateName = getConstant(props["http://schema.org/alternateName"])
 		const url = getConstant(props["http://schema.org/url"]) as string
 		const description = getConstant(props["http://schema.org/description"])
-		const header = `h${Math.min(6, depth)}`
-		const properties = depth > 1 ? { className: "max-width" } : {}
+		const makeId = path =>
+			path.map(v => (nodes.hasOwnProperty(v) ? nodes[v][LABEL] : v)).join("/")
+		const exp = explorer.find(list => makeId(list.slice(1)) === makeId(path))
+		const isOpened = !!exp
+		const go = root || !isOpened
 		return (
 			<Fragment>
-				{name && React.createElement(header, properties, [name])}
-				{alternateName && depth < 2 && <h3>{alternateName}</h3>}
-				{url && depth < 2 && <a href={url}>{url}</a>}
-				{description && depth < 2 && <p>{description}</p>}
-				{children}
+				{renderHeader(
+					name,
+					depth,
+					() => onExplore(path),
+					!root,
+					isOpened,
+					isOpened ? exp.get(0) : null
+				)}
+				{go && alternateName && depth < 3 && <h3>{alternateName}</h3>}
+				{go && url && depth < 3 && <a href={url}>{url}</a>}
+				{go && description && depth < 3 && <p>{description}</p>}
+				{go && children}
 			</Fragment>
 		)
 	},
 	"http://schema.org/CreativeWork"({
+		path,
 		graph,
 		depth,
 		props,
 		children,
+		onExplore,
+		explorer,
 	}: ViewProps) {
-		// media
 		let associatedMedia = null
-		const value = props["http://schema.org/associatedMedia"]
+		const associatedMediaProperty = "http://schema.org/associatedMedia"
+		const value = props[associatedMediaProperty]
 		const position = "http://schema.org/position"
 		if (value) {
 			const values = Array.isArray(value) ? value : [value]
+			let resolveIndex = (number: number) => number
 			let resolvedValues: ResolvedValue[] = values.map(
 				(value: SourcedInline) => {
 					const props = resolve(value, graph)
@@ -141,12 +202,29 @@ const renderers = {
 						(getConstant(a[1][position] as SourcedValues) as number) -
 						(getConstant(b[1][position] as SourcedValues) as number)
 				)
+				resolveIndex = number =>
+					values.findIndex(value => getConstant(value[position]) === number)
 			}
 			associatedMedia = resolvedValues.map(
 				([props, value]: ResolvedValue, key) => {
 					const type = value[TYPE]
-					const properties = { key, type, graph, props, depth: depth + 1 }
-					return <RealView {...properties} />
+					const properties = {
+						path: value.hasOwnProperty(ID)
+							? [value[ID]]
+							: path.concat([
+									associatedMediaProperty,
+									resolveIndex(key).toString(),
+							  ]),
+						key,
+						type,
+						graph,
+						props,
+						depth: depth + 1,
+						onExplore,
+						explorer,
+						root: false,
+					}
+					return <View {...properties} />
 				}
 			)
 		}
@@ -156,6 +234,7 @@ const renderers = {
 				{associatedMedia && (
 					<Fragment>
 						{React.createElement(header, {}, ["Associated media"])}
+						<button>Open all</button>
 						<div className="carousel">{associatedMedia}</div>
 					</Fragment>
 				)}
@@ -163,7 +242,7 @@ const renderers = {
 			</Fragment>
 		)
 	},
-	"http://schema.org/MediaObject"({ props, children }: ViewProps) {
+	"http://schema.org/MediaObject"({ props, children, depth }: ViewProps) {
 		const content = "http://schema.org/contentUrl"
 		const format = "http://schema.org/encodingFormat"
 		const mime = getConstant(props[format]) as string
@@ -173,26 +252,50 @@ const renderers = {
 			<Fragment>
 				{display &&
 					(mediaRenderers.hasOwnProperty(mime) &&
-						mediaRenderers[mime](mime, src))}
+						mediaRenderers[mime](mime, src, depth))}
 				{children}
 			</Fragment>
 		)
 	},
-	"http://schema.org/Place"({ children }: ViewProps) {
+	"http://schema.org/Place"({ props, graph, children }: ViewProps) {
+		const geo = "http://schema.org/geo"
+		const lat = "http://schema.org/latitude"
+		const long = "http://schema.org/longitude"
+		let map = null
+		if (props.hasOwnProperty(geo)) {
+			const value = props[geo]
+			const values = Array.isArray(value) ? value : [value]
+			map = values.map((value: SourcedInline, key) => {
+				const source = value[SOURCE]
+				const props = resolve(value, graph)
+				const raw = [props[lat], props[long]]
+				const [latitude, longitude] = raw.map(getConstant) as [number, number]
+				if (latitude && longitude) {
+					const properties = { key, latitude, longitude, scale: 3 }
+					return (
+						<Fragment>
+							<MapView {...properties} />
+							{renderSource(source)}
+						</Fragment>
+					)
+				} else return null
+			})
+		}
 		return (
 			<Fragment>
 				<p>And i'm a place</p>
+				{map}
 				{children}
 			</Fragment>
 		)
 	},
 }
 
-export function RealView({ depth, graph, type, props }: ViewProps) {
+export function View({ depth, type, ...rest }: ViewProps) {
 	const ancestors = Array.from(ancestry[type])
 	const children = ancestors.reduce((child, type, key) => {
 		if (renderers.hasOwnProperty(type)) {
-			const properties = { key, graph, props, type, depth: depth + 1 }
+			const properties: ViewProps = { ...rest, key, type, depth: depth + 1 }
 			return React.createElement(renderers[type], properties, [child])
 		} else {
 			return child
@@ -201,12 +304,29 @@ export function RealView({ depth, graph, type, props }: ViewProps) {
 	return <div>{children}</div>
 }
 
-const mediaRenderers = {
-	"text/csv"(encodingFormat: string, contentUrl: string) {},
-	"application/pdf"(encodingFormat: string, contentUrl: string) {
-		return <object data={contentUrl} type={encodingFormat} />
+const mediaRenderers: {
+	[mime: string]: (
+		encodingFormat: string,
+		contentUrl: string,
+		depth: number
+	) => JSX.Element
+} = {
+	"text/csv"(encodingFormat: string, contentUrl: string) {
+		console.log("fetching", contentUrl)
+		fetch(contentUrl)
+			.then(response => response.text())
+			.then(text => console.log())
+		return <TableView contentUrl={contentUrl} />
 	},
-	"image/jpeg"(encodingFormat: string, contentUrl: string) {
-		return <img className="image" src={contentUrl} />
+	"application/pdf"(encodingFormat: string, contentUrl: string, depth: number) {
+		const className = depth > 2 ? "small" : depth > 1 ? "medium" : "large"
+		return (
+			<object className={className} data={contentUrl} type={encodingFormat} />
+		)
+	},
+	"image/jpeg"(encodingFormat: string, contentUrl: string, depth: number) {
+		const className =
+			depth > 2 ? "image" : depth > 1 ? "medium image" : "full image"
+		return <img className={className} src={contentUrl} />
 	},
 }

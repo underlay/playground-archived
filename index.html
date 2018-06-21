@@ -26,9 +26,15 @@
 	}
 
 	.large.object {
-		display: block;
-		min-width: 330px;
+		display: inline-block;
+		width: max-content;
 		max-width: 1024px;
+	}
+
+	.medium.object {
+		display: inline-block;
+		width: max-content;
+		max-width: 680px;
 	}
 
 	.form {
@@ -137,14 +143,50 @@
 		width: max-content;
 	}
 
-	object {
+	object.small {
 		width: 320px;
 		height: 320px;
+	}
+
+	object.medium {
+		width: 640px;
+		height: 480px;
+	}
+
+	header .header {
+		display: inline-block;
+	}
+
+	header.opened {
+		border: 1px solid blue;
+		padding: 1em;
+		width: max-content;
 	}
 
 	.image {
 		max-height: 320px;
 		max-width: 320px;
+	}
+
+	.full.image {
+		max-width: 100%;
+		max-height: unset;
+	}
+
+	.medium.image {
+		max-height: 640px;
+		max-width: 640px;
+	}
+
+	.table,
+	.table th,
+	.table td {
+		border: 1px solid #888;
+		width: max-content;
+	}
+
+	.mono a {
+		overflow-wrap: break-word;
 	}
 </style>
 

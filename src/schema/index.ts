@@ -75,7 +75,9 @@ interface SchemaNode extends Node<PropertyValues> {
 }
 
 export type AssertionNode = Node<Values>
-export type SourcedNode = Node<SourcedValues>
+export type SourcedNode = Node<
+	SourcedValues | SourcedConstant | SourcedReference | SourcedInline
+>
 
 export interface Graph<T extends Node<any>> {
 	[ID]?: string

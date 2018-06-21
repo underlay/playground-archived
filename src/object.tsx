@@ -10,16 +10,20 @@ import {
 	TIME,
 	SOURCE,
 } from "./schema"
-import { RealView } from "./views"
-import { Map } from "immutable"
+import { View, ViewProps } from "./views"
+import { Map, Set, List } from "immutable"
 
-interface ObjectProps {
-	large: boolean
+export interface ObjectProps {
+	className: string
 	node: SourcedNode
 	focus: boolean
+	depth: number
 	graph: Map<string, SourcedNode>
 	disabled: boolean
 	onSubmit: () => void
+	onExplore: (path: string[]) => void
+	onExploreRemove?: () => void
+	explorer: Set<List<string>>
 }
 
 interface ObjectState {
@@ -43,7 +47,18 @@ export default class ObjectView extends React.Component<
 		return { type, types }
 	}
 	render() {
-		const { node, focus, disabled, onSubmit, graph } = this.props
+		const {
+			node,
+			focus,
+			disabled,
+			onSubmit,
+			graph,
+			depth,
+			className,
+			onExplore,
+			onExploreRemove,
+			explorer,
+		} = this.props
 		const { types, type } = this.state
 		const {
 			[ID]: id,
@@ -59,8 +74,19 @@ export default class ObjectView extends React.Component<
 				<span className="mono">{nodes[type][LABEL]}</span>
 			</Fragment>
 		))
+		const path = [id]
+		const properties: ViewProps = {
+			path,
+			onExplore,
+			type,
+			props,
+			graph,
+			depth,
+			explorer,
+			root: true,
+		}
 		return (
-			<div className={this.props.large ? "large object" : "object"}>
+			<div className={className + "object"}>
 				<h3 className="mono">
 					<a href={`#${id}`}>{id}</a>
 				</h3>
@@ -68,14 +94,13 @@ export default class ObjectView extends React.Component<
 				<input
 					className="float"
 					type="button"
-					value="Add"
+					value={onExploreRemove ? "Remove" : "Add"}
 					autoFocus={focus}
 					disabled={disabled}
-					onClick={onSubmit}
+					onClick={onExploreRemove || onSubmit}
 				/>
 				<hr />
-				<RealView {...{ type, props, graph, depth: 0 }} />
-				{/* <View type={type} props={props} graph={graph, depth: 0} /> */}
+				<View {...properties} />
 			</div>
 		)
 	}

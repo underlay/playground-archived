@@ -20,6 +20,7 @@
 		"multihashing": "^0.3.2",
 		"niceware": "^1.0.5",
 		"npm": "^6.1.0",
+		"papaparse": "^4.5.0",
 		"react": "^16.3.1",
 		"react-dom": "^16.3.1",
 		"topojson": "^3.0.2",
