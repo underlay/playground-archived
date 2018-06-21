@@ -24,6 +24,8 @@ export interface ObjectProps {
 	onExplore: (path: string[]) => void
 	onExploreRemove?: () => void
 	explorer: Set<List<string>>
+	onFocus: (focus: string) => void
+	focused: string
 }
 
 interface ObjectState {
@@ -58,6 +60,8 @@ export default class ObjectView extends React.Component<
 			onExplore,
 			onExploreRemove,
 			explorer,
+			focused,
+			onFocus,
 		} = this.props
 		const { types, type } = this.state
 		const {
@@ -84,9 +88,32 @@ export default class ObjectView extends React.Component<
 			depth,
 			explorer,
 			root: true,
+			onFocus,
+			focused,
 		}
+		const makeId = path =>
+			path.map(v => (nodes.hasOwnProperty(v) ? nodes[v][LABEL] : v)).join("/")
+		const exp = explorer.find(e => makeId(e.slice(1)) === makeId(path))
+		/*
+		-webkit-box-shadow: 0px 0px 5px 5px rgba(233,51,40,1);
+		-moz-box-shadow: 0px 0px 5px 5px rgba(233,51,40,1);
+		box-shadow: 0px 0px 5px 5px rgba(233,51,40,1);
+		*/
+		const style =
+			focused === id && exp
+				? {
+						// border: `2px solid ${exp.get(0)}`,
+						// borderRadius: 2,
+						boxShadow: `0px 0px 5px 5px ${exp.get(0)}`,
+				  }
+				: {}
 		return (
-			<div className={className + "object"}>
+			<div
+				className={className + "object" + (focused === id ? " focused" : "")}
+				style={style}
+				onMouseEnter={event => onFocus(id)}
+				onMouseLeave={event => onFocus(null)}
+			>
 				<h3 className="mono">
 					<a href={`#${id}`}>{id}</a>
 				</h3>

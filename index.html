@@ -23,6 +23,10 @@
 	.object {
 		width: 512px;
 		vertical-align: top;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 
 	.large.object {
@@ -139,6 +143,15 @@
 		margin-left: 1em;
 	}
 
+	h4 {
+		padding-top: 1em;
+		margin: 0;
+	}
+
+	h5 {
+		margin: 0;
+	}
+
 	.max-width {
 		width: max-content;
 	}
@@ -155,13 +168,20 @@
 
 	header .header {
 		display: inline-block;
-	}
-
-	header.opened {
-		border: 1px solid blue;
-		padding: 1em;
+		max-width: 100%;
 		width: max-content;
 	}
+
+	.carousel-item {
+		margin: 0.5em;
+	}
+
+	/* header.opened {
+		border: 1px solid #888;
+		padding: 0.5em;
+		margin: 0.5em;
+		width: max-content;
+	} */
 
 	.image {
 		max-height: 320px;

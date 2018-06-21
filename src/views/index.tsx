@@ -17,6 +17,7 @@ import {
 import { Map, List, Set } from "immutable"
 import MapView from "./types/map"
 import TableView from "./types/table"
+import { SSL_OP_NETSCAPE_CA_DN_BUG } from "constants"
 
 export function getConstant(value: SourcedValues) {
 	if (value && value.length > 0 && value[0].hasOwnProperty(VALUE)) {
@@ -68,6 +69,8 @@ export interface ViewProps {
 	onExplore: (path: string[]) => void
 	type: string
 	props: { [prop: string]: SourcedValues }
+	focused: string
+	onFocus: (focus: string) => void
 }
 
 export interface ValueProps {
@@ -114,15 +117,14 @@ function renderHeader(
 	depth: number,
 	onClick: () => void,
 	open: boolean,
-	opened: boolean,
-	color: string
+	opened: boolean
 ) {
 	const className = open ? "header max-width" : "header"
 	const tag = `h${Math.min(6, depth)}`
 	const element = name && React.createElement(tag, { className }, [name])
 	if (open) {
 		return (
-			<header className={opened ? "opened" : null} style={{ color }}>
+			<header className={opened ? "opened" : null}>
 				{element}
 				<button className="float" onClick={onClick} disabled={opened}>
 					Open
@@ -138,6 +140,9 @@ function renderSource(source: string) {
 	return <div className="source">{source}</div>
 }
 
+const makeId = path =>
+	path.map(v => (nodes.hasOwnProperty(v) ? nodes[v][LABEL] : v)).join("/")
+
 const renderers = {
 	"http://schema.org/Thing"({
 		path,
@@ -147,31 +152,37 @@ const renderers = {
 		onExplore,
 		explorer,
 		root,
+		focused,
+		onFocus,
 	}: ViewProps) {
 		const name = getConstant(props["http://schema.org/name"]) as string
 		const alternateName = getConstant(props["http://schema.org/alternateName"])
 		const url = getConstant(props["http://schema.org/url"]) as string
 		const description = getConstant(props["http://schema.org/description"])
-		const makeId = path =>
-			path.map(v => (nodes.hasOwnProperty(v) ? nodes[v][LABEL] : v)).join("/")
-		const exp = explorer.find(list => makeId(list.slice(1)) === makeId(path))
+		const realId = makeId(path)
+		const exp = explorer.find(list => makeId(list.slice(1)) === realId)
+
+		const boxShadow =
+			(!root || depth > 2) && exp && focused === realId
+				? `0px 0px 5px 5px ${exp.get(0)}`
+				: null
 		const isOpened = !!exp
-		const go = root || !isOpened
+		const go = root || !isOpened || true
+
 		return (
-			<Fragment>
-				{renderHeader(
-					name,
-					depth,
-					() => onExplore(path),
-					!root,
-					isOpened,
-					isOpened ? exp.get(0) : null
-				)}
+			<div
+				onMouseEnter={event => onFocus(realId)}
+				onMouseLeave={event => onFocus(null)}
+				className="carousel-item"
+				style={boxShadow ? { boxShadow } : {}}
+			>
+				{renderHeader(name, depth, () => onExplore(path), !root, isOpened)}
 				{go && alternateName && depth < 3 && <h3>{alternateName}</h3>}
 				{go && url && depth < 3 && <a href={url}>{url}</a>}
 				{go && description && depth < 3 && <p>{description}</p>}
+				{/* {go && renderSource(source)} */}
 				{go && children}
-			</Fragment>
+			</div>
 		)
 	},
 	"http://schema.org/CreativeWork"({
@@ -180,12 +191,11 @@ const renderers = {
 		depth,
 		props,
 		children,
-		onExplore,
-		explorer,
+		...rest
 	}: ViewProps) {
 		let associatedMedia = null
 		const associatedMediaProperty = "http://schema.org/associatedMedia"
-		const value = props[associatedMediaProperty]
+		let value = props[associatedMediaProperty]
 		const position = "http://schema.org/position"
 		if (value) {
 			const values = Array.isArray(value) ? value : [value]
@@ -209,6 +219,7 @@ const renderers = {
 				([props, value]: ResolvedValue, key) => {
 					const type = value[TYPE]
 					const properties = {
+						...rest,
 						path: value.hasOwnProperty(ID)
 							? [value[ID]]
 							: path.concat([
@@ -216,25 +227,67 @@ const renderers = {
 									resolveIndex(key).toString(),
 							  ]),
 						key,
+
 						type,
 						graph,
 						props,
 						depth: depth + 1,
-						onExplore,
-						explorer,
 						root: false,
 					}
 					return <View {...properties} />
 				}
 			)
 		}
+		let author = null
+		const authorProperty = "http://schema.org/author"
+		value = props[authorProperty]
+		if (value) {
+			const values = Array.isArray(value) ? value : [value]
+			let resolveIndex = (number: number) => number
+			let resolvedValues: ResolvedValue[] = values.map(
+				(value: SourcedInline) => {
+					const props = resolve(value, graph)
+					return [props, value] as ResolvedValue
+				}
+			)
+			if (resolvedValues.every(([props]) => props.hasOwnProperty(position))) {
+				resolvedValues = resolvedValues.sort(
+					(a: ResolvedValue, b: ResolvedValue) =>
+						(getConstant(a[1][position] as SourcedValues) as number) -
+						(getConstant(b[1][position] as SourcedValues) as number)
+				)
+				resolveIndex = number =>
+					values.findIndex(value => getConstant(value[position]) === number)
+			}
+			author = resolvedValues.map(([props, value]: ResolvedValue, key) => {
+				const type = value[TYPE]
+				const properties = {
+					...rest,
+					path: value.hasOwnProperty(ID)
+						? [value[ID]]
+						: path.concat([authorProperty, resolveIndex(key).toString()]),
+					key,
+					type,
+					graph,
+					props,
+					depth: depth + 1,
+					root: false,
+				}
+				return <View {...properties} />
+			})
+		}
 		const header = `h${Math.min(6, depth + 1)}`
 		return (
 			<Fragment>
+				{author && (
+					<Fragment>
+						{React.createElement(header, {}, ["Authors"])}
+						<div className="carousel">{author}</div>
+					</Fragment>
+				)}
 				{associatedMedia && (
 					<Fragment>
 						{React.createElement(header, {}, ["Associated media"])}
-						<button>Open all</button>
 						<div className="carousel">{associatedMedia}</div>
 					</Fragment>
 				)}
@@ -285,6 +338,53 @@ const renderers = {
 			<Fragment>
 				<p>And i'm a place</p>
 				{map}
+				{children}
+			</Fragment>
+		)
+	},
+	"http://schema.org/Person"({
+		props,
+		graph,
+		depth,
+		children,
+		path,
+		type,
+		...rest
+	}: ViewProps) {
+		const affiliationProperty = "http://schema.org/affiliation"
+		const value = props[affiliationProperty]
+		const values = value ? (Array.isArray(value) ? value : [value]) : null
+
+		const affiliations = values
+			? values.map((value, key) => {
+					const type = value[TYPE]
+					const props = resolve(
+						value as SourcedInline | SourcedReference,
+						graph
+					)
+					if (props) {
+						const properties = {
+							...rest,
+							key,
+							props,
+							graph,
+							type,
+							depth: depth + 1,
+							path: path.concat(["affiliation", key.toString()]),
+							root: false,
+						}
+						return <View {...properties} />
+					} else return null
+			  })
+			: null
+
+		const header = `h${Math.min(6, depth + 1)}`
+		return (
+			<Fragment>
+				{affiliations &&
+					depth < 4 &&
+					React.createElement(header, {}, ["Affiliation"])}
+				{depth < 4 && affiliations}
 				{children}
 			</Fragment>
 		)

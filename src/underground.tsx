@@ -137,10 +137,11 @@ export default class Underground extends React.Component<
 			<div>
 				<a href="#">Back to graph</a> {this.renderFileInput()}
 				<hr />
-				{this.renderNode(graph.get(hash), 0, false)}
+				{graph.has(hash) && this.renderNode(graph.get(hash), 0)}
 				{explorer.toArray().map((path, key) => {
 					const node = this.resolvePath(path.slice(1).toArray())
-					return this.renderNode(node, key, false)
+					if (node) return this.renderNode(node, key)
+					else return null
 				})}
 			</div>
 		)
@@ -256,9 +257,8 @@ export default class Underground extends React.Component<
 		}
 		return null
 	}
-	private renderNode(node: SourcedNode, key: number, small: any) {
+	private renderNode(node: SourcedNode, key: number) {
 		const { explorer, graph, focus } = this.state
-		const large = !small
 		const { [ID]: id, [TYPE]: type } = node
 		const types = flattenValues(type)
 		const onExplore = (path: string[]) => {
@@ -286,15 +286,17 @@ export default class Underground extends React.Component<
 			focus: focus === id,
 			onSubmit,
 			depth: 0,
+			focused: focus,
+			onFocus: focus => this.setState({ focus }),
 		}
 		if (this.state.hash !== "") {
 			properties.depth = this.state.hash === id ? 0 : 1
 			if (this.state.hash === id) {
 				properties.depth = 0
-				properties.className = "large "
+				properties.className = "large" + " "
 			} else {
 				properties.depth = 1
-				properties.className = "medium "
+				properties.className = "medium" + " "
 			}
 			properties.onExploreRemove = () => {
 				const element = this.state.explorer.find(
