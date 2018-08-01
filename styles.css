@@ -69,14 +69,14 @@ input.split {
 	display: inline-block;
 	padding: 4px;
 	margin: 4px;
-	overflow: scroll;
 
 	/* Hmmm */
 	min-width: 512px;
+	width: min-content;
 }
 
 .form .select {
-	max-width: 512px;
+	max-width: 100%;
 }
 
 .object {
@@ -89,6 +89,7 @@ input.split {
 
 .form h3 {
 	margin: 0;
+	width: max-content;
 }
 
 .float {
@@ -103,6 +104,7 @@ form .container {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
+	margin: 0.5em 0;
 }
 
 tbody {

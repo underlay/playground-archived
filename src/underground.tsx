@@ -120,7 +120,6 @@ export default class Underground extends React.Component<
 				>
 					{this.renderFileInput()}
 				</Select>
-				<header>Issue a new assertion</header>
 				<form onSubmit={this.handleSubmit}>
 					<div className="container">
 						{this.state.forms
@@ -148,7 +147,6 @@ export default class Underground extends React.Component<
 								return <FormView key={id} {...formProps} />
 							})}
 					</div>
-					<hr />
 					<input
 						disabled={disabled}
 						type="button"

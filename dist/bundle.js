@@ -120131,9 +120131,11 @@ var Select = function (_React$Component) {
                     return _this2.input = input;
                 }, autoFocus: true, value: search, onChange: this.handleChange, onFocus: function onFocus() {
                     if (!_this2.state.focused) _this2.setState({ focused: true });
-                }, onBlur: function onBlur() {
-                    if (_this2.state.focused) _this2.setState({ focused: false });
-                }, onKeyDown: function onKeyDown(event) {
+                },
+                // onBlur={() => {
+                // 	if (this.state.focused) this.setState({ focused: false })
+                // }}
+                onKeyDown: function onKeyDown(event) {
                     if (event.keyCode === 13) {
                         // enter
                         event.preventDefault();
@@ -120360,7 +120362,7 @@ var Underground = function (_React$Component) {
             var disabled = forms.size === 0;
             return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement(_select2.default, { placeholder: "Create a new object by type", catalog: Underground.createCatalog, onSubmit: function onSubmit(type) {
                     return _this4.createNode([type]);
-                }, hash: this.state.hash }, this.renderFileInput()), _react2.default.createElement("header", null, "Issue a new assertion"), _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("div", { className: "container" }, this.state.forms.entrySeq().map(function (_ref) {
+                }, hash: this.state.hash }, this.renderFileInput()), _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("div", { className: "container" }, this.state.forms.entrySeq().map(function (_ref) {
                 var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
                     id = _ref2[0],
                     form = _ref2[1];
@@ -120385,7 +120387,7 @@ var Underground = function (_React$Component) {
                     }
                 };
                 return _react2.default.createElement(_form2.default, Object.assign({ key: id }, formProps));
-            })), _react2.default.createElement("hr", null), _react2.default.createElement("input", { disabled: disabled, type: "button", value: "Submit", onClick: function onClick(event) {
+            })), _react2.default.createElement("input", { disabled: disabled, type: "button", value: "Submit", onClick: function onClick(event) {
                     return _this4.handleSubmit(event, true);
                 } }), _react2.default.createElement("input", { disabled: disabled, type: "submit", value: "Download" })));
         }

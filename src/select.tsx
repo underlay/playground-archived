@@ -74,9 +74,9 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 						onFocus={() => {
 							if (!this.state.focused) this.setState({ focused: true })
 						}}
-						onBlur={() => {
-							if (this.state.focused) this.setState({ focused: false })
-						}}
+						// onBlur={() => {
+						// 	if (this.state.focused) this.setState({ focused: false })
+						// }}
 						onKeyDown={event => {
 							if (event.keyCode === 13) {
 								// enter
