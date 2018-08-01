@@ -120096,6 +120096,40 @@ var Select = function (_React$Component) {
         var _this = (0, _possibleConstructorReturn3.default)(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
 
         _this.emptySearch = "No results";
+        _this.keyHandlers = {
+            // enter
+            13: function _(_ref) {
+                var focus = _ref.focus,
+                    results = _ref.results;
+
+                if (focus < results.size) {
+                    var _results$get = results.get(focus),
+                        id = _results$get.id;
+
+                    _this.handleSubmit(id);
+                }
+            },
+            // up arrow
+            40: function _(_ref2) {
+                var focus = _ref2.focus,
+                    size = _ref2.results.size;
+
+                var newFocus = size ? (focus + 1) % size : 0;
+                _this.setState({ focus: newFocus });
+                var target = _this.results.children[0].children[newFocus];
+                _this.scrollIntoView(target);
+            },
+            // down arrow
+            38: function _(_ref3) {
+                var focus = _ref3.focus,
+                    size = _ref3.results.size;
+
+                var newFocus = size ? (size + focus - 1) % size : 0;
+                _this.setState({ focus: newFocus });
+                var target = _this.results.children[0].children[newFocus];
+                _this.scrollIntoView(target);
+            }
+        };
         _this.catalog = _this.props.catalog.map(function (record) {
             var id = record.get(0);
             var name = _schema.nodes[id][_schema.LABEL];
@@ -120118,78 +120152,75 @@ var Select = function (_React$Component) {
     }
 
     (0, _createClass3.default)(Select, [{
+        key: "scrollIntoView",
+        value: function scrollIntoView(target) {
+            var offset = target.offsetTop - Select.scrollMargin;
+            var position = offset - this.results.scrollTop;
+            if (position - target.offsetHeight < 0) {
+                this.results.scrollTop = offset - target.offsetHeight;
+            } else if (position > this.results.offsetHeight) {
+                this.results.scrollTop = offset - this.results.offsetHeight;
+            }
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
 
             var _state = this.state,
                 focused = _state.focused,
-                results = _state.results,
                 search = _state.search;
 
+            var handle = function handle(f) {
+                return function () {
+                    return focused !== f && _this2.setState({ focused: f });
+                };
+            };
             return _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("div", { className: "select-header" }, _react2.default.createElement("input", { type: "text", className: "search", placeholder: this.props.placeholder, ref: function ref(input) {
                     return _this2.input = input;
-                }, autoFocus: true, value: search, onChange: this.handleChange, onFocus: function onFocus() {
-                    if (!_this2.state.focused) _this2.setState({ focused: true });
-                },
-                // onBlur={() => {
-                // 	if (this.state.focused) this.setState({ focused: false })
-                // }}
-                onKeyDown: function onKeyDown(event) {
-                    if (event.keyCode === 13) {
-                        // enter
-                        event.preventDefault();
-                        var _state2 = _this2.state,
-                            focus = _state2.focus,
-                            _results = _state2.results;
+                }, autoFocus: true, value: search, onChange: this.handleChange, onFocus: handle(true), onBlur: handle(false), onKeyDown: function onKeyDown(event) {
+                    var keyCode = event.keyCode;
 
-                        if (focus < _results.size) _this2.handleSubmit(_results.get(focus).id);
-                    } else if (event.keyCode === 40) {
-                        // down arrow
+                    if (_this2.keyHandlers.hasOwnProperty(keyCode)) {
                         event.preventDefault();
-                        var _state3 = _this2.state,
-                            _focus = _state3.focus,
-                            _results2 = _state3.results;
-                        var size = _results2.size;
-
-                        var newFocus = size ? (_focus + 1) % size : 0;
-                        _this2.setState({ focus: newFocus });
-                    } else if (event.keyCode === 38) {
-                        // up arrow
-                        event.preventDefault();
-                        var _state4 = _this2.state,
-                            _focus2 = _state4.focus,
-                            _results3 = _state4.results;
-                        var _size = _results3.size;
-
-                        var _newFocus = _size ? (_size + _focus2 - 1) % _size : 0;
-                        _this2.setState({ focus: _newFocus });
+                        _this2.keyHandlers[keyCode](_this2.state);
                     }
-                } }), this.props.children), focused && _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("div", { className: "select" }, _react2.default.createElement("div", { className: "results" }, _react2.default.createElement("div", { className: "scroller" }, results.size ? results.map(this.renderResult) : this.emptySearch)), _react2.default.createElement("div", { className: "description" }, this.renderDescription())), _react2.default.createElement("hr", null)));
+                } }), this.props.children), focused && this.renderResults());
+        }
+    }, {
+        key: "renderResults",
+        value: function renderResults() {
+            var _this3 = this;
+
+            var content = this.state.results.size > 0 ? this.state.results.map(this.renderResult) : this.emptySearch;
+            return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("div", { className: "select" }, _react2.default.createElement("div", { ref: function ref(div) {
+                    return _this3.results = div;
+                }, className: "results" }, _react2.default.createElement("div", { className: "scroller" }, content)), _react2.default.createElement("div", { className: "description" }, this.renderDescription())), _react2.default.createElement("hr", null));
         }
     }, {
         key: "renderResult",
         value: function renderResult(entry, key) {
-            var _this3 = this;
+            var _this4 = this;
 
             var focus = key === this.state.focus ? "focus mono" : "mono";
-            var handleFocus = function handleFocus() {
-                if (_this3.state.focus !== key) {
-                    _this3.setState({ focus: key });
+            var handleFocus = function handleFocus(event) {
+                if (_this4.state.focus !== key && _this4.results) {
+                    _this4.setState({ focus: key });
+                    _this4.scrollIntoView(event.target);
                     // window.location.hash = this.props.hash + "/" + key
                 }
             };
             return _react2.default.createElement("div", { key: key, className: "result", onMouseEnter: handleFocus, onMouseMove: handleFocus, onMouseDown: function onMouseDown(event) {
                     event.preventDefault();
-                    _this3.handleSubmit(entry.id);
+                    _this4.handleSubmit(entry.id);
                 } }, _react2.default.createElement("span", { className: focus }, entry.name));
         }
     }, {
         key: "renderDescription",
         value: function renderDescription() {
-            var _state5 = this.state,
-                results = _state5.results,
-                focus = _state5.focus;
+            var _state2 = this.state,
+                results = _state2.results,
+                focus = _state2.focus;
 
             if (focus < results.size) {
                 var entry = results.get(focus);
@@ -120208,14 +120239,14 @@ var Select = function (_React$Component) {
     }, {
         key: "handleSubmit",
         value: function handleSubmit(id) {
-            var _this4 = this;
+            var _this5 = this;
 
             this.setState({
                 search: "",
                 results: this.everything,
                 focused: false
             }, function () {
-                return _this4.input && _this4.input.blur();
+                return _this5.input && _this5.input.blur();
             });
             this.props.onSubmit(id);
         }
@@ -120231,6 +120262,7 @@ Select.fuseOptions = {
     threshold: 0.3,
     keys: [{ name: "name", weight: 0.8 }, { name: "description", weight: 0.2 }]
 };
+Select.scrollMargin = 8;
 
 /***/ }),
 

@@ -25,6 +25,7 @@ interface SelectState {
 
 export default class Select extends React.Component<SelectProps, SelectState> {
 	private input: HTMLInputElement
+	private results: HTMLDivElement
 	private index: any
 	private catalog: Entry[]
 	private everything: List<Entry>
@@ -34,6 +35,41 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		location: 0,
 		threshold: 0.3,
 		keys: [{ name: "name", weight: 0.8 }, { name: "description", weight: 0.2 }],
+	}
+	private keyHandlers: {
+		[keyCode: number]: (state: SelectState) => void
+	} = {
+		// enter
+		13: ({ focus, results }) => {
+			if (focus < results.size) {
+				const { id } = results.get(focus)
+				this.handleSubmit(id)
+			}
+		},
+		// up arrow
+		40: ({ focus, results: { size } }) => {
+			const newFocus = size ? (focus + 1) % size : 0
+			this.setState({ focus: newFocus })
+			const target = this.results.children[0].children[newFocus]
+			this.scrollIntoView(target as HTMLDivElement)
+		},
+		// down arrow
+		38: ({ focus, results: { size } }) => {
+			const newFocus = size ? (size + focus - 1) % size : 0
+			this.setState({ focus: newFocus })
+			const target = this.results.children[0].children[newFocus]
+			this.scrollIntoView(target as HTMLDivElement)
+		},
+	}
+	private static scrollMargin = 8
+	private scrollIntoView(target: HTMLDivElement) {
+		const offset = target.offsetTop - Select.scrollMargin
+		const position = offset - this.results.scrollTop
+		if (position - target.offsetHeight < 0) {
+			this.results.scrollTop = offset - target.offsetHeight
+		} else if (position > this.results.offsetHeight) {
+			this.results.scrollTop = offset - this.results.offsetHeight
+		}
 	}
 	constructor(props: SelectProps) {
 		super(props)
@@ -59,7 +95,8 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		this.renderResult = this.renderResult.bind(this)
 	}
 	render() {
-		const { focused, results, search } = this.state
+		const { focused, search } = this.state
+		const handle = f => () => focused !== f && this.setState({ focused: f })
 		return (
 			<React.Fragment>
 				<div className="select-header">
@@ -71,61 +108,45 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 						autoFocus={true}
 						value={search}
 						onChange={this.handleChange}
-						onFocus={() => {
-							if (!this.state.focused) this.setState({ focused: true })
-						}}
-						// onBlur={() => {
-						// 	if (this.state.focused) this.setState({ focused: false })
-						// }}
+						onFocus={handle(true)}
+						onBlur={handle(false)}
 						onKeyDown={event => {
-							if (event.keyCode === 13) {
-								// enter
+							const { keyCode } = event
+							if (this.keyHandlers.hasOwnProperty(keyCode)) {
 								event.preventDefault()
-								const { focus, results } = this.state
-								if (focus < results.size)
-									this.handleSubmit(results.get(focus).id)
-							} else if (event.keyCode === 40) {
-								// down arrow
-								event.preventDefault()
-								const { focus, results } = this.state
-								const { size } = results
-								const newFocus = size ? (focus + 1) % size : 0
-								this.setState({ focus: newFocus })
-							} else if (event.keyCode === 38) {
-								// up arrow
-								event.preventDefault()
-								const { focus, results } = this.state
-								const { size } = results
-								const newFocus = size ? (size + focus - 1) % size : 0
-								this.setState({ focus: newFocus })
+								this.keyHandlers[keyCode](this.state)
 							}
 						}}
 					/>
 					{this.props.children}
 				</div>
-				{focused && (
-					<Fragment>
-						<div className="select">
-							<div className="results">
-								<div className="scroller">
-									{results.size
-										? results.map(this.renderResult)
-										: this.emptySearch}
-								</div>
-							</div>
-							<div className="description">{this.renderDescription()}</div>
-						</div>
-						<hr />
-					</Fragment>
-				)}
+				{focused && this.renderResults()}
 			</React.Fragment>
+		)
+	}
+	renderResults() {
+		const content =
+			this.state.results.size > 0
+				? this.state.results.map(this.renderResult)
+				: this.emptySearch
+		return (
+			<Fragment>
+				<div className="select">
+					<div ref={div => (this.results = div)} className="results">
+						<div className="scroller">{content}</div>
+					</div>
+					<div className="description">{this.renderDescription()}</div>
+				</div>
+				<hr />
+			</Fragment>
 		)
 	}
 	renderResult(entry: Entry, key: number) {
 		const focus = key === this.state.focus ? "focus mono" : "mono"
-		const handleFocus = () => {
-			if (this.state.focus !== key) {
+		const handleFocus = event => {
+			if (this.state.focus !== key && this.results) {
 				this.setState({ focus: key })
+				this.scrollIntoView(event.target)
 				// window.location.hash = this.props.hash + "/" + key
 			}
 		}
