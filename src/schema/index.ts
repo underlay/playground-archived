@@ -139,9 +139,7 @@ function enumerateAncestry(type: string) {
 	traverseAncestry(type, history)
 	return history
 }
-things.forEach(type => {
-	ancestry[type] = enumerateAncestry(type)
-})
+things.forEach(type => (ancestry[type] = enumerateAncestry(type)))
 
 export const inheritance: { [type: string]: Set<string> } = {}
 const keys = Object.keys(ancestry)

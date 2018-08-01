@@ -14,6 +14,7 @@ interface SelectProps {
 	placeholder?: string
 	catalog: List<List<string>>
 	onSubmit: (id: string) => void
+	hash: string
 }
 interface SelectState {
 	search: string
@@ -61,63 +62,73 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		const { focused, results, search } = this.state
 		return (
 			<React.Fragment>
-				<input
-					type="text"
-					className="search"
-					placeholder={this.props.placeholder}
-					ref={input => (this.input = input)}
-					autoFocus={true}
-					value={search}
-					onChange={this.handleChange}
-					onFocus={event => {
-						if (!this.state.focused) this.setState({ focused: true })
-					}}
-					onBlur={event => {
-						if (this.state.focused) this.setState({ focused: false })
-					}}
-					onKeyDown={event => {
-						if (event.keyCode === 13) {
-							// enter
-							event.preventDefault()
-							const { focus, results } = this.state
-							if (focus < results.size) this.handleSubmit(results.get(focus).id)
-						} else if (event.keyCode === 40) {
-							// down arrow
-							event.preventDefault()
-							const { focus, results } = this.state
-							const { size } = results
-							const newFocus = size ? (focus + 1) % size : 0
-							this.setState({ focus: newFocus })
-						} else if (event.keyCode === 38) {
-							// up arrow
-							event.preventDefault()
-							const { focus, results } = this.state
-							const { size } = results
-							const newFocus = size ? (size + focus - 1) % size : 0
-							this.setState({ focus: newFocus })
-						}
-					}}
-				/>
-				{this.props.children}
+				<div className="select-header">
+					<input
+						type="text"
+						className="search"
+						placeholder={this.props.placeholder}
+						ref={input => (this.input = input)}
+						autoFocus={true}
+						value={search}
+						onChange={this.handleChange}
+						onFocus={() => {
+							if (!this.state.focused) this.setState({ focused: true })
+						}}
+						onBlur={() => {
+							if (this.state.focused) this.setState({ focused: false })
+						}}
+						onKeyDown={event => {
+							if (event.keyCode === 13) {
+								// enter
+								event.preventDefault()
+								const { focus, results } = this.state
+								if (focus < results.size)
+									this.handleSubmit(results.get(focus).id)
+							} else if (event.keyCode === 40) {
+								// down arrow
+								event.preventDefault()
+								const { focus, results } = this.state
+								const { size } = results
+								const newFocus = size ? (focus + 1) % size : 0
+								this.setState({ focus: newFocus })
+							} else if (event.keyCode === 38) {
+								// up arrow
+								event.preventDefault()
+								const { focus, results } = this.state
+								const { size } = results
+								const newFocus = size ? (size + focus - 1) % size : 0
+								this.setState({ focus: newFocus })
+							}
+						}}
+					/>
+					{this.props.children}
+				</div>
 				{focused && (
-					<div className="select">
-						<div className="results">
-							<div className="scroller">
-								{results.size
-									? results.map(this.renderResult)
-									: this.emptySearch}
+					<Fragment>
+						<div className="select">
+							<div className="results">
+								<div className="scroller">
+									{results.size
+										? results.map(this.renderResult)
+										: this.emptySearch}
+								</div>
 							</div>
+							<div className="description">{this.renderDescription()}</div>
 						</div>
-						<div className="description">{this.renderDescription()}</div>
-					</div>
+						<hr />
+					</Fragment>
 				)}
 			</React.Fragment>
 		)
 	}
 	renderResult(entry: Entry, key: number) {
 		const focus = key === this.state.focus ? "focus mono" : "mono"
-		const handleFocus = (event: React.MouseEvent<HTMLDivElement>) =>
-			this.state.focus !== key && this.setState({ focus: key })
+		const handleFocus = () => {
+			if (this.state.focus !== key) {
+				this.setState({ focus: key })
+				// window.location.hash = this.props.hash + "/" + key
+			}
+		}
 		return (
 			<div
 				key={key}

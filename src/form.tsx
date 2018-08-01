@@ -1,14 +1,12 @@
 import React, { Fragment } from "react"
 import { Map, List, Record } from "immutable"
 import {
-	SourcedNode,
 	flattenValues,
 	nodes,
 	LABEL,
 	RANGE,
 	ancestry,
 	enumerateProperties,
-	TYPE,
 	inheritance,
 } from "./schema"
 import Select from "./select"
@@ -36,7 +34,7 @@ export class FormValue extends Record({
 	value: null,
 	constant: null,
 	reference: null,
-	inline: Map({}),
+	inline: null,
 }) {
 	type: string
 	value: FormValueType
@@ -53,16 +51,13 @@ export class FormValue extends Record({
 
 export type FormValues = Map<string, List<FormValue>>
 
-interface FormProps {
-	createNode: (type: string) => string
-	graph: Map<string, SourcedNode>
-	form: FormValues
+export interface FormProps {
 	id: string
-	types: string[]
-	focus: string
-	path: string[]
+	form: FormValues
+	createNode: (types: string[]) => string
+	graph: Map<string, string[]>
 	onRemove?: () => void
-	onChange: (form: FormValues, id?: string, formValues?: FormValues) => void
+	onChange: (form: FormValues, newId?: string, newForm?: FormValues) => void
 }
 
 interface FormState {
@@ -93,58 +88,48 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		this.renderProperty = this.renderProperty.bind(this)
 	}
 	render() {
-		const { id, types, onRemove, form } = this.props
-		const catalog = FormView.generateProperties(types)
+		const { id, graph, onChange, onRemove, form } = this.props
+		const catalog = FormView.generateProperties(graph.get(id))
 		return (
 			<div className="form">
-				{id && (
-					<Fragment>
-						<h3 className="mono">{id}</h3>
-						{types.map((type, key) => (
-							<Fragment key={key}>
-								{key ? ", " : null}
-								<span className="mono">{nodes[type][LABEL]}</span>
-							</Fragment>
-						))}
-						<input
-							className="float"
-							value="Remove"
-							type="button"
-							onClick={onRemove}
-						/>
-						<hr />
+				<h3 className="mono">{id}</h3>
+				{graph.get(id).map((type, key) => (
+					<Fragment key={key}>
+						{key ? ", " : null}
+						<span className="mono">{nodes[type][LABEL]}</span>
 					</Fragment>
-				)}
+				))}
+				<input
+					className="float"
+					value="Remove"
+					type="button"
+					onClick={onRemove}
+				/>
+				<hr />
 				<Select
-					placeholder="Search for a property"
+					hash=""
+					placeholder="Search for a property to enter values"
 					catalog={catalog}
 					onSubmit={property => {
 						const [type] = flattenValues(nodes[property][RANGE])
-						const formValue = FormView.defaultFormValue(type, this.props.graph)
-						if (this.props.form.has(property)) {
+						const formValue = FormView.defaultFormValue(type, graph)
+						if (form.has(property)) {
 							const path = [property, form.get(property).size]
 							const focus = path.join("/")
 							this.setState({ focus })
-							this.props.onChange(form.setIn(path, formValue))
+							onChange(form.setIn(path, formValue))
 						} else {
 							const focus = [property, 0].join("/")
 							this.setState({ focus })
-							this.props.onChange(form.set(property, List([formValue])))
+							onChange(form.set(property, List([formValue])))
 						}
 					}}
 				/>
-				<hr />
-				<table>
-					<tbody>
-						{form.size > 0 ? (
-							form.entrySeq().map(this.renderProperty)
-						) : (
-							<tr>
-								<td>Select properties above to enter values</td>
-							</tr>
-						)}
-					</tbody>
-				</table>
+				<div className="table-scroller">
+					<table>
+						<tbody>{form.entrySeq().map(this.renderProperty)}</tbody>
+					</table>
+				</div>
 			</div>
 		)
 	}
@@ -160,8 +145,10 @@ export default class FormView extends React.Component<FormProps, FormState> {
 						{label}
 					</td>
 				)}
-				<td>{this.renderType(property, index, formValue)}</td>
-				<td>{this.renderValue(property, index, formValue)}</td>
+				<td className="type">{this.renderType(property, index, formValue)}</td>
+				<td className="value">
+					{this.renderValue(property, index, formValue)}
+				</td>
 				<td>
 					<input
 						type="button"
@@ -197,14 +184,19 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		)
 	}
 	private renderValue(property: string, index: number, formValue: FormValue) {
-		const { createNode, graph, path, focus } = this.props
-		// const autoFocus = this.state.focus === [property, index].join("/")
+		const { createNode, graph, id } = this.props
+		const label = nodes[property][LABEL]
+		const path = id.split("/").concat([label, index.toString()])
 		return (
 			<PropertyView
-				{...{ focus, path, formValue, graph, createNode }}
-				onChange={(value, id, formValues) => {
-					const form = this.props.form.setIn([property, index], value)
-					this.props.onChange(form, id, formValues)
+				path={path}
+				graph={graph}
+				formValue={formValue}
+				createNode={createNode}
+				onChange={(value, newId, newForm) => {
+					const path = [property, index]
+					const form = this.props.form.setIn(path, value)
+					this.props.onChange(form, newId, newForm)
 				}}
 			/>
 		)
@@ -218,10 +210,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 			this.props.onChange(form.delete(property))
 		}
 	}
-	private static defaultFormValue(
-		type: string,
-		graph: Map<string, SourcedNode>
-	) {
+	private static defaultFormValue(type: string, nodes: Map<string, string[]>) {
 		const props: Partial<FormValue> = { type }
 		if (constants.hasOwnProperty(type)) {
 			props.value = Constant
@@ -229,12 +218,12 @@ export default class FormView extends React.Component<FormProps, FormState> {
 				? FormView.defaultValues[type]
 				: FormView.defaultValue
 		} else {
-			const predicate = (node: SourcedNode) =>
-				flattenValues(node[TYPE]).some(t => inheritance[type].has(t))
-			const ref = graph.findKey(node => predicate(node))
-			if (ref !== undefined) {
+			const id = nodes.findKey(types =>
+				types.some(t => inheritance[type].has(t))
+			)
+			if (id !== undefined) {
 				props.value = Reference
-				props.reference = ref
+				props.reference = id
 			} else {
 				props.value = Inline
 				props.inline = Map({})
