@@ -63,12 +63,13 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 	}
 	private static scrollMargin = 8
 	private scrollIntoView(target: HTMLDivElement) {
-		const offset = target.offsetTop - Select.scrollMargin
+		const offset = target.offsetTop - this.results.offsetTop
 		const position = offset - this.results.scrollTop
-		if (position - target.offsetHeight < 0) {
-			this.results.scrollTop = offset - target.offsetHeight
-		} else if (position > this.results.offsetHeight) {
-			this.results.scrollTop = offset - this.results.offsetHeight
+		const height = this.results.offsetHeight - target.offsetHeight
+		if (position < 0) {
+			this.results.scrollTop = offset
+		} else if (position > height) {
+			this.results.scrollTop = offset - height
 		}
 	}
 	constructor(props: SelectProps) {
@@ -146,7 +147,6 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		const handleFocus = event => {
 			if (this.state.focus !== key && this.results) {
 				this.setState({ focus: key })
-				this.scrollIntoView(event.target)
 				// window.location.hash = this.props.hash + "/" + key
 			}
 		}

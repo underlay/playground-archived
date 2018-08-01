@@ -120154,12 +120154,13 @@ var Select = function (_React$Component) {
     (0, _createClass3.default)(Select, [{
         key: "scrollIntoView",
         value: function scrollIntoView(target) {
-            var offset = target.offsetTop - Select.scrollMargin;
+            var offset = target.offsetTop - this.results.offsetTop;
             var position = offset - this.results.scrollTop;
-            if (position - target.offsetHeight < 0) {
-                this.results.scrollTop = offset - target.offsetHeight;
-            } else if (position > this.results.offsetHeight) {
-                this.results.scrollTop = offset - this.results.offsetHeight;
+            var height = this.results.offsetHeight - target.offsetHeight;
+            if (position < 0) {
+                this.results.scrollTop = offset;
+            } else if (position > height) {
+                this.results.scrollTop = offset - height;
             }
         }
     }, {
@@ -120206,7 +120207,6 @@ var Select = function (_React$Component) {
             var handleFocus = function handleFocus(event) {
                 if (_this4.state.focus !== key && _this4.results) {
                     _this4.setState({ focus: key });
-                    _this4.scrollIntoView(event.target);
                     // window.location.hash = this.props.hash + "/" + key
                 }
             };
