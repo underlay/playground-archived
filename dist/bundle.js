@@ -119592,7 +119592,6 @@ var FormView = function (_React$Component) {
                 form = _props.form;
 
             var catalog = FormView.generateProperties(graph.get(id));
-            console.log("form", form.toJS());
             return _react2.default.createElement("div", { className: "form" }, _react2.default.createElement("h3", { className: "mono" }, id), graph.get(id).map(function (type, key) {
                 return _react2.default.createElement(_react.Fragment, { key: key }, key ? ", " : null, _react2.default.createElement("span", { className: "mono" }, _schema.nodes[type][_constants.LABEL]));
             }), _react2.default.createElement("input", { className: "float", value: label, type: "button", onClick: function onClick(event) {
@@ -119625,10 +119624,9 @@ var FormView = function (_React$Component) {
                 property = _ref2[0],
                 values = _ref2[1];
 
-            console.log("rendering", property);
             var label = _schema.nodes[property][_constants.LABEL];
             return values.map(function (formValue, index) {
-                return _react2.default.createElement("tr", { key: key + "/" + index }, index === 0 && _react2.default.createElement("td", { className: "mono", rowSpan: values.size }, label), _react2.default.createElement("td", { className: "type" }, _this4.renderType(property, index, formValue)), _react2.default.createElement("td", { className: "value" }, _this4.renderValue(property, index, formValue)));
+                return _react2.default.createElement("tr", { key: key + "/" + index }, index === 0 && _react2.default.createElement("td", { className: "mono", rowSpan: values.size }, label), _react2.default.createElement("td", { className: "type" }, _this4.renderType(property, index, formValue)), _react2.default.createElement("td", { className: "value", colSpan: formValue.value === Constant ? 1 : 2 }, _this4.renderValue(property, index, formValue)), formValue.value === Constant && _react2.default.createElement("td", { className: "remove" }, _this4.renderRemove(property, index)));
             });
         }
         // private renderTypeSelect(
@@ -119693,9 +119691,16 @@ var FormView = function (_React$Component) {
                     var path = [property, index];
                     var form = _this6.props.form.setIn(path, value);
                     _this6.props.onChange(form, newId, newForm);
-                } }, _react2.default.createElement("input", { type: "button", value: "Remove", onClick: function onClick() {
-                    return _this6.removeProperty(property, index);
-                } }));
+                } }, this.renderRemove(property, index));
+        }
+    }, {
+        key: "renderRemove",
+        value: function renderRemove(property, index) {
+            var _this7 = this;
+
+            return _react2.default.createElement("input", { type: "button", value: "Remove", onClick: function onClick() {
+                    return _this7.removeProperty(property, index);
+                } });
         }
     }, {
         key: "removeProperty",

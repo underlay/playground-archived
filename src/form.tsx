@@ -94,7 +94,6 @@ export default class FormView extends React.Component<FormProps, FormState> {
 	render() {
 		const { id, label, graph, onChange, onClick, form } = this.props
 		const catalog = FormView.generateProperties(graph.get(id))
-		console.log("form", form.toJS())
 		return (
 			<div className="form">
 				<h3 className="mono">{id}</h3>
@@ -148,7 +147,6 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		[property, values]: [string, List<FormValue>],
 		key: number
 	) {
-		console.log("rendering", property)
 		const label = nodes[property][LABEL]
 		return values.map((formValue, index) => (
 			<tr key={`${key}/${index}`}>
@@ -158,9 +156,12 @@ export default class FormView extends React.Component<FormProps, FormState> {
 					</td>
 				)}
 				<td className="type">{this.renderType(property, index, formValue)}</td>
-				<td className="value">
+				<td className="value" colSpan={formValue.value === Constant ? 1 : 2}>
 					{this.renderValue(property, index, formValue)}
 				</td>
+				{formValue.value === Constant && (
+					<td className="remove">{this.renderRemove(property, index)}</td>
+				)}
 			</tr>
 		))
 	}
@@ -231,12 +232,17 @@ export default class FormView extends React.Component<FormProps, FormState> {
 					this.props.onChange(form, newId, newForm)
 				}}
 			>
-				<input
-					type="button"
-					value="Remove"
-					onClick={() => this.removeProperty(property, index)}
-				/>
+				{this.renderRemove(property, index)}
 			</PropertyView>
+		)
+	}
+	private renderRemove(property: string, index: number) {
+		return (
+			<input
+				type="button"
+				value="Remove"
+				onClick={() => this.removeProperty(property, index)}
+			/>
 		)
 	}
 	private removeProperty(property: string, index: number) {

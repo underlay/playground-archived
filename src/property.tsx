@@ -6,7 +6,6 @@ import {
 	enumerations,
 	searchAncestry,
 	classInheritance,
-	properties,
 } from "./schema"
 import { LABEL, SUBCLASS } from "./schema/constants"
 import Form, {

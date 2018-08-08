@@ -16,6 +16,13 @@ td.value > div input + select + input {
 	float: right;
 }
 
+td.remove {
+	vertical-align: middle;
+}
+td.remove input {
+	float: right;
+}
+
 input.split {
 	margin-left: 0.5em;
 }
