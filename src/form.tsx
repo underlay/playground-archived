@@ -1,13 +1,13 @@
 import React, { Fragment } from "react"
 import { Map, List, Record } from "immutable"
+import { LABEL, RANGE, SUBCLASS, SUBPROPERTY } from "./schema/constants"
 import {
 	flattenValues,
 	nodes,
-	LABEL,
-	RANGE,
-	ancestry,
 	enumerateProperties,
-	inheritance,
+	enumerateAncestry,
+	searchAncestry,
+	propertyInheritance,
 } from "./schema"
 import Select from "./select"
 import PropertyView from "./property"
@@ -71,11 +71,14 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		const set: Set<string> = new Set()
 		const props = types.reduce((props: List<List<string>>, type) => {
 			return props.concat(
-				Array.from(ancestry[type]).reduce((props: List<List<string>>, type) => {
-					const filter = (prop: string) => !set.has(prop) && !!set.add(prop)
-					const properties = enumerateProperties(type).filter(filter)
-					return props.concat(properties.map(prop => List([prop, type])))
-				}, List([]))
+				enumerateAncestry(type, SUBCLASS).reduce(
+					(props: List<List<string>>, type) => {
+						const filter = (prop: string) => !set.has(prop) && !!set.add(prop)
+						const properties = enumerateProperties(type).filter(filter)
+						return props.concat(properties.map(prop => List([prop, type])))
+					},
+					List([])
+				)
 			)
 		}, List([]))
 		return List(props)
@@ -99,17 +102,23 @@ export default class FormView extends React.Component<FormProps, FormState> {
 						<span className="mono">{nodes[type][LABEL]}</span>
 					</Fragment>
 				))}
-				<input
-					className="float"
-					value="Remove"
-					type="button"
-					onClick={onRemove}
-				/>
+				{onRemove && (
+					<input
+						className="float"
+						value="Remove"
+						type="button"
+						onClick={onRemove}
+					/>
+				)}
 				<hr />
 				<Select
 					hash=""
+					parentProperty={SUBPROPERTY}
+					parentDescription="Subproperty"
+					childDescription="Children"
 					placeholder="Search for a property to enter values"
 					catalog={catalog}
+					inheritance={propertyInheritance}
 					onSubmit={property => {
 						const [type] = flattenValues(nodes[property][RANGE])
 						const formValue = FormView.defaultFormValue(type, graph)
@@ -219,7 +228,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 				: FormView.defaultValue
 		} else {
 			const id = nodes.findKey(types =>
-				types.some(t => inheritance[type].has(t))
+				types.some(t => searchAncestry(t, type, SUBCLASS))
 			)
 			if (id !== undefined) {
 				props.value = Reference

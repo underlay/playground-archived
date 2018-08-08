@@ -1,5 +1,7 @@
 import React, { Fragment } from "react"
-import { nodes, LABEL, SourcedNode, flattenValues, TYPE, ID } from "./schema"
+import { nodes, flattenValues } from "./schema"
+import { SourcedNode } from "./schema/types"
+import { TYPE, ID, LABEL } from "./schema/constants"
 import { Map, Set, List } from "immutable"
 
 export interface ObjectProps {

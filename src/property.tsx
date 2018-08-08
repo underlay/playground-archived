@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { List, Map } from "immutable"
-import { things, nodes, enumerations, LABEL, inheritance } from "./schema"
-
+import { things, nodes, enumerations, searchAncestry } from "./schema"
+import { LABEL, SUBCLASS } from "./schema/constants"
 import Form, {
 	FormValue,
 	Constant,
@@ -53,12 +53,11 @@ export default function PropertyView(props: PropertyViewProps) {
 			/>
 		)
 	} else if (things.has(type)) {
-		const inherited = inheritance[type]
 		const objects: List<[string, string[]]> = List(
 			props.graph
 				.entrySeq()
 				.filter(([_, types]: [string, string[]]) =>
-					types.some(t => inherited.has(t))
+					types.some(t => searchAncestry(t, type, SUBCLASS))
 				)
 		)
 		const hasObjects = objects.size > 0
@@ -113,10 +112,11 @@ export default function PropertyView(props: PropertyViewProps) {
 				</div>
 				<div>
 					<input {...radio(Inline)} />
-					<select disabled={inherited.size === 1 || value === Reference}>
-						{Array.from(inherited).map((subtype, key) => (
+					<select disabled={objects.size === 1 || value === Reference}>
+						{/* {Array.from(inherited).map((subtype, key) => (
 							<option key={key}>{nodes[subtype][LABEL]}</option>
-						))}
+						))} */}
+						{/* TODO: Get replaced with the new <Select /> */}
 					</select>
 					<input
 						className="split"

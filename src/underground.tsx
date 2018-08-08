@@ -4,22 +4,18 @@ import { Buffer } from "buffer"
 import multihashing from "multihashing"
 import multihash from "multihashes"
 import niceware from "niceware"
-
 import {
-	Assertion,
 	ID,
 	TYPE,
 	TIME,
 	VALUE,
 	SOURCE,
-	things,
-	ancestry,
-	enumerateProperties,
 	GRAPH,
 	CONTEXT,
-	Values,
-	AssertionNode,
-} from "./schema"
+	thing,
+	SUBCLASS,
+} from "./schema/constants"
+import { Assertion, Values, AssertionNode } from "./schema/types"
 import Select from "./select"
 import FormView, {
 	FormValue,
@@ -29,6 +25,7 @@ import FormView, {
 	FormProps,
 	FormValues,
 } from "./form"
+import { classInheritance } from "./schema"
 
 interface UndergroundProps {
 	onSubmit: (assertion: Assertion, hash: string) => void
@@ -46,29 +43,8 @@ export default class Underground extends React.Component<
 	UndergroundProps,
 	UndergroundState
 > {
-	private static createCatalog: List<List<string>> = List(
-		Array.from(things).map(id => List([id]))
-	)
 	private static createId() {
 		return niceware.generatePassphrase(4).join("-")
-	}
-	private static generateProperties(types: string[]): List<List<string>> {
-		const set: Set<string> = new Set()
-		return List(
-			types.reduce((props: List<List<string>>, type) => {
-				return props.concat(
-					Array.from(ancestry[type]).reduce(
-						(props: List<List<string>>, type) =>
-							props.concat(
-								enumerateProperties(type)
-									.filter(prop => !set.has(prop) && !!set.add(prop))
-									.map(prop => List([prop, type]))
-							),
-						List([])
-					)
-				)
-			}, List([]))
-		)
 	}
 	private static key = "http://underlay.mit.edu"
 	private source: string
@@ -113,8 +89,12 @@ export default class Underground extends React.Component<
 		return (
 			<Fragment>
 				<Select
+					parentDescription="Subclass"
+					parentProperty={SUBCLASS}
 					placeholder="Create a new object by type"
-					catalog={Underground.createCatalog}
+					catalog={List([List([thing])])}
+					inheritance={classInheritance}
+					childDescription="Children"
 					onSubmit={type => this.createNode([type])}
 					hash={this.state.hash}
 				>
@@ -158,9 +138,32 @@ export default class Underground extends React.Component<
 			</Fragment>
 		)
 	}
+	private removeReference(id: string, form: FormValues): FormValues {
+		return Map(
+			form.map(values =>
+				List(
+					values.map(value => {
+						const props: Partial<FormValue> = {}
+						if (value.reference === id) {
+							props.reference = null
+							if (value.value === Reference) {
+								props.value = Inline
+							}
+						}
+						props.inline = value.inline
+							? this.removeReference(id, value.inline)
+							: Map({})
+						return value.with(props)
+					})
+				)
+			)
+		)
+	}
 	private removeForm(id: string) {
-		const forms = this.state.forms.delete(id)
-		this.setState({ forms })
+		const graph = this.state.graph.delete(id)
+		const slice = this.state.forms.delete(id)
+		const forms = slice.map(form => this.removeReference(id, form))
+		this.setState({ forms: Map(forms), graph })
 	}
 	private setHash(hash: string) {
 		this.setState({ hash }, () => (window.location.hash = hash))

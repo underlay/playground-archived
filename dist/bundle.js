@@ -119506,6 +119506,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _immutable = __webpack_require__(/*! immutable */ "./node_modules/immutable/dist/immutable.js");
 
+var _constants = __webpack_require__(/*! ./schema/constants */ "./src/schema/constants.ts");
+
 var _schema = __webpack_require__(/*! ./schema */ "./src/schema/index.ts");
 
 var _select = __webpack_require__(/*! ./select */ "./src/select.tsx");
@@ -119516,7 +119518,7 @@ var _property = __webpack_require__(/*! ./property */ "./src/property.tsx");
 
 var _property2 = _interopRequireDefault(_property);
 
-var _constants = __webpack_require__(/*! ./constants */ "./src/constants.ts");
+var _constants2 = __webpack_require__(/*! ./constants */ "./src/constants.ts");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -119590,9 +119592,9 @@ var FormView = function (_React$Component) {
 
             var catalog = FormView.generateProperties(graph.get(id));
             return _react2.default.createElement("div", { className: "form" }, _react2.default.createElement("h3", { className: "mono" }, id), graph.get(id).map(function (type, key) {
-                return _react2.default.createElement(_react.Fragment, { key: key }, key ? ", " : null, _react2.default.createElement("span", { className: "mono" }, _schema.nodes[type][_schema.LABEL]));
-            }), _react2.default.createElement("input", { className: "float", value: "Remove", type: "button", onClick: onRemove }), _react2.default.createElement("hr", null), _react2.default.createElement(_select2.default, { hash: "", placeholder: "Search for a property to enter values", catalog: catalog, onSubmit: function onSubmit(property) {
-                    var _flattenValues = (0, _schema.flattenValues)(_schema.nodes[property][_schema.RANGE]),
+                return _react2.default.createElement(_react.Fragment, { key: key }, key ? ", " : null, _react2.default.createElement("span", { className: "mono" }, _schema.nodes[type][_constants.LABEL]));
+            }), onRemove && _react2.default.createElement("input", { className: "float", value: "Remove", type: "button", onClick: onRemove }), _react2.default.createElement("hr", null), _react2.default.createElement(_select2.default, { hash: "", parentProperty: _constants.SUBPROPERTY, parentDescription: "Subproperty", childDescription: "Children", placeholder: "Search for a property to enter values", catalog: catalog, inheritance: _schema.propertyInheritance, onSubmit: function onSubmit(property) {
+                    var _flattenValues = (0, _schema.flattenValues)(_schema.nodes[property][_constants.RANGE]),
                         _flattenValues2 = (0, _slicedToArray3.default)(_flattenValues, 1),
                         type = _flattenValues2[0];
 
@@ -119630,7 +119632,7 @@ var FormView = function (_React$Component) {
         value: function renderType(property, index, formValue) {
             var _this5 = this;
 
-            var range = (0, _schema.flattenValues)(_schema.nodes[property][_schema.RANGE]);
+            var range = (0, _schema.flattenValues)(_schema.nodes[property][_constants.RANGE]);
             return _react2.default.createElement("select", { value: formValue.type, disabled: range.length === 1, onChange: function onChange(event) {
                     var type = event.target.value;
                     if (type !== formValue.type) {
@@ -119640,7 +119642,7 @@ var FormView = function (_React$Component) {
                         _this5.props.onChange(form);
                     }
                 } }, range.map(function (type, key) {
-                return _react2.default.createElement("option", { key: key, value: type }, _schema.nodes[type][_schema.LABEL]);
+                return _react2.default.createElement("option", { key: key, value: type }, _schema.nodes[type][_constants.LABEL]);
             }));
         }
     }, {
@@ -119653,7 +119655,7 @@ var FormView = function (_React$Component) {
                 graph = _props2.graph,
                 id = _props2.id;
 
-            var label = _schema.nodes[property][_schema.LABEL];
+            var label = _schema.nodes[property][_constants.LABEL];
             var path = id.split("/").concat([label, index.toString()]);
             return _react2.default.createElement(_property2.default, { path: path, graph: graph, formValue: formValue, createNode: createNode, onChange: function onChange(value, newId, newForm) {
                     var path = [property, index];
@@ -119678,7 +119680,7 @@ var FormView = function (_React$Component) {
         value: function generateProperties(types) {
             var set = new Set();
             var props = types.reduce(function (props, type) {
-                return props.concat(Array.from(_schema.ancestry[type]).reduce(function (props, type) {
+                return props.concat((0, _schema.enumerateAncestry)(type, _constants.SUBCLASS).reduce(function (props, type) {
                     var filter = function filter(prop) {
                         return !set.has(prop) && !!set.add(prop);
                     };
@@ -119694,13 +119696,13 @@ var FormView = function (_React$Component) {
         key: "defaultFormValue",
         value: function defaultFormValue(type, nodes) {
             var props = { type: type };
-            if (_constants.constants.hasOwnProperty(type)) {
+            if (_constants2.constants.hasOwnProperty(type)) {
                 props.value = Constant;
                 props.constant = FormView.defaultValues.hasOwnProperty(type) ? FormView.defaultValues[type] : FormView.defaultValue;
             } else {
                 var id = nodes.findKey(function (types) {
                     return types.some(function (t) {
-                        return _schema.inheritance[type].has(t);
+                        return (0, _schema.searchAncestry)(t, type, _constants.SUBCLASS);
                     });
                 });
                 if (id !== undefined) {
@@ -119794,11 +119796,13 @@ var _immutable = __webpack_require__(/*! immutable */ "./node_modules/immutable/
 
 var _schema = __webpack_require__(/*! ./schema */ "./src/schema/index.ts");
 
+var _constants = __webpack_require__(/*! ./schema/constants */ "./src/schema/constants.ts");
+
 var _form = __webpack_require__(/*! ./form */ "./src/form.tsx");
 
 var _form2 = _interopRequireDefault(_form);
 
-var _constants = __webpack_require__(/*! ./constants */ "./src/constants.ts");
+var _constants2 = __webpack_require__(/*! ./constants */ "./src/constants.ts");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -119822,8 +119826,8 @@ function PropertyView(props) {
     var value = formValue.value,
         type = formValue.type;
 
-    if (_constants.constants.hasOwnProperty(type) && value === _form.Constant) {
-        var _constants$type = _constants.constants[type],
+    if (_constants2.constants.hasOwnProperty(type) && value === _form.Constant) {
+        var _constants$type = _constants2.constants[type],
             _props = _constants$type.props,
             getValue = _constants$type.getValue,
             setValue = _constants$type.setValue;
@@ -119834,20 +119838,19 @@ function PropertyView(props) {
                 return event.keyCode === 13 && event.preventDefault();
             } }));
     } else if (_schema.things.has(type)) {
-        var inherited = _schema.inheritance[type];
         var objects = (0, _immutable.List)(props.graph.entrySeq().filter(function (_ref) {
             var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
                 _ = _ref2[0],
                 types = _ref2[1];
 
             return types.some(function (t) {
-                return inherited.has(t);
+                return (0, _schema.searchAncestry)(t, type, _constants.SUBCLASS);
             });
         }));
         var hasObjects = objects.size > 0;
         var hasEnumerations = _schema.enumerations.hasOwnProperty(type);
         var disabled = !hasObjects && !hasEnumerations;
-        var label = _schema.nodes[type][_schema.LABEL];
+        var label = _schema.nodes[type][_constants.LABEL];
         var defaultValue = hasObjects ? objects.get(0)[0] : hasEnumerations ? Array.from(_schema.enumerations[type])[0] : "";
         var radio = function radio(valueType) {
             return {
@@ -119873,15 +119876,13 @@ function PropertyView(props) {
                 var props = { value: _form.Reference, reference: reference, inline: null };
                 _onChange(formValue.with(props));
             } }, disabled && _react2.default.createElement("option", { value: "" }, "No ", label, " objects found."), Array.from(_schema.enumerations[type] || []).map(function (id, key) {
-            return _react2.default.createElement("option", { key: -(key + 1), value: id }, _schema.nodes[id][_schema.LABEL]);
+            return _react2.default.createElement("option", { key: -(key + 1), value: id }, _schema.nodes[id][_constants.LABEL]);
         }), objects.map(function (_ref4, key) {
             var _ref5 = (0, _slicedToArray3.default)(_ref4, 1),
                 id = _ref5[0];
 
             return _react2.default.createElement("option", { key: key, value: id }, id);
-        }))), _react2.default.createElement("div", null, _react2.default.createElement("input", Object.assign({}, radio(_form.Inline))), _react2.default.createElement("select", { disabled: inherited.size === 1 || value === _form.Reference }, Array.from(inherited).map(function (subtype, key) {
-            return _react2.default.createElement("option", { key: key }, _schema.nodes[subtype][_schema.LABEL]);
-        })), _react2.default.createElement("input", { className: "split", type: "button", value: "Split into new object", disabled: value === _form.Reference, onClick: function onClick(event) {
+        }))), _react2.default.createElement("div", null, _react2.default.createElement("input", Object.assign({}, radio(_form.Inline))), _react2.default.createElement("select", { disabled: objects.size === 1 || value === _form.Reference }), _react2.default.createElement("input", { className: "split", type: "button", value: "Split into new object", disabled: value === _form.Reference, onClick: function onClick(event) {
                 event.preventDefault();
                 var reference = createNode([type]);
                 var inline = (0, _immutable.Map)({});
@@ -119892,6 +119893,39 @@ function PropertyView(props) {
         return _react2.default.createElement("span", null, "\"Cannot enter this kind of value yet\"");
     }
 }
+
+/***/ }),
+
+/***/ "./src/schema/constants.ts":
+/*!*********************************!*\
+  !*** ./src/schema/constants.ts ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ID = exports.ID = "@id";
+var TYPE = exports.TYPE = "@type";
+var DATA = exports.DATA = "@data";
+var VALUE = exports.VALUE = "@value";
+var CONTEXT = exports.CONTEXT = "@context";
+var GRAPH = exports.GRAPH = "@graph";
+var SOURCE = exports.SOURCE = "http://underlay.mit.edu/source";
+var TIME = exports.TIME = "http://underlay.mit.edu/time";
+var LABEL = exports.LABEL = "rdfs:label";
+var COMMENT = exports.COMMENT = "rdfs:comment";
+var DOMAIN = exports.DOMAIN = "http://schema.org/domainIncludes";
+var RANGE = exports.RANGE = "http://schema.org/rangeIncludes";
+var SUBPROPERTY = exports.SUBPROPERTY = "rdfs:subPropertyOf";
+var SUBCLASS = exports.SUBCLASS = "rdfs:subClassOf";
+var enumeration = exports.enumeration = "http://schema.org/Enumeration";
+var thing = exports.thing = "http://schema.org/Thing";
+var property = exports.property = "rdf:Property";
 
 /***/ }),
 
@@ -119908,32 +119942,21 @@ function PropertyView(props) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.enumerations = exports.inheritance = exports.ancestry = exports.things = exports.thing = exports.nodes = exports.schema = exports.enumeration = exports.SUBCLASS = exports.SUBPROPERTY = exports.RANGE = exports.DOMAIN = exports.COMMENT = exports.LABEL = exports.TIME = exports.SOURCE = exports.GRAPH = exports.CONTEXT = exports.VALUE = exports.DATA = exports.TYPE = exports.ID = undefined;
+exports.enumerations = exports.propertyInheritance = exports.classInheritance = exports.things = exports.properties = exports.nodes = exports.schema = undefined;
 
 var _typeof2 = __webpack_require__(/*! babel-runtime/helpers/typeof */ "./node_modules/babel-runtime/helpers/typeof.js");
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
 exports.flattenValues = flattenValues;
+exports.searchAncestry = searchAncestry;
+exports.enumerateAncestry = enumerateAncestry;
 exports.enumerateProperties = enumerateProperties;
+
+var _constants = __webpack_require__(/*! ./constants */ "./src/schema/constants.ts");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ID = exports.ID = "@id";
-var TYPE = exports.TYPE = "@type";
-var DATA = exports.DATA = "@data";
-var VALUE = exports.VALUE = "@value";
-var CONTEXT = exports.CONTEXT = "@context";
-var GRAPH = exports.GRAPH = "@graph";
-var SOURCE = exports.SOURCE = "http://underlay.mit.edu/source";
-var TIME = exports.TIME = "http://underlay.mit.edu/time";
-var LABEL = exports.LABEL = "rdfs:label";
-var COMMENT = exports.COMMENT = "rdfs:comment";
-var DOMAIN = exports.DOMAIN = "http://schema.org/domainIncludes";
-var RANGE = exports.RANGE = "http://schema.org/rangeIncludes";
-var SUBPROPERTY = exports.SUBPROPERTY = "rdfs:subPropertyOf";
-var SUBCLASS = exports.SUBCLASS = "rdfs:subClassOf";
-var enumeration = exports.enumeration = "http://schema.org/Enumeration";
 function flattenValue(propertyValue) {
     if ((typeof propertyValue === "undefined" ? "undefined" : (0, _typeof3.default)(propertyValue)) === "object") {
         return propertyValue["@id"];
@@ -119953,22 +119976,27 @@ function flattenValues(propertyValues) {
 var schema = exports.schema = __webpack_require__(/*! ./schema.json */ "./src/schema/schema.json");
 window.schema = schema;
 var nodes = exports.nodes = {};
-schema[GRAPH].forEach(function (node) {
-    return nodes[node[ID]] = node;
+schema[_constants.GRAPH].forEach(function (node) {
+    return nodes[node[_constants.ID]] = node;
 });
 window.nodes = nodes;
-var thing = exports.thing = "http://schema.org/Thing";
-var things = exports.things = new Set([thing]);
+var properties = exports.properties = new Set([]);
+function traverseProperties(node) {
+    if (node[_constants.TYPE] === _constants.property) {
+        properties.add(node[_constants.ID]);
+    }
+}
+var things = exports.things = new Set([_constants.thing]);
 function traverseThings(node) {
     var isThing = false;
-    if (!things.has(node[ID])) {
-        flattenValues(node[SUBCLASS]).forEach(function (subclass) {
+    if (!things.has(node[_constants.ID])) {
+        flattenValues(node[_constants.SUBCLASS]).forEach(function (subclass) {
             if (things.has(subclass)) {
-                things.add(node[ID]);
+                things.add(node[_constants.ID]);
                 isThing = true;
             } else if (nodes.hasOwnProperty(subclass)) {
                 if (traverseThings(nodes[subclass])) {
-                    things.add(node[ID]);
+                    things.add(node[_constants.ID]);
                     isThing = true;
                 }
             }
@@ -119976,55 +120004,67 @@ function traverseThings(node) {
     }
     return isThing;
 }
-schema[GRAPH].forEach(traverseThings);
+schema[_constants.GRAPH].forEach(function (node) {
+    traverseProperties(node);
+    traverseThings(node);
+});
 window.things = things;
-var ancestry = exports.ancestry = {};
-function traverseAncestry(type, history) {
-    history.add(type);
-    if (nodes.hasOwnProperty(type) && nodes[type].hasOwnProperty(SUBCLASS)) {
-        flattenValues(nodes[type][SUBCLASS]).forEach(function (value) {
-            return traverseAncestry(value, history);
+window.properties = properties;
+function searchAncestry(type, target, parent) {
+    if (type === target) return true;else if (nodes[type] && nodes[type][parent]) {
+        return flattenValues(nodes[type][parent]).some(function (t) {
+            return searchAncestry(t, target, parent);
+        });
+    } else return false;
+}
+function traverseAncestry(type, parent, ancestry) {
+    ancestry.push(type);
+    if (nodes[type] && nodes[type][parent]) {
+        flattenValues(nodes[type][parent]).forEach(function (value) {
+            return traverseAncestry(value, parent, ancestry);
         });
     }
 }
-function enumerateAncestry(type) {
-    var history = new Set();
-    traverseAncestry(type, history);
-    return history;
+function enumerateAncestry(type, parent) {
+    var ancestry = [];
+    traverseAncestry(type, parent, ancestry);
+    return ancestry;
 }
-things.forEach(function (type) {
-    return ancestry[type] = enumerateAncestry(type);
-});
-var inheritance = exports.inheritance = {};
-var keys = Object.keys(ancestry);
-things.forEach(function (type) {
-    var types = keys.filter(function (key) {
-        return ancestry[key].has(type);
-    });
-    var set = new Set();
-    things.forEach(function (epyt) {
-        return ancestry[epyt].has(type) && set.add(epyt);
-    });
-    inheritance[type] = set;
-});
 function enumerateProperties(type) {
-    return schema[GRAPH].filter(function (node) {
-        return node.hasOwnProperty(DOMAIN) && flattenValues(node[DOMAIN]).includes(type);
+    return schema[_constants.GRAPH].filter(function (node) {
+        return node[_constants.DOMAIN] && flattenValues(node[_constants.DOMAIN]).includes(type);
     }).map(function (node) {
-        return node["@id"];
+        return node[_constants.ID];
     });
 }
+function traverseInheritance(inheritance, pool, parent) {
+    pool.forEach(function (id) {
+        if (!inheritance[id]) inheritance[id] = new Set();
+        flattenValues(nodes[id][parent]).forEach(function (ancestor) {
+            if (!inheritance[ancestor]) inheritance[ancestor] = new Set();
+            inheritance[ancestor].add(id);
+        });
+    });
+}
+var classInheritance = exports.classInheritance = {};
+var propertyInheritance = exports.propertyInheritance = {};
+traverseInheritance(classInheritance, things, _constants.SUBCLASS);
+traverseInheritance(propertyInheritance, properties, _constants.SUBPROPERTY);
 var enumerations = exports.enumerations = {};
-schema[GRAPH].forEach(function (node) {
-    var id = node[ID];
-    if (id !== enumeration && enumerateAncestry(id).has(enumeration)) {
+schema[_constants.GRAPH].forEach(function (_ref) {
+    var id = _ref[_constants.ID];
+
+    if (id !== _constants.enumeration && searchAncestry(id, _constants.enumeration, _constants.SUBCLASS)) {
         enumerations[id] = new Set([]);
     }
 });
-schema[GRAPH].forEach(function (node) {
-    flattenValues(node[TYPE]).forEach(function (type) {
+schema[_constants.GRAPH].forEach(function (_ref2) {
+    var id = _ref2[_constants.ID],
+        type = _ref2[_constants.TYPE];
+
+    flattenValues(type).forEach(function (type) {
         if (enumerations.hasOwnProperty(type)) {
-            enumerations[type].add(node[ID]);
+            enumerations[type].add(id);
         }
     });
 });
@@ -120085,6 +120125,8 @@ var _fuse2 = _interopRequireDefault(_fuse);
 
 var _schema = __webpack_require__(/*! ./schema */ "./src/schema/index.ts");
 
+var _constants = __webpack_require__(/*! ./schema/constants */ "./src/schema/constants.ts");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Select = function (_React$Component) {
@@ -120095,63 +120137,280 @@ var Select = function (_React$Component) {
 
         var _this = (0, _possibleConstructorReturn3.default)(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
 
-        _this.emptySearch = "No results";
-        _this.keyHandlers = {
-            // enter
-            13: function _(_ref) {
-                var focus = _ref.focus,
-                    results = _ref.results;
+        _this.attachInput = function (input) {
+            return _this.input = input;
+        };
+        // Events
+        _this.handleChange = function (event) {
+            var value = event.target.value;
 
-                if (focus < results.size) {
-                    var _results$get = results.get(focus),
-                        id = _results$get.id;
+            var isEmpty = /^\s*$/.test(value);
+            var results = isEmpty ? null : (0, _immutable.List)(_this.state.index.search(value));
+            _this.setState({ value: value, results: results, focus: 0 });
+        };
+        _this.handleSubmit = function (id) {
+            _this.setState({ value: "", results: null, focused: false }, function () {
+                return _this.input && _this.input.blur();
+            });
+            _this.props.onSubmit(id);
+        };
+        _this.onInputFocus = function () {
+            return !_this.state.focused && _this.setState({ focused: true });
+        };
+        _this.onInputBlur = function () {
+            return _this.state.focused && _this.setState({ focused: false });
+        };
+        _this.onKeyDown = function (event) {
+            var keyCode = event.keyCode;
 
-                    _this.handleSubmit(id);
-                }
-            },
-            // up arrow
-            40: function _(_ref2) {
-                var focus = _ref2.focus,
-                    size = _ref2.results.size;
-
-                var newFocus = size ? (focus + 1) % size : 0;
-                _this.setState({ focus: newFocus });
-                var target = _this.results.children[0].children[newFocus];
-                _this.scrollIntoView(target);
-            },
-            // down arrow
-            38: function _(_ref3) {
-                var focus = _ref3.focus,
-                    size = _ref3.results.size;
-
-                var newFocus = size ? (size + focus - 1) % size : 0;
-                _this.setState({ focus: newFocus });
-                var target = _this.results.children[0].children[newFocus];
-                _this.scrollIntoView(target);
+            if (_this.keyHandlers[keyCode]) {
+                event.preventDefault();
+                _this.keyHandlers[keyCode](_this.state);
             }
         };
-        _this.catalog = _this.props.catalog.map(function (record) {
-            var id = record.get(0);
-            var name = _schema.nodes[id][_schema.LABEL];
-            var description = _schema.nodes[id][_schema.COMMENT];
-            var category = record.size > 1 ? record.get(1) : null;
-            return { id: id, name: name, category: category, description: description };
-        }).toArray();
-        _this.everything = (0, _immutable.List)(_this.catalog);
-        _this.index = new _fuse2.default(_this.catalog, Select.fuseOptions);
-        _this.state = {
-            search: "",
+        _this.keyHandlers = {
+            13: function _(_ref) {
+                var focus = _ref.focus,
+                    results = _ref.results,
+                    catalog = _ref.catalog;
+
+                // enter
+                var index = results !== null ? results.get(focus) : focus;
+
+                var _catalog$get = catalog.get(index),
+                    id = _catalog$get.id;
+
+                _this.handleSubmit(id);
+            },
+            40: function _(_ref2) {
+                var focus = _ref2.focus,
+                    results = _ref2.results,
+                    catalog = _ref2.catalog;
+
+                // down arrow
+                if (results !== null) {
+                    _this.setState({ focus: (focus + 1) % results.size });
+                } else {
+                    var _catalog$get2 = catalog.get(focus),
+                        expanded = _catalog$get2.expanded,
+                        size = _catalog$get2.size;
+
+                    var delta = expanded ? 1 : size;
+                    if (focus + delta < catalog.size) {
+                        _this.setState({ focus: focus + delta });
+                    }
+                }
+                // 	const target = this.results.children[0].children[newFocus]
+                // 	this.scrollIntoView(target as HTMLDivElement)
+            },
+            39: function _(_ref3) {
+                var focus = _ref3.focus,
+                    catalog = _ref3.catalog,
+                    results = _ref3.results;
+
+                // right arrow
+                if (results === null) {
+                    var entry = catalog.get(focus);
+                    if (entry.size > 1) {
+                        entry.expanded = true;
+                        _this.setState({ focus: focus + 1 });
+                    }
+                }
+            },
+            38: function _(_ref4) {
+                var focus = _ref4.focus,
+                    results = _ref4.results,
+                    catalog = _ref4.catalog;
+
+                // up arrow
+                if (results !== null) {
+                    _this.setState({ focus: (results.size + focus - 1) % results.size });
+                } else if (focus > 0) {
+                    var previous = catalog.get(focus - 1);
+                    while (!_this.isExpanded(previous)) {
+                        previous = catalog.get(previous.index - 1);
+                    }
+                    _this.setState({ focus: previous.index });
+                }
+            },
+            37: function _(_ref5) {
+                var focus = _ref5.focus,
+                    catalog = _ref5.catalog,
+                    results = _ref5.results;
+
+                // left arrow
+                if (results === null) {
+                    var entry = catalog.get(focus);
+                    if (entry.index !== entry.parent) {
+                        var parent = catalog.get(entry.parent);
+                        parent.expanded = false;
+                        _this.setState({ focus: parent.index });
+                    }
+                }
+            }
+        };
+        _this.state = Object.assign({
+            catalog: null,
+            roots: null,
+            index: null,
+            // These are true
+            value: "",
             focus: 0,
             focused: true,
-            results: _this.everything
-        };
+            results: null
+        }, _this.updateIndex());
         _this.input = null;
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.renderResult = _this.renderResult.bind(_this);
         return _this;
     }
 
     (0, _createClass3.default)(Select, [{
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevProps.catalog !== this.props.catalog) {
+                this.setState(this.updateIndex);
+            }
+        }
+    }, {
+        key: "updateIndex",
+        value: function updateIndex() {
+            var _this2 = this;
+
+            var catalog = [];
+            var roots = [];
+            this.props.catalog.forEach(function (record) {
+                roots.push(catalog.length);
+                Select.parseCatalog(record, catalog, 0, _this2.props.inheritance);
+            });
+            window.catalog = catalog;
+            return {
+                catalog: (0, _immutable.List)(catalog),
+                index: new _fuse2.default(catalog, Select.fuseOptions),
+                roots: (0, _immutable.List)(roots)
+            };
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _state = this.state,
+                focused = _state.focused,
+                value = _state.value;
+
+            return _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("div", { className: "select-header" }, _react2.default.createElement("input", { type: "text", className: "search", placeholder: this.props.placeholder, ref: this.attachInput, autoFocus: true, value: value, onChange: this.handleChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.onKeyDown }), this.props.children), focused && this.renderContainer());
+        }
+    }, {
+        key: "renderContainer",
+        value: function renderContainer() {
+            var _this3 = this;
+
+            return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("div", { className: "select" }, _react2.default.createElement("div", { ref: function ref(div) {
+                    return _this3.results = div;
+                }, className: "results" }, _react2.default.createElement("div", { className: "scroller" }, this.renderContent())), _react2.default.createElement("div", { className: "description" }, this.renderDescription())), _react2.default.createElement("hr", null));
+        }
+    }, {
+        key: "renderContent",
+        value: function renderContent() {
+            var _this4 = this;
+
+            var _state2 = this.state,
+                roots = _state2.roots,
+                results = _state2.results,
+                value = _state2.value,
+                catalog = _state2.catalog;
+            // console.log("roots", roots, "results", results)
+
+            if (!value || !results) return this.renderTrees(roots);
+            if (results.size === 0) return Select.emptySearch;else return results.map(function (result, index) {
+                return _this4.renderItem(index, catalog.get(result));
+            });
+        }
+    }, {
+        key: "renderTrees",
+        value: function renderTrees(indices) {
+            var _this5 = this;
+
+            var results = [];
+            indices.forEach(function (index) {
+                return _this5.renderTree(index, results, 0);
+            });
+            return results;
+        }
+    }, {
+        key: "renderTree",
+        value: function renderTree(index, results, depth) {
+            // console.log("rendering", index, this.state.catalog.get(index))
+            var entry = this.state.catalog.get(index);
+            var delta = index - results.length;
+            var expanded = this.isExpanded(entry, depth);
+            results.push(expanded ? this.renderItem(index, entry, depth) : null);
+            var size = this.props.inheritance[entry.id].size;
+
+            for (var i = 0; i < size; i++) {
+                this.renderTree(results.length + delta, results, depth + 1);
+            }
+        }
+    }, {
+        key: "renderItem",
+        value: function renderItem(index, entry, depth) {
+            var _this6 = this;
+
+            var className = index === this.state.focus ? "focus mono" : "mono";
+            var handleFocus = function handleFocus(event) {
+                if (_this6.state.focus !== index) {
+                    _this6.setState({ focus: index });
+                }
+            };
+            return _react2.default.createElement("div", { key: index, className: "result", onMouseEnter: handleFocus, onMouseMove: handleFocus, onMouseDown: function onMouseDown(event) {
+                    event.preventDefault();
+                    _this6.handleSubmit(entry.id);
+                } }, !isNaN(depth) && _react2.default.createElement("span", { className: "spacer" }, "  ".repeat(depth)), _react2.default.createElement("span", { className: className }, entry.name));
+        }
+    }, {
+        key: "renderDescription",
+        value: function renderDescription() {
+            var _state3 = this.state,
+                catalog = _state3.catalog,
+                focus = _state3.focus,
+                results = _state3.results;
+
+            var index = results === null ? focus : results.get(focus);
+            var entry = catalog.get(index);
+            if (entry) {
+                return _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("h1", { className: "mono" }, entry.name), entry.category && _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("div", null, "Inherited from", " ", _react2.default.createElement("span", { className: "mono" }, _schema.nodes[entry.category][_constants.LABEL]))), this.renderParents(entry), this.renderChildren(entry), _react2.default.createElement("div", null, "Range:", " ", _react2.default.createElement("span", { className: "mono" }, (0, _schema.flattenValues)(_schema.nodes[entry.id][_constants.RANGE]).filter(function (id) {
+                    return _schema.nodes[id];
+                }).map(function (id) {
+                    return _schema.nodes[id][_constants.LABEL];
+                }).join(", "))), _react2.default.createElement("hr", null), _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: entry.description } }));
+            }
+        }
+    }, {
+        key: "renderParents",
+        value: function renderParents(entry) {
+            var _props = this.props,
+                parentDescription = _props.parentDescription,
+                parentProperty = _props.parentProperty;
+
+            var values = _schema.nodes[entry.id][parentProperty];
+            return values ? _react2.default.createElement("div", null, parentDescription, " of", " ", _react2.default.createElement("span", { className: "mono" }, (0, _schema.flattenValues)(values).filter(function (id) {
+                return _schema.nodes[id];
+            }).map(function (id) {
+                return _schema.nodes[id][_constants.LABEL];
+            }).join(", "))) : null;
+        }
+    }, {
+        key: "renderChildren",
+        value: function renderChildren(entry) {
+            var _props2 = this.props,
+                childDescription = _props2.childDescription,
+                inheritance = _props2.inheritance;
+
+            if (inheritance[entry.id].size > 0) {
+                var children = Array.from(inheritance[entry.id]).map(function (id) {
+                    return _schema.nodes[id][_constants.LABEL];
+                });
+                return _react2.default.createElement("div", null, childDescription, ":", " ", _react2.default.createElement("span", { className: "mono" }, children.join(", ")));
+            } else return null;
+        }
+    }, {
         key: "scrollIntoView",
         value: function scrollIntoView(target) {
             var offset = target.offsetTop - this.results.offsetTop;
@@ -120164,91 +120423,54 @@ var Select = function (_React$Component) {
             }
         }
     }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            var _state = this.state,
-                focused = _state.focused,
-                search = _state.search;
-
-            var handle = function handle(f) {
-                return function () {
-                    return focused !== f && _this2.setState({ focused: f });
-                };
-            };
-            return _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("div", { className: "select-header" }, _react2.default.createElement("input", { type: "text", className: "search", placeholder: this.props.placeholder, ref: function ref(input) {
-                    return _this2.input = input;
-                }, autoFocus: true, value: search, onChange: this.handleChange, onFocus: handle(true), onBlur: handle(false), onKeyDown: function onKeyDown(event) {
-                    var keyCode = event.keyCode;
-
-                    if (_this2.keyHandlers.hasOwnProperty(keyCode)) {
-                        event.preventDefault();
-                        _this2.keyHandlers[keyCode](_this2.state);
-                    }
-                } }), this.props.children), focused && this.renderResults());
-        }
-    }, {
-        key: "renderResults",
-        value: function renderResults() {
-            var _this3 = this;
-
-            var content = this.state.results.size > 0 ? this.state.results.map(this.renderResult) : this.emptySearch;
-            return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("div", { className: "select" }, _react2.default.createElement("div", { ref: function ref(div) {
-                    return _this3.results = div;
-                }, className: "results" }, _react2.default.createElement("div", { className: "scroller" }, content)), _react2.default.createElement("div", { className: "description" }, this.renderDescription())), _react2.default.createElement("hr", null));
-        }
-    }, {
-        key: "renderResult",
-        value: function renderResult(entry, key) {
-            var _this4 = this;
-
-            var focus = key === this.state.focus ? "focus mono" : "mono";
-            var handleFocus = function handleFocus(event) {
-                if (_this4.state.focus !== key && _this4.results) {
-                    _this4.setState({ focus: key });
-                    // window.location.hash = this.props.hash + "/" + key
-                }
-            };
-            return _react2.default.createElement("div", { key: key, className: "result", onMouseEnter: handleFocus, onMouseMove: handleFocus, onMouseDown: function onMouseDown(event) {
-                    event.preventDefault();
-                    _this4.handleSubmit(entry.id);
-                } }, _react2.default.createElement("span", { className: focus }, entry.name));
-        }
-    }, {
-        key: "renderDescription",
-        value: function renderDescription() {
-            var _state2 = this.state,
-                results = _state2.results,
-                focus = _state2.focus;
-
-            if (focus < results.size) {
-                var entry = results.get(focus);
-                return _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("h1", { className: "mono" }, entry.name), entry.category && _react2.default.createElement(_react2.default.Fragment, null, _react2.default.createElement("div", null, "Inherited from", " ", _react2.default.createElement("span", { className: "mono" }, _schema.nodes[entry.category][_schema.LABEL])), _react2.default.createElement("div", null, "Range:", " ", (0, _schema.flattenValues)(_schema.nodes[entry.id][_schema.RANGE]).map(function (type, key) {
-                    return _react2.default.createElement(_react.Fragment, { key: key }, key ? ", " : null, _react2.default.createElement("span", { className: "mono" }, _schema.nodes[type][_schema.LABEL]));
-                }))), _react2.default.createElement("hr", null), _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: entry.description } }));
+        key: "isExpanded",
+        value: function isExpanded(entry, depth) {
+            if (isNaN(depth)) depth = Infinity;
+            var parent = this.state.catalog.get(entry.parent);
+            var expanded = parent.expanded || depth === 0;
+            while (parent.index !== parent.parent && --depth > 0) {
+                parent = this.state.catalog.get(parent.parent);
+                expanded = expanded && parent.expanded;
             }
+            return expanded;
         }
-    }, {
-        key: "handleChange",
-        value: function handleChange(event) {
-            var search = event.target.value;
-            var results = /^\s*$/.test(search) ? this.everything : (0, _immutable.List)(this.index.search(search));
-            this.setState({ search: search, results: results, focus: 0 });
-        }
-    }, {
-        key: "handleSubmit",
-        value: function handleSubmit(id) {
-            var _this5 = this;
-
-            this.setState({
-                search: "",
-                results: this.everything,
-                focused: false
-            }, function () {
-                return _this5.input && _this5.input.blur();
+    }], [{
+        key: "parseCatalog",
+        value: function parseCatalog(record, catalog, depth, inheritance) {
+            var id = record.get(0);
+            var node = _schema.nodes[id];
+            var entry = {
+                id: id,
+                name: node[_constants.LABEL],
+                size: null,
+                elder: null,
+                index: null,
+                parent: null,
+                parents: (0, _schema.flattenValues)(node[_constants.SUBCLASS]),
+                category: record.get(1) || null,
+                expanded: depth < 1,
+                description: node[_constants.COMMENT]
+            };
+            var length = catalog.push(entry);
+            var index = length - 1;
+            entry.index = index;
+            entry.parent = index; // Will overwrite except for roots
+            // I'm really sorry about all this.
+            // I picked the wrong abstractions a while ago and now we all have to suffer.
+            inheritance[id].forEach(function (id, i) {
+                // Here `length` is the root of the current subtree,
+                // and `index` is the root of the elder == "previous-sibling-or-parent" subtree
+                Select.parseCatalog((0, _immutable.List)([id]), catalog, depth + 1, inheritance);
+                var root = catalog[length];
+                root.parent = entry.index;
+                root.elder = index;
+                index = length;
+                length += root.size;
             });
-            this.props.onSubmit(id);
+            // Hackiness aside, this is actually a really fast way to build an index like this.
+            // It's a like a doubly-linked list, except it's a triply-linked tree.
+            // And we never have to modify it.
+            entry.size = catalog.length - entry.index;
         }
     }]);
     return Select;
@@ -120256,13 +120478,14 @@ var Select = function (_React$Component) {
 
 exports.default = Select;
 
+Select.emptySearch = "No results";
 Select.fuseOptions = {
+    id: "index",
     shouldSort: true,
     location: 0,
     threshold: 0.3,
     keys: [{ name: "name", weight: 0.8 }, { name: "description", weight: 0.2 }]
 };
-Select.scrollMargin = 8;
 
 /***/ }),
 
@@ -120324,7 +120547,7 @@ var _niceware = __webpack_require__(/*! niceware */ "./node_modules/niceware/lib
 
 var _niceware2 = _interopRequireDefault(_niceware);
 
-var _schema = __webpack_require__(/*! ./schema */ "./src/schema/index.ts");
+var _constants = __webpack_require__(/*! ./schema/constants */ "./src/schema/constants.ts");
 
 var _select = __webpack_require__(/*! ./select */ "./src/select.tsx");
 
@@ -120333,6 +120556,8 @@ var _select2 = _interopRequireDefault(_select);
 var _form = __webpack_require__(/*! ./form */ "./src/form.tsx");
 
 var _form2 = _interopRequireDefault(_form);
+
+var _schema = __webpack_require__(/*! ./schema */ "./src/schema/index.ts");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -120392,7 +120617,7 @@ var Underground = function (_React$Component) {
                 graph = _state.graph;
 
             var disabled = forms.size === 0;
-            return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement(_select2.default, { placeholder: "Create a new object by type", catalog: Underground.createCatalog, onSubmit: function onSubmit(type) {
+            return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement(_select2.default, { parentDescription: "Subclass", parentProperty: _constants.SUBCLASS, placeholder: "Create a new object by type", catalog: (0, _immutable.List)([(0, _immutable.List)([_constants.thing])]), inheritance: _schema.classInheritance, childDescription: "Children", onSubmit: function onSubmit(type) {
                     return _this4.createNode([type]);
                 }, hash: this.state.hash }, this.renderFileInput()), _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("div", { className: "container" }, this.state.forms.entrySeq().map(function (_ref) {
                 var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
@@ -120424,10 +120649,35 @@ var Underground = function (_React$Component) {
                 } }), _react2.default.createElement("input", { disabled: disabled, type: "submit", value: "Download" })));
         }
     }, {
+        key: "removeReference",
+        value: function removeReference(id, form) {
+            var _this5 = this;
+
+            return (0, _immutable.Map)(form.map(function (values) {
+                return (0, _immutable.List)(values.map(function (value) {
+                    var props = {};
+                    if (value.reference === id) {
+                        props.reference = null;
+                        if (value.value === _form.Reference) {
+                            props.value = _form.Inline;
+                        }
+                    }
+                    props.inline = value.inline ? _this5.removeReference(id, value.inline) : (0, _immutable.Map)({});
+                    return value.with(props);
+                }));
+            }));
+        }
+    }, {
         key: "removeForm",
         value: function removeForm(id) {
-            var forms = this.state.forms.delete(id);
-            this.setState({ forms: forms });
+            var _this6 = this;
+
+            var graph = this.state.graph.delete(id);
+            var slice = this.state.forms.delete(id);
+            var forms = slice.map(function (form) {
+                return _this6.removeReference(id, form);
+            });
+            this.setState({ forms: (0, _immutable.Map)(forms), graph: graph });
         }
     }, {
         key: "setHash",
@@ -120449,7 +120699,7 @@ var Underground = function (_React$Component) {
     }, {
         key: "accumulateNode",
         value: function accumulateNode(acc, elm) {
-            var _this5 = this;
+            var _this7 = this;
 
             var _elm = (0, _slicedToArray3.default)(elm, 2),
                 property = _elm[0],
@@ -120462,12 +120712,12 @@ var Underground = function (_React$Component) {
                     reference = formValue.reference,
                     inline = formValue.inline;
 
-                var node = (0, _defineProperty3.default)({}, _schema.TYPE, type);
+                var node = (0, _defineProperty3.default)({}, _constants.TYPE, type);
                 if (value === _form.Constant) {
                     var result = constant ? JSON.parse(constant) : _form2.default.defaultValues.hasOwnProperty(formValue.type) ? _form2.default.defaultValues[formValue.type] : null;
-                    node[_schema.VALUE] = result;
+                    node[_constants.VALUE] = result;
                 } else if (value === _form.Reference) {
-                    node[_schema.ID] = reference || null;
+                    node[_constants.ID] = reference || null;
                 } else if (value === _form.Inline) {
                     inline.entrySeq().map(function (_ref3) {
                         var _ref4 = (0, _slicedToArray3.default)(_ref3, 2),
@@ -120475,7 +120725,7 @@ var Underground = function (_React$Component) {
                             vals = _ref4[1];
 
                         return [prop, vals.toArray()];
-                    }).reduce(_this5.accumulateNode, (0, _immutable.Map)()).forEach(function (value, key) {
+                    }).reduce(_this7.accumulateNode, (0, _immutable.Map)()).forEach(function (value, key) {
                         return node[key] = value;
                     });
                 }
@@ -120494,7 +120744,7 @@ var Underground = function (_React$Component) {
 
             var type = this.state.graph.get(id);
             var properties = props.reduce(this.accumulateNode, (0, _immutable.Map)({}));
-            return Object.assign((_Object$assign = {}, (0, _defineProperty3.default)(_Object$assign, _schema.ID, id), (0, _defineProperty3.default)(_Object$assign, _schema.TYPE, type), _Object$assign), properties.toJS());
+            return Object.assign((_Object$assign = {}, (0, _defineProperty3.default)(_Object$assign, _constants.ID, id), (0, _defineProperty3.default)(_Object$assign, _constants.TYPE, type), _Object$assign), properties.toJS());
         }
     }, {
         key: "handleSubmit",
@@ -120504,12 +120754,12 @@ var Underground = function (_React$Component) {
             event.preventDefault();
             var date = new Date();
             var time = date.toISOString();
-            var data = (_data = {}, (0, _defineProperty3.default)(_data, _schema.TIME, time), (0, _defineProperty3.default)(_data, _schema.SOURCE, this.source), _data);
+            var data = (_data = {}, (0, _defineProperty3.default)(_data, _constants.TIME, time), (0, _defineProperty3.default)(_data, _constants.SOURCE, this.source), _data);
             var nodes = this.state.forms.map(function (props) {
                 return props.entrySeq();
             }).entrySeq();
             var graph = nodes.map(this.exportNode).toJS();
-            var assertion = Object.assign((_Object$assign2 = {}, (0, _defineProperty3.default)(_Object$assign2, _schema.CONTEXT, {}), (0, _defineProperty3.default)(_Object$assign2, _schema.GRAPH, graph), _Object$assign2), data);
+            var assertion = Object.assign((_Object$assign2 = {}, (0, _defineProperty3.default)(_Object$assign2, _constants.CONTEXT, {}), (0, _defineProperty3.default)(_Object$assign2, _constants.GRAPH, graph), _Object$assign2), data);
             var json = JSON.stringify(assertion);
             var bytes = _buffer.Buffer.from(json, "utf8");
             var mhash = (0, _multihashing2.default)(bytes, "sha1");
@@ -120523,7 +120773,7 @@ var Underground = function (_React$Component) {
     }, {
         key: "readFile",
         value: function readFile(event) {
-            var _this6 = this;
+            var _this8 = this;
 
             event.preventDefault();
             var files = event.target.files;
@@ -120542,7 +120792,7 @@ var Underground = function (_React$Component) {
                         // } else {
 
 
-                        _this6.importFile(hash, file);
+                        _this8.importFile(hash, file);
                         // }
                     }
                 });
@@ -120551,7 +120801,7 @@ var Underground = function (_React$Component) {
     }, {
         key: "importFile",
         value: function importFile(hash, file) {
-            var _this7 = this;
+            var _this9 = this;
 
             var reader = new FileReader();
             var data = void 0;
@@ -120562,7 +120812,7 @@ var Underground = function (_React$Component) {
                 } catch (e) {
                     console.error("could not parse text", text, e);
                 }
-                _this7.importAssertion(data, hash);
+                _this9.importAssertion(data, hash);
             };
             reader.readAsText(file);
         }
@@ -120601,29 +120851,12 @@ var Underground = function (_React$Component) {
         value: function createId() {
             return _niceware2.default.generatePassphrase(4).join("-");
         }
-    }, {
-        key: "generateProperties",
-        value: function generateProperties(types) {
-            var set = new Set();
-            return (0, _immutable.List)(types.reduce(function (props, type) {
-                return props.concat(Array.from(_schema.ancestry[type]).reduce(function (props, type) {
-                    return props.concat((0, _schema.enumerateProperties)(type).filter(function (prop) {
-                        return !set.has(prop) && !!set.add(prop);
-                    }).map(function (prop) {
-                        return (0, _immutable.List)([prop, type]);
-                    }));
-                }, (0, _immutable.List)([])));
-            }, (0, _immutable.List)([])));
-        }
     }]);
     return Underground;
 }(_react2.default.Component);
 
 exports.default = Underground;
 
-Underground.createCatalog = (0, _immutable.List)(Array.from(_schema.things).map(function (id) {
-    return (0, _immutable.List)([id]);
-}));
 Underground.key = "http://underlay.mit.edu";
 
 /***/ }),

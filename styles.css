@@ -28,8 +28,8 @@ input.split {
 }
 
 .select .results {
-	min-width: 8em;
-	width: 8em;
+	min-width: 10em;
+	width: 10em;
 	vertical-align: top;
 	height: 100%;
 	overflow-y: scroll;
@@ -56,6 +56,11 @@ input.split {
 .select .results .result .focus {
 	font-weight: bold;
 	text-decoration: underline;
+}
+
+.spacer {
+	font-family: monospace;
+	white-space: pre;
 }
 
 /* -------- */

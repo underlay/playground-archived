@@ -1,19 +1,14 @@
 import React, { Fragment } from "react"
+import { ID, TYPE, SOURCE, VALUE, LABEL, SUBCLASS } from "../schema/constants"
 import {
 	SourcedNode,
-	VALUE,
 	SourcedValues,
-	ancestry,
 	SourcedConstant,
-	ID,
-	TYPE,
-	SOURCE,
 	SourcedReference,
 	SourcedInline,
 	Values,
-	nodes,
-	LABEL,
-} from "../schema"
+} from "../schema/types"
+import { nodes, enumerateAncestry } from "../schema"
 import { Map, List, Set } from "immutable"
 // import MapView from "./types/map"
 import TableView from "./types/table"
@@ -444,7 +439,7 @@ const renderers = {
 }
 
 export function View({ depth, type, ...rest }: ViewProps) {
-	const ancestors = Array.from(ancestry[type])
+	const ancestors = enumerateAncestry(type, SUBCLASS)
 	const children = ancestors.reduce((child, type, key) => {
 		if (renderers.hasOwnProperty(type)) {
 			const properties: ViewProps = { ...rest, key, type, depth: depth + 1 }
