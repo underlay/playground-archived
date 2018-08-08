@@ -1,23 +1,17 @@
 import React, { Fragment } from "react"
+import { ID, TYPE, SOURCE, VALUE, LABEL, SUBCLASS } from "../schema/constants"
 import {
 	SourcedNode,
-	VALUE,
 	SourcedValues,
-	ancestry,
 	SourcedConstant,
-	ID,
-	TYPE,
-	SOURCE,
 	SourcedReference,
 	SourcedInline,
 	Values,
-	nodes,
-	LABEL,
-} from "../schema"
+} from "../schema/types"
+import { nodes, enumerateAncestry } from "../schema"
 import { Map, List, Set } from "immutable"
-import MapView from "./types/map"
+// import MapView from "./types/map"
 import TableView from "./types/table"
-import { SSL_OP_NETSCAPE_CA_DN_BUG } from "constants"
 
 export function getConstant(value: SourcedValues) {
 	if (value && value.length > 0 && value[0].hasOwnProperty(VALUE)) {
@@ -363,38 +357,38 @@ const renderers = {
 			</Fragment>
 		)
 	},
-	"http://schema.org/Place"({ props, graph, children }: ViewProps) {
-		const geo = "http://schema.org/geo"
-		const lat = "http://schema.org/latitude"
-		const long = "http://schema.org/longitude"
-		let map = null
-		if (props.hasOwnProperty(geo)) {
-			const value = props[geo]
-			const values = Array.isArray(value) ? value : [value]
-			map = values.map((value: SourcedInline, key) => {
-				const source = value[SOURCE]
-				const props = resolve(value, graph)
-				const raw = [props[lat], props[long]]
-				const [latitude, longitude] = raw.map(getConstant) as [number, number]
-				if (latitude && longitude) {
-					const properties = { key, latitude, longitude, scale: 3 }
-					return (
-						<Fragment>
-							<MapView {...properties} />
-							{renderSource(source)}
-						</Fragment>
-					)
-				} else return null
-			})
-		}
-		return (
-			<Fragment>
-				<p>And i'm a place</p>
-				{map}
-				{children}
-			</Fragment>
-		)
-	},
+	// "http://schema.org/Place"({ props, graph, children }: ViewProps) {
+	// 	const geo = "http://schema.org/geo"
+	// 	const lat = "http://schema.org/latitude"
+	// 	const long = "http://schema.org/longitude"
+	// 	let map = null
+	// 	if (props.hasOwnProperty(geo)) {
+	// 		const value = props[geo]
+	// 		const values = Array.isArray(value) ? value : [value]
+	// 		map = values.map((value: SourcedInline, key) => {
+	// 			const source = value[SOURCE]
+	// 			const props = resolve(value, graph)
+	// 			const raw = [props[lat], props[long]]
+	// 			const [latitude, longitude] = raw.map(getConstant) as [number, number]
+	// 			if (latitude && longitude) {
+	// 				const properties = { key, latitude, longitude, scale: 3 }
+	// 				return (
+	// 					<Fragment>
+	// 						<MapView {...properties} />
+	// 						{renderSource(source)}
+	// 					</Fragment>
+	// 				)
+	// 			} else return null
+	// 		})
+	// 	}
+	// 	return (
+	// 		<Fragment>
+	// 			<p>And i'm a place</p>
+	// 			{map}
+	// 			{children}
+	// 		</Fragment>
+	// 	)
+	// },
 	"http://schema.org/Person"({
 		props,
 		graph,
@@ -445,7 +439,7 @@ const renderers = {
 }
 
 export function View({ depth, type, ...rest }: ViewProps) {
-	const ancestors = Array.from(ancestry[type])
+	const ancestors = enumerateAncestry(type, SUBCLASS)
 	const children = ancestors.reduce((child, type, key) => {
 		if (renderers.hasOwnProperty(type)) {
 			const properties: ViewProps = { ...rest, key, type, depth: depth + 1 }

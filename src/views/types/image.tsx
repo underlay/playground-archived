@@ -1,6 +1,7 @@
 import React, { Fragment } from "react"
 import { Map } from "immutable"
-import { SourcedNode, ID, TYPE, SourcedValues, VALUE } from "../../schema"
+import { ID, TYPE, VALUE } from "../../schema/constants"
+import { SourcedNode, SourcedValues } from "../../schema/types"
 
 interface ImageProps {
 	node: SourcedNode

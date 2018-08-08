@@ -1,18 +1,16 @@
-export const ID = "@id"
-export const TYPE = "@type"
-export const DATA = "@data"
-export const VALUE = "@value"
-export const CONTEXT = "@context"
-export const GRAPH = "@graph"
-export const SOURCE = "http://underlay.mit.edu/source"
-export const TIME = "http://underlay.mit.edu/time"
-export const LABEL = "rdfs:label"
-export const COMMENT = "rdfs:comment"
-export const DOMAIN = "http://schema.org/domainIncludes"
-export const RANGE = "http://schema.org/rangeIncludes"
-export const SUBPROPERTY = "rdfs:subPropertyOf"
-export const SUBCLASS = "rdfs:subClassOf"
-export const enumeration = "http://schema.org/Enumeration"
+import {
+	TYPE,
+	ID,
+	GRAPH,
+	SUBCLASS,
+	DOMAIN,
+	enumeration,
+	thing,
+	property,
+	SUBPROPERTY,
+} from "./constants"
+
+import { PropertyValue, PropertyValues, SchemaGraph, SchemaNode } from "./types"
 
 function flattenValue(propertyValue: PropertyValue): string {
 	if (typeof propertyValue === "object") {
@@ -32,68 +30,6 @@ export function flattenValues(propertyValues: PropertyValues): string[] {
 	}
 }
 
-type Context = string | { [key: string]: string }
-type PropertyValue = string | Node<any>
-export type PropertyValues = PropertyValue | PropertyValue[]
-
-export interface Value {
-	[TYPE]: string
-}
-export interface SourcedValue extends Value {
-	[SOURCE]: string
-}
-
-interface Constant extends Value {
-	"@value": string | number | boolean
-}
-interface Reference extends Value {
-	"@id": string
-}
-
-interface Inline extends Value {
-	[prop: string]: string | Array<Constant | Reference | Inline>
-}
-
-export interface SourcedConstant extends Constant, SourcedValue {}
-export interface SourcedReference extends Reference, SourcedValue {}
-export interface SourcedInline extends Inline, SourcedValue {}
-
-export type Values = Array<Constant | Reference | Inline>
-export type SourcedValues = Array<
-	SourcedConstant | SourcedReference | SourcedInline
->
-
-interface Node<P> {
-	[ID]: string
-	[TYPE]: string | string[]
-	[property: string]: P | string | string[]
-}
-
-interface SchemaNode extends Node<PropertyValues> {
-	[LABEL]: string
-	[COMMENT]: string
-}
-
-export type AssertionNode = Node<Values>
-export type SourcedNode = Node<
-	SourcedValues | SourcedConstant | SourcedReference | SourcedInline
->
-
-export interface Graph<T extends Node<any>> {
-	[ID]?: string
-	[CONTEXT]: Context
-	[GRAPH]: T[]
-}
-
-export interface Assertion extends Graph<AssertionNode> {
-	[SOURCE]: string
-	[TIME]: string
-}
-
-interface SchemaGraph extends Graph<SchemaNode> {
-	[ID]: string
-}
-
 export const schema: SchemaGraph = require("./schema.json")
 ;(window as any).schema = schema
 
@@ -101,7 +37,13 @@ export const nodes: { [id: string]: SchemaNode } = {}
 schema[GRAPH].forEach(node => (nodes[node[ID]] = node))
 ;(window as any).nodes = nodes
 
-export const thing = "http://schema.org/Thing"
+export const properties: Set<string> = new Set([])
+function traverseProperties(node: SchemaNode) {
+	if (node[TYPE] === property) {
+		properties.add(node[ID])
+	}
+}
+
 export const things: Set<string> = new Set([thing])
 function traverseThings(node: SchemaNode): boolean {
 	let isThing = false
@@ -121,57 +63,80 @@ function traverseThings(node: SchemaNode): boolean {
 	return isThing
 }
 
-schema[GRAPH].forEach(traverseThings)
+schema[GRAPH].forEach(node => {
+	traverseProperties(node)
+	traverseThings(node)
+})
 ;(window as any).things = things
+;(window as any).properties = properties
 
-export const ancestry: { [type: string]: Set<string> } = {}
-function traverseAncestry(type: string, history: Set<string>) {
-	history.add(type)
-	if (nodes.hasOwnProperty(type) && nodes[type].hasOwnProperty(SUBCLASS)) {
-		flattenValues(nodes[type][SUBCLASS]).forEach(value =>
-			traverseAncestry(value, history)
+export function searchAncestry(
+	type: string,
+	target: string,
+	parent: string
+): boolean {
+	if (type === target) return true
+	else if (nodes[type] && nodes[type][parent]) {
+		return flattenValues(nodes[type][parent]).some(t =>
+			searchAncestry(t, target, parent)
+		)
+	} else return false
+}
+
+function traverseAncestry(type: string, parent: string, ancestry: string[]) {
+	ancestry.push(type)
+	if (nodes[type] && nodes[type][parent]) {
+		flattenValues(nodes[type][parent]).forEach(value =>
+			traverseAncestry(value, parent, ancestry)
 		)
 	}
 }
 
-function enumerateAncestry(type: string) {
-	const history = new Set()
-	traverseAncestry(type, history)
-	return history
+export function enumerateAncestry(type: string, parent: string): string[] {
+	const ancestry = []
+	traverseAncestry(type, parent, ancestry)
+	return ancestry
 }
-things.forEach(type => {
-	ancestry[type] = enumerateAncestry(type)
-})
-
-export const inheritance: { [type: string]: Set<string> } = {}
-const keys = Object.keys(ancestry)
-things.forEach(type => {
-	const types = keys.filter(key => ancestry[key].has(type))
-	const set = new Set()
-	things.forEach(epyt => ancestry[epyt].has(type) && set.add(epyt))
-	inheritance[type] = set
-})
 
 export function enumerateProperties(type: string): string[] {
 	return schema[GRAPH].filter(
-		node =>
-			node.hasOwnProperty(DOMAIN) && flattenValues(node[DOMAIN]).includes(type)
-	).map(node => node["@id"])
+		node => node[DOMAIN] && flattenValues(node[DOMAIN]).includes(type)
+	).map(node => node[ID])
 }
+
+type Inheritance = { [id: string]: Set<string> }
+
+function traverseInheritance(
+	inheritance: Inheritance,
+	pool: Set<string>,
+	parent: string
+) {
+	pool.forEach(id => {
+		if (!inheritance[id]) inheritance[id] = new Set()
+		flattenValues(nodes[id][parent]).forEach(ancestor => {
+			if (!inheritance[ancestor]) inheritance[ancestor] = new Set()
+			inheritance[ancestor].add(id)
+		})
+	})
+}
+
+export const classInheritance: Inheritance = {}
+export const propertyInheritance: Inheritance = {}
+traverseInheritance(classInheritance, things, SUBCLASS)
+traverseInheritance(propertyInheritance, properties, SUBPROPERTY)
 
 export const enumerations: { [type: string]: Set<string> } = {}
 
-schema[GRAPH].forEach(node => {
-	const id = node[ID]
-	if (id !== enumeration && enumerateAncestry(id).has(enumeration)) {
+schema[GRAPH].forEach(({ [ID]: id }) => {
+	if (id !== enumeration && searchAncestry(id, enumeration, SUBCLASS)) {
 		enumerations[id] = new Set([])
 	}
 })
 
-schema[GRAPH].forEach(node => {
-	flattenValues(node[TYPE]).forEach(type => {
+schema[GRAPH].forEach(({ [ID]: id, [TYPE]: type }) => {
+	flattenValues(type).forEach(type => {
 		if (enumerations.hasOwnProperty(type)) {
-			enumerations[type].add(node[ID])
+			enumerations[type].add(id)
 		}
 	})
 })

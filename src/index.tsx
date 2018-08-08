@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 import Underground from "./underground"
-import { Assertion } from "./schema"
+import { Assertion } from "./schema/types"
 
 const main = document.querySelector("main")
 ReactDOM.render(<Underground onSubmit={handleSubmit} />, main)

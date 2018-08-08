@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import * as d3_geo from "d3-geo"
 import * as d3_selection from "d3-selection"
 import * as topojson from "topojson"
