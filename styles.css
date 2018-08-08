@@ -5,6 +5,15 @@
 
 td.value > div {
 	width: max-content;
+	min-width: 100%;
+}
+
+td.value > div > input + .select-header {
+	display: inline-flex;
+}
+
+td.value > div input + select + input {
+	float: right;
 }
 
 input.split {
@@ -210,7 +219,7 @@ header .header {
 
 .table,
 .table th,
-.table td {
+.table > {
 	border: 1px solid #888;
 	width: max-content;
 }

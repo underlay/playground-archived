@@ -56,7 +56,8 @@ export interface FormProps {
 	form: FormValues
 	createNode: (types: string[]) => string
 	graph: Map<string, string[]>
-	onRemove?: () => void
+	label: string
+	onClick: () => void
 	onChange: (form: FormValues, newId?: string, newForm?: FormValues) => void
 }
 
@@ -91,8 +92,9 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		this.renderProperty = this.renderProperty.bind(this)
 	}
 	render() {
-		const { id, graph, onChange, onRemove, form } = this.props
+		const { id, label, graph, onChange, onClick, form } = this.props
 		const catalog = FormView.generateProperties(graph.get(id))
+		console.log("form", form.toJS())
 		return (
 			<div className="form">
 				<h3 className="mono">{id}</h3>
@@ -102,17 +104,17 @@ export default class FormView extends React.Component<FormProps, FormState> {
 						<span className="mono">{nodes[type][LABEL]}</span>
 					</Fragment>
 				))}
-				{onRemove && (
-					<input
-						className="float"
-						value="Remove"
-						type="button"
-						onClick={onRemove}
-					/>
-				)}
+				<input
+					className="float"
+					value={label}
+					type="button"
+					onClick={event => {
+						event.preventDefault()
+						onClick()
+					}}
+				/>
 				<hr />
 				<Select
-					hash=""
 					parentProperty={SUBPROPERTY}
 					parentDescription="Subproperty"
 					childDescription="Children"
@@ -146,7 +148,8 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		[property, values]: [string, List<FormValue>],
 		key: number
 	) {
-		const label = nodes[property]["rdfs:label"]
+		console.log("rendering", property)
+		const label = nodes[property][LABEL]
 		return values.map((formValue, index) => (
 			<tr key={`${key}/${index}`}>
 				{index === 0 && (
@@ -158,16 +161,36 @@ export default class FormView extends React.Component<FormProps, FormState> {
 				<td className="value">
 					{this.renderValue(property, index, formValue)}
 				</td>
-				<td>
-					<input
-						type="button"
-						value="Remove"
-						onClick={() => this.removeProperty(property, index)}
-					/>
-				</td>
 			</tr>
 		))
 	}
+	// private renderTypeSelect(
+	// 	property: string,
+	// 	index: number,
+	// 	formValue: FormValue
+	// ) {
+	// 	const range = flattenValues(nodes[property][RANGE])
+	// 	const catalog = List(range.map(type => List([type])))
+	// 	console.log("catalog", catalog.toJS())
+	// 	return (
+	// 		<Select
+	// 			placeholder="Select value type"
+	// 			parentProperty={SUBCLASS}
+	// 			parentDescription="Subclass"
+	// 			childDescription="Children"
+	// 			inheritance={classInheritance}
+	// 			catalog={catalog}
+	// 			onSubmit={value => {
+	// 				if (value !== formValue.type) {
+	// 					const path = [property, index]
+	// 					const formValue = FormView.defaultFormValue(value, this.props.graph)
+	// 					const form = this.props.form.setIn(path, formValue)
+	// 					this.props.onChange(form)
+	// 				}
+	// 			}}
+	// 		/>
+	// 	)
+	// }
 	private renderType(property: string, index: number, formValue: FormValue) {
 		const range = flattenValues(nodes[property][RANGE])
 		return (
@@ -207,7 +230,13 @@ export default class FormView extends React.Component<FormProps, FormState> {
 					const form = this.props.form.setIn(path, value)
 					this.props.onChange(form, newId, newForm)
 				}}
-			/>
+			>
+				<input
+					type="button"
+					value="Remove"
+					onClick={() => this.removeProperty(property, index)}
+				/>
+			</PropertyView>
 		)
 	}
 	private removeProperty(property: string, index: number) {

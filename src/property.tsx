@@ -1,6 +1,13 @@
 import React, { Fragment } from "react"
 import { List, Map } from "immutable"
-import { things, nodes, enumerations, searchAncestry } from "./schema"
+import {
+	things,
+	nodes,
+	enumerations,
+	searchAncestry,
+	classInheritance,
+	properties,
+} from "./schema"
 import { LABEL, SUBCLASS } from "./schema/constants"
 import Form, {
 	FormValue,
@@ -12,24 +19,36 @@ import Form, {
 	FormProps,
 } from "./form"
 import { constants } from "./constants"
+import Select from "./select"
 
 interface PropertyViewProps {
 	path: string[]
 	formValue: FormValue
+	children: any
 	graph: Map<string, string[]>
 	createNode: (types: string[]) => string
 	onChange: (value: FormValue, newId?: string, newForm?: FormValues) => void
 }
 
-function renderInline(props: PropertyViewProps) {
+function renderInline(props: PropertyViewProps, onClick: () => void) {
 	const { createNode, formValue } = props
 	const id = props.path.join("/")
 	const graph = props.graph.set(id, [formValue.type])
 	const onChange = (inline, newId, newForm) => {
+		// the newId and newForm here are passed up in case a *nested* form
+		// way down the line tries to split into a new object
 		props.onChange(formValue.with({ inline }), newId, newForm)
 	}
 	const form = formValue.inline
-	const formProps: FormProps = { createNode, graph, id, onChange, form }
+	const formProps: FormProps = {
+		createNode,
+		graph,
+		id,
+		onChange,
+		form,
+		label: "Split into new Object",
+		onClick,
+	}
 	return (
 		<Fragment>
 			<br />
@@ -39,7 +58,7 @@ function renderInline(props: PropertyViewProps) {
 }
 
 export default function PropertyView(props: PropertyViewProps) {
-	const { createNode, formValue, onChange } = props
+	const { formValue, createNode, onChange } = props
 	const { value, type } = formValue
 	if (constants.hasOwnProperty(type) && value === Constant) {
 		const { props, getValue, setValue } = constants[type]
@@ -109,22 +128,21 @@ export default function PropertyView(props: PropertyViewProps) {
 							</option>
 						))}
 					</select>
+					{props.children}
 				</div>
 				<div>
 					<input {...radio(Inline)} />
-					<select disabled={objects.size === 1 || value === Reference}>
-						{/* {Array.from(inherited).map((subtype, key) => (
-							<option key={key}>{nodes[subtype][LABEL]}</option>
-						))} */}
-						{/* TODO: Get replaced with the new <Select /> */}
-					</select>
-					<input
-						className="split"
-						type="button"
-						value={`Split into new object`}
-						disabled={value === Reference}
-						onClick={event => {
-							event.preventDefault()
+					<Select
+						placeholder="Select object type"
+						parentProperty={SUBCLASS}
+						parentDescription="Subclass"
+						childDescription="Children"
+						inheritance={classInheritance}
+						catalog={List([List([type])])}
+						onSubmit={type => onChange(formValue.with({ type }))}
+					/>
+					{value === Inline &&
+						renderInline(props, () => {
 							const reference = createNode([type])
 							const inline: FormValues = Map({})
 							const values = { value: Reference, reference, inline }
@@ -133,9 +151,7 @@ export default function PropertyView(props: PropertyViewProps) {
 								reference,
 								props.formValue.inline
 							)
-						}}
-					/>
-					{value === Inline && renderInline(props)}
+						})}
 				</div>
 			</Fragment>
 		)

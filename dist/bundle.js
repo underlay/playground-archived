@@ -119585,15 +119585,20 @@ var FormView = function (_React$Component) {
 
             var _props = this.props,
                 id = _props.id,
+                label = _props.label,
                 graph = _props.graph,
                 onChange = _props.onChange,
-                onRemove = _props.onRemove,
+                _onClick = _props.onClick,
                 form = _props.form;
 
             var catalog = FormView.generateProperties(graph.get(id));
+            console.log("form", form.toJS());
             return _react2.default.createElement("div", { className: "form" }, _react2.default.createElement("h3", { className: "mono" }, id), graph.get(id).map(function (type, key) {
                 return _react2.default.createElement(_react.Fragment, { key: key }, key ? ", " : null, _react2.default.createElement("span", { className: "mono" }, _schema.nodes[type][_constants.LABEL]));
-            }), onRemove && _react2.default.createElement("input", { className: "float", value: "Remove", type: "button", onClick: onRemove }), _react2.default.createElement("hr", null), _react2.default.createElement(_select2.default, { hash: "", parentProperty: _constants.SUBPROPERTY, parentDescription: "Subproperty", childDescription: "Children", placeholder: "Search for a property to enter values", catalog: catalog, inheritance: _schema.propertyInheritance, onSubmit: function onSubmit(property) {
+            }), _react2.default.createElement("input", { className: "float", value: label, type: "button", onClick: function onClick(event) {
+                    event.preventDefault();
+                    _onClick();
+                } }), _react2.default.createElement("hr", null), _react2.default.createElement(_select2.default, { parentProperty: _constants.SUBPROPERTY, parentDescription: "Subproperty", childDescription: "Children", placeholder: "Search for a property to enter values", catalog: catalog, inheritance: _schema.propertyInheritance, onSubmit: function onSubmit(property) {
                     var _flattenValues = (0, _schema.flattenValues)(_schema.nodes[property][_constants.RANGE]),
                         _flattenValues2 = (0, _slicedToArray3.default)(_flattenValues, 1),
                         type = _flattenValues2[0];
@@ -119620,13 +119625,40 @@ var FormView = function (_React$Component) {
                 property = _ref2[0],
                 values = _ref2[1];
 
-            var label = _schema.nodes[property]["rdfs:label"];
+            console.log("rendering", property);
+            var label = _schema.nodes[property][_constants.LABEL];
             return values.map(function (formValue, index) {
-                return _react2.default.createElement("tr", { key: key + "/" + index }, index === 0 && _react2.default.createElement("td", { className: "mono", rowSpan: values.size }, label), _react2.default.createElement("td", { className: "type" }, _this4.renderType(property, index, formValue)), _react2.default.createElement("td", { className: "value" }, _this4.renderValue(property, index, formValue)), _react2.default.createElement("td", null, _react2.default.createElement("input", { type: "button", value: "Remove", onClick: function onClick() {
-                        return _this4.removeProperty(property, index);
-                    } })));
+                return _react2.default.createElement("tr", { key: key + "/" + index }, index === 0 && _react2.default.createElement("td", { className: "mono", rowSpan: values.size }, label), _react2.default.createElement("td", { className: "type" }, _this4.renderType(property, index, formValue)), _react2.default.createElement("td", { className: "value" }, _this4.renderValue(property, index, formValue)));
             });
         }
+        // private renderTypeSelect(
+        // 	property: string,
+        // 	index: number,
+        // 	formValue: FormValue
+        // ) {
+        // 	const range = flattenValues(nodes[property][RANGE])
+        // 	const catalog = List(range.map(type => List([type])))
+        // 	console.log("catalog", catalog.toJS())
+        // 	return (
+        // 		<Select
+        // 			placeholder="Select value type"
+        // 			parentProperty={SUBCLASS}
+        // 			parentDescription="Subclass"
+        // 			childDescription="Children"
+        // 			inheritance={classInheritance}
+        // 			catalog={catalog}
+        // 			onSubmit={value => {
+        // 				if (value !== formValue.type) {
+        // 					const path = [property, index]
+        // 					const formValue = FormView.defaultFormValue(value, this.props.graph)
+        // 					const form = this.props.form.setIn(path, formValue)
+        // 					this.props.onChange(form)
+        // 				}
+        // 			}}
+        // 		/>
+        // 	)
+        // }
+
     }, {
         key: "renderType",
         value: function renderType(property, index, formValue) {
@@ -119661,7 +119693,9 @@ var FormView = function (_React$Component) {
                     var path = [property, index];
                     var form = _this6.props.form.setIn(path, value);
                     _this6.props.onChange(form, newId, newForm);
-                } });
+                } }, _react2.default.createElement("input", { type: "button", value: "Remove", onClick: function onClick() {
+                    return _this6.removeProperty(property, index);
+                } }));
         }
     }, {
         key: "removeProperty",
@@ -119804,24 +119838,38 @@ var _form2 = _interopRequireDefault(_form);
 
 var _constants2 = __webpack_require__(/*! ./constants */ "./src/constants.ts");
 
+var _select = __webpack_require__(/*! ./select */ "./src/select.tsx");
+
+var _select2 = _interopRequireDefault(_select);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function renderInline(props) {
+function renderInline(props, onClick) {
     var createNode = props.createNode,
         formValue = props.formValue;
 
     var id = props.path.join("/");
     var graph = props.graph.set(id, [formValue.type]);
     var onChange = function onChange(inline, newId, newForm) {
+        // the newId and newForm here are passed up in case a *nested* form
+        // way down the line tries to split into a new object
         props.onChange(formValue.with({ inline: inline }), newId, newForm);
     };
     var form = formValue.inline;
-    var formProps = { createNode: createNode, graph: graph, id: id, onChange: onChange, form: form };
+    var formProps = {
+        createNode: createNode,
+        graph: graph,
+        id: id,
+        onChange: onChange,
+        form: form,
+        label: "Split into new Object",
+        onClick: onClick
+    };
     return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("br", null), _react2.default.createElement(_form2.default, Object.assign({}, formProps)));
 }
 function PropertyView(props) {
-    var createNode = props.createNode,
-        formValue = props.formValue,
+    var formValue = props.formValue,
+        createNode = props.createNode,
         _onChange = props.onChange;
     var value = formValue.value,
         type = formValue.type;
@@ -119882,13 +119930,14 @@ function PropertyView(props) {
                 id = _ref5[0];
 
             return _react2.default.createElement("option", { key: key, value: id }, id);
-        }))), _react2.default.createElement("div", null, _react2.default.createElement("input", Object.assign({}, radio(_form.Inline))), _react2.default.createElement("select", { disabled: objects.size === 1 || value === _form.Reference }), _react2.default.createElement("input", { className: "split", type: "button", value: "Split into new object", disabled: value === _form.Reference, onClick: function onClick(event) {
-                event.preventDefault();
-                var reference = createNode([type]);
-                var inline = (0, _immutable.Map)({});
-                var values = { value: _form.Reference, reference: reference, inline: inline };
-                _onChange(formValue.with(values), reference, props.formValue.inline);
-            } }), value === _form.Inline && renderInline(props)));
+        })), props.children), _react2.default.createElement("div", null, _react2.default.createElement("input", Object.assign({}, radio(_form.Inline))), _react2.default.createElement(_select2.default, { placeholder: "Select object type", parentProperty: _constants.SUBCLASS, parentDescription: "Subclass", childDescription: "Children", inheritance: _schema.classInheritance, catalog: (0, _immutable.List)([(0, _immutable.List)([type])]), onSubmit: function onSubmit(type) {
+                return _onChange(formValue.with({ type: type }));
+            } }), value === _form.Inline && renderInline(props, function () {
+            var reference = createNode([type]);
+            var inline = (0, _immutable.Map)({});
+            var values = { value: _form.Reference, reference: reference, inline: inline };
+            _onChange(formValue.with(values), reference, props.formValue.inline);
+        })));
     } else {
         return _react2.default.createElement("span", null, "\"Cannot enter this kind of value yet\"");
     }
@@ -120039,9 +120088,9 @@ function enumerateProperties(type) {
 }
 function traverseInheritance(inheritance, pool, parent) {
     pool.forEach(function (id) {
-        if (!inheritance[id]) inheritance[id] = new Set();
+        if (!inheritance[id]) inheritance[id] = new Set([]);
         flattenValues(nodes[id][parent]).forEach(function (ancestor) {
-            if (!inheritance[ancestor]) inheritance[ancestor] = new Set();
+            if (!inheritance[ancestor]) inheritance[ancestor] = new Set([]);
             inheritance[ancestor].add(id);
         });
     });
@@ -120050,6 +120099,8 @@ var classInheritance = exports.classInheritance = {};
 var propertyInheritance = exports.propertyInheritance = {};
 traverseInheritance(classInheritance, things, _constants.SUBCLASS);
 traverseInheritance(propertyInheritance, properties, _constants.SUBPROPERTY);
+window.classInheritance = classInheritance;
+window.propertyInheritance = propertyInheritance;
 var enumerations = exports.enumerations = {};
 schema[_constants.GRAPH].forEach(function (_ref) {
     var id = _ref[_constants.ID];
@@ -120457,7 +120508,7 @@ var Select = function (_React$Component) {
             entry.parent = index; // Will overwrite except for roots
             // I'm really sorry about all this.
             // I picked the wrong abstractions a while ago and now we all have to suffer.
-            inheritance[id].forEach(function (id, i) {
+            inheritance[id].forEach(function (id) {
                 // Here `length` is the root of the current subtree,
                 // and `index` is the root of the elder == "previous-sibling-or-parent" subtree
                 Select.parseCatalog((0, _immutable.List)([id]), catalog, depth + 1, inheritance);
@@ -120619,7 +120670,7 @@ var Underground = function (_React$Component) {
             var disabled = forms.size === 0;
             return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement(_select2.default, { parentDescription: "Subclass", parentProperty: _constants.SUBCLASS, placeholder: "Create a new object by type", catalog: (0, _immutable.List)([(0, _immutable.List)([_constants.thing])]), inheritance: _schema.classInheritance, childDescription: "Children", onSubmit: function onSubmit(type) {
                     return _this4.createNode([type]);
-                }, hash: this.state.hash }, this.renderFileInput()), _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("div", { className: "container" }, this.state.forms.entrySeq().map(function (_ref) {
+                } }, this.renderFileInput()), _react2.default.createElement("form", { onSubmit: this.handleSubmit }, _react2.default.createElement("div", { className: "container" }, this.state.forms.entrySeq().map(function (_ref) {
                 var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
                     id = _ref2[0],
                     form = _ref2[1];
@@ -120631,7 +120682,8 @@ var Underground = function (_React$Component) {
                     createNode: function createNode(types) {
                         return _this4.createNode(types);
                     },
-                    onRemove: function onRemove() {
+                    label: "Remove",
+                    onClick: function onClick() {
                         return _this4.removeForm(id);
                     },
                     onChange: function onChange(form, newId, newForm) {

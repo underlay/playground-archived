@@ -96,7 +96,6 @@ export default class Underground extends React.Component<
 					inheritance={classInheritance}
 					childDescription="Children"
 					onSubmit={type => this.createNode([type])}
-					hash={this.state.hash}
 				>
 					{this.renderFileInput()}
 				</Select>
@@ -110,7 +109,8 @@ export default class Underground extends React.Component<
 									graph,
 									form,
 									createNode: types => this.createNode(types),
-									onRemove: () => this.removeForm(id),
+									label: "Remove",
+									onClick: () => this.removeForm(id),
 									onChange: (
 										form: FormValues,
 										newId?: string,

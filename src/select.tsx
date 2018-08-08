@@ -25,7 +25,6 @@ interface SelectProps {
 	catalog: List<List<string>>
 	inheritance: { [type: string]: Set<string> }
 	onSubmit: (id: string) => void
-	hash: string
 }
 
 interface SelectState {
@@ -112,7 +111,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		entry.parent = index // Will overwrite except for roots
 		// I'm really sorry about all this.
 		// I picked the wrong abstractions a while ago and now we all have to suffer.
-		inheritance[id].forEach((id, i) => {
+		inheritance[id].forEach(id => {
 			// Here `length` is the root of the current subtree,
 			// and `index` is the root of the elder == "previous-sibling-or-parent" subtree
 			Select.parseCatalog(List([id]), catalog, depth + 1, inheritance)

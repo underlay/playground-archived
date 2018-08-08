@@ -112,9 +112,9 @@ function traverseInheritance(
 	parent: string
 ) {
 	pool.forEach(id => {
-		if (!inheritance[id]) inheritance[id] = new Set()
+		if (!inheritance[id]) inheritance[id] = new Set([])
 		flattenValues(nodes[id][parent]).forEach(ancestor => {
-			if (!inheritance[ancestor]) inheritance[ancestor] = new Set()
+			if (!inheritance[ancestor]) inheritance[ancestor] = new Set([])
 			inheritance[ancestor].add(id)
 		})
 	})
@@ -124,6 +124,8 @@ export const classInheritance: Inheritance = {}
 export const propertyInheritance: Inheritance = {}
 traverseInheritance(classInheritance, things, SUBCLASS)
 traverseInheritance(propertyInheritance, properties, SUBPROPERTY)
+;(window as any).classInheritance = classInheritance
+;(window as any).propertyInheritance = propertyInheritance
 
 export const enumerations: { [type: string]: Set<string> } = {}
 
