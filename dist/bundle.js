@@ -119698,7 +119698,7 @@ var FormView = function (_React$Component) {
         value: function renderRemove(property, index) {
             var _this7 = this;
 
-            return _react2.default.createElement("input", { type: "button", value: "Remove", onClick: function onClick() {
+            return _react2.default.createElement("input", { className: "remove", type: "button", value: "Remove", onClick: function onClick() {
                     return _this7.removeProperty(property, index);
                 } });
         }
@@ -119843,10 +119843,6 @@ var _form2 = _interopRequireDefault(_form);
 
 var _constants2 = __webpack_require__(/*! ./constants */ "./src/constants.ts");
 
-var _select = __webpack_require__(/*! ./select */ "./src/select.tsx");
-
-var _select2 = _interopRequireDefault(_select);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderInline(props, onClick) {
@@ -119867,10 +119863,10 @@ function renderInline(props, onClick) {
         id: id,
         onChange: onChange,
         form: form,
-        label: "Split into new Object",
+        label: "Split into new object",
         onClick: onClick
     };
-    return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("br", null), _react2.default.createElement(_form2.default, Object.assign({}, formProps)));
+    return _react2.default.createElement(_form2.default, Object.assign({}, formProps));
 }
 function PropertyView(props) {
     var formValue = props.formValue,
@@ -119905,10 +119901,11 @@ function PropertyView(props) {
         var disabled = !hasObjects && !hasEnumerations;
         var label = _schema.nodes[type][_constants.LABEL];
         var defaultValue = hasObjects ? objects.get(0)[0] : hasEnumerations ? Array.from(_schema.enumerations[type])[0] : "";
+        var name = props.path.join("/");
         var radio = function radio(valueType) {
             return {
                 type: "radio",
-                name: props.path.join("/"),
+                name: name,
                 value: valueType.toString(),
                 checked: value === valueType,
                 onChange: function onChange(_ref3) {
@@ -119923,7 +119920,7 @@ function PropertyView(props) {
                 }
             };
         };
-        return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("div", null, _react2.default.createElement("input", Object.assign({}, radio(_form.Reference), { disabled: disabled })), _react2.default.createElement("select", { disabled: disabled || value !== _form.Reference, value: formValue.reference || defaultValue, onChange: function onChange(event) {
+        return _react2.default.createElement(_react.Fragment, null, _react2.default.createElement("label", { className: "reference" }, _react2.default.createElement("input", Object.assign({}, radio(_form.Reference), { disabled: disabled })), _react2.default.createElement("select", { disabled: disabled || value !== _form.Reference, value: formValue.reference || defaultValue, onChange: function onChange(event) {
                 event.preventDefault();
                 var reference = event.target.value;
                 var props = { value: _form.Reference, reference: reference, inline: null };
@@ -119935,14 +119932,12 @@ function PropertyView(props) {
                 id = _ref5[0];
 
             return _react2.default.createElement("option", { key: key, value: id }, id);
-        })), props.children), _react2.default.createElement("div", null, _react2.default.createElement("input", Object.assign({}, radio(_form.Inline))), _react2.default.createElement(_select2.default, { placeholder: "Select object type", parentProperty: _constants.SUBCLASS, parentDescription: "Subclass", childDescription: "Children", inheritance: _schema.classInheritance, catalog: (0, _immutable.List)([(0, _immutable.List)([type])]), onSubmit: function onSubmit(type) {
-                return _onChange(formValue.with({ type: type }));
-            } }), value === _form.Inline && renderInline(props, function () {
+        })), props.children), _react2.default.createElement("label", { className: "inline" }, _react2.default.createElement("input", Object.assign({}, radio(_form.Inline))), _react2.default.createElement("span", null, "Create object inline")), value === _form.Inline && renderInline(props, function () {
             var reference = createNode([type]);
             var inline = (0, _immutable.Map)({});
             var values = { value: _form.Reference, reference: reference, inline: inline };
             _onChange(formValue.with(values), reference, props.formValue.inline);
-        })));
+        }));
     } else {
         return _react2.default.createElement("span", null, "\"Cannot enter this kind of value yet\"");
     }
@@ -120375,7 +120370,7 @@ var Select = function (_React$Component) {
             // console.log("roots", roots, "results", results)
 
             if (!value || !results) return this.renderTrees(roots);
-            if (results.size === 0) return Select.emptySearch;else return results.map(function (result, index) {
+            if (results.size === 0) return _react2.default.createElement("p", null, Select.emptySearch);else return results.map(function (result, index) {
                 return _this4.renderItem(index, catalog.get(result));
             });
         }

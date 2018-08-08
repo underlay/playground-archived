@@ -239,6 +239,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 	private renderRemove(property: string, index: number) {
 		return (
 			<input
+				className="remove"
 				type="button"
 				value="Remove"
 				onClick={() => this.removeProperty(property, index)}

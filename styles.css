@@ -3,24 +3,25 @@
 	max-width: 100%;
 }
 
-td.value > div {
-	width: max-content;
+table {
 	min-width: 100%;
 }
 
-td.value > div > input + .select-header {
-	display: inline-flex;
+/* td.value > div {
+	width: max-content;
+	min-width: 100%;
+} */
+
+td.value {
+	width: 100%;
 }
 
-td.value > div input + select + input {
+input.remove {
 	float: right;
 }
 
 td.remove {
 	vertical-align: middle;
-}
-td.remove input {
-	float: right;
 }
 
 input.split {
@@ -86,7 +87,7 @@ input.split {
 }
 
 .form {
-	border: 1px solid #888;
+	border: 1px solid #ccc;
 	border-radius: 1px;
 	display: inline-block;
 	padding: 4px;

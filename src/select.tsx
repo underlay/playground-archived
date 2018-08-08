@@ -166,7 +166,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		const { roots, results, value, catalog } = this.state
 		// console.log("roots", roots, "results", results)
 		if (!value || !results) return this.renderTrees(roots)
-		if (results.size === 0) return Select.emptySearch
+		if (results.size === 0) return <p>{Select.emptySearch}</p>
 		else
 			return results.map((result, index) =>
 				this.renderItem(index, catalog.get(result))

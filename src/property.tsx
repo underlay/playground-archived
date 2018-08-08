@@ -45,15 +45,10 @@ function renderInline(props: PropertyViewProps, onClick: () => void) {
 		id,
 		onChange,
 		form,
-		label: "Split into new Object",
+		label: "Split into new object",
 		onClick,
 	}
-	return (
-		<Fragment>
-			<br />
-			<Form {...formProps} />
-		</Fragment>
-	)
+	return <Form {...formProps} />
 }
 
 export default function PropertyView(props: PropertyViewProps) {
@@ -87,9 +82,10 @@ export default function PropertyView(props: PropertyViewProps) {
 			: hasEnumerations
 				? Array.from(enumerations[type])[0]
 				: ""
+		const name = props.path.join("/")
 		const radio = (valueType: FormValueType) => ({
 			type: "radio",
-			name: props.path.join("/"),
+			name,
 			value: valueType.toString(),
 			checked: value === valueType,
 			onChange({ target: { value } }) {
@@ -103,7 +99,7 @@ export default function PropertyView(props: PropertyViewProps) {
 		})
 		return (
 			<Fragment>
-				<div>
+				<label className="reference">
 					<input {...radio(Reference)} disabled={disabled} />
 					<select
 						disabled={disabled || value !== Reference}
@@ -128,30 +124,18 @@ export default function PropertyView(props: PropertyViewProps) {
 						))}
 					</select>
 					{props.children}
-				</div>
-				<div>
+				</label>
+				<label className="inline">
 					<input {...radio(Inline)} />
-					<Select
-						placeholder="Select object type"
-						parentProperty={SUBCLASS}
-						parentDescription="Subclass"
-						childDescription="Children"
-						inheritance={classInheritance}
-						catalog={List([List([type])])}
-						onSubmit={type => onChange(formValue.with({ type }))}
-					/>
-					{value === Inline &&
-						renderInline(props, () => {
-							const reference = createNode([type])
-							const inline: FormValues = Map({})
-							const values = { value: Reference, reference, inline }
-							onChange(
-								formValue.with(values),
-								reference,
-								props.formValue.inline
-							)
-						})}
-				</div>
+					<span>Create object inline</span>
+				</label>
+				{value === Inline &&
+					renderInline(props, () => {
+						const reference = createNode([type])
+						const inline: FormValues = Map({})
+						const values = { value: Reference, reference, inline }
+						onChange(formValue.with(values), reference, props.formValue.inline)
+					})}
 			</Fragment>
 		)
 	} else {
