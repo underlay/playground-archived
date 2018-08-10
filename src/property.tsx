@@ -1,12 +1,6 @@
 import React, { Fragment } from "react"
 import { List, Map } from "immutable"
-import {
-	things,
-	nodes,
-	enumerations,
-	searchAncestry,
-	classInheritance,
-} from "./schema"
+import { things, nodes, enumerations, searchAncestry } from "./schema"
 import { LABEL, SUBCLASS } from "./schema/constants"
 import Form, {
 	FormValue,
@@ -18,7 +12,6 @@ import Form, {
 	FormProps,
 } from "./form"
 import { constants } from "./constants"
-import Select from "./select"
 
 interface PropertyViewProps {
 	path: string[]
