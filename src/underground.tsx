@@ -1,15 +1,18 @@
 import React, { Fragment } from "react"
 import { Map, List } from "immutable"
 import niceware from "niceware"
+import jsonld from "jsonld"
 import {
 	ID,
 	TYPE,
 	VALUE,
-	GRAPH,
-	CONTEXT,
 	SUBCLASS,
 	thing,
-} from "./schema/constants"
+	dagOptions,
+	topic,
+	pubsubOptions,
+} from "./utils/constants"
+import Assertion from "./assertion"
 import { AssertionGraph, Values, AssertionNode } from "./schema/types"
 import Select from "./select"
 import FormView, {
@@ -23,11 +26,14 @@ import FormView, {
 import { classInheritance } from "./schema"
 
 export interface UndergroundProps {
+	ipfs: ipfs
 	onSubmit: (assertion: AssertionGraph) => void
 	onDownload: (assertion: AssertionGraph) => void
 }
 
 interface UndergroundState {
+	hash: string
+	assertions: List<[string, number, string, AssertionGraph]>
 	graph: Map<string, string[]> // id -> types
 	forms: Map<string, Map<string, List<FormValue>>> // id -> properties
 }
@@ -45,7 +51,10 @@ export default class Underground extends React.Component<
 	private source: string
 	constructor(props) {
 		super(props)
+		const hash = window.location.hash.slice(1)
 		this.state = {
+			hash,
+			assertions: List(),
 			graph: Map({}),
 			forms: Map({}),
 		}
@@ -59,7 +68,103 @@ export default class Underground extends React.Component<
 			localStorage[Underground.key] = this.source
 		}
 	}
+	componentDidMount() {
+		window.addEventListener("hashchange", () => {
+			const hash = window.location.hash.slice(1)
+			if (hash === "log" || hash === "new") {
+				if (this.state.hash !== hash) this.setState({ hash })
+			} else window.location.hash = this.state.hash
+		})
+		this.props.ipfs.pubsub.subscribe(
+			topic,
+			({ from, data }: libp2p.Message) => {
+				let result: AssertionGraph
+				const text = data.toString("utf8")
+				try {
+					result = JSON.parse(text)
+				} catch (err) {
+					console.error(err)
+				}
+				const time = new Date().valueOf()
+				this.importAssertion(from, time, result)
+			},
+			pubsubOptions
+		)
+	}
+	readFile = event => {
+		event.preventDefault()
+		const { files } = event.target
+		const time = new Date()
+		if (files && files.length > 0) {
+			Array.from(files).forEach((file: File) => {
+				if (file.type === "application/json") {
+					const reader = new FileReader()
+					reader.onloadend = () => {
+						let data
+						const text = reader.result
+						try {
+							data = JSON.parse(text)
+						} catch (e) {
+							console.error("Could not parse assertion", text, e)
+						}
+						this.importAssertion(
+							"local file upload",
+							time.valueOf(),
+							data as AssertionGraph
+						)
+					}
+					reader.readAsText(file)
+				}
+			})
+		}
+	}
+	async importAssertion(from: string, time: number, assertion: AssertionGraph) {
+		const cid = await this.props.ipfs.dag.put(assertion, dagOptions)
+		const hash = cid.toBaseEncodedString()
+		const assertions = this.state.assertions.push([from, time, hash, assertion])
+		this.setState({ assertions })
+		console.log("got the cid!", cid)
+	}
+	renderFileInput() {
+		return (
+			<input
+				className="file-input"
+				type="file"
+				accept="application/json"
+				onChange={this.readFile}
+			/>
+		)
+	}
 	render() {
+		const { hash } = this.state
+		if (hash === "new") return this.renderForm()
+		else if (hash === "log") return this.renderLog()
+		else window.location.hash = "new"
+	}
+	renderLog() {
+		const { assertions } = this.state
+		const content = assertions.size
+			? assertions
+					.map(([id, time, hash, assertion], key) => ({
+						id,
+						time,
+						hash,
+						assertion,
+						key,
+					}))
+					.map(props => <Assertion {...props} />)
+			: "No assertions found"
+		return (
+			<div className="log">
+				<header>
+					<a href="#new">create new assertion</a>
+				</header>
+				<hr />
+				{content}
+			</div>
+		)
+	}
+	renderForm() {
 		const { forms, graph } = this.state
 		const disabled = forms.size === 0
 		return (
@@ -72,7 +177,10 @@ export default class Underground extends React.Component<
 					inheritance={classInheritance}
 					childDescription="Children"
 					onSubmit={type => this.createNode([type])}
-				/>
+				>
+					{this.renderFileInput()}
+					<a href="#log">assertion log</a>
+				</Select>
 				<form onSubmit={this.handleSubmit}>
 					<div className="container">
 						{this.state.forms
@@ -183,13 +291,15 @@ export default class Underground extends React.Component<
 		console.log("handling submit!")
 		const nodes = this.state.forms.map(props => props.entrySeq()).entrySeq()
 		const graph = nodes.map(this.exportNode).toJS()
-		console.log("graph", graph)
-		const assertion = { [CONTEXT]: {}, [GRAPH]: graph }
-		this.setState({ forms: Map({}), graph: Map({}) })
-		if (publish) {
-			this.props.onSubmit(assertion)
-		} else {
-			this.props.onDownload(assertion)
-		}
+		jsonld.compact(
+			graph,
+			{ "@vocab": "http://schema.org/" },
+			(err, compacted) => {
+				this.setState({ forms: Map({}), graph: Map({}) })
+				if (err) console.error(err)
+				else if (publish) this.props.onSubmit(compacted)
+				else this.props.onDownload(compacted)
+			}
+		)
 	}
 }

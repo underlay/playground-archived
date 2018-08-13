@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { List, Map } from "immutable"
 import { things, nodes, enumerations, searchAncestry } from "./schema"
-import { LABEL, SUBCLASS } from "./schema/constants"
+import { LABEL, SUBCLASS } from "./utils/constants"
 import Form, {
 	FormValue,
 	Constant,
@@ -110,9 +110,9 @@ export default function PropertyView(props: PropertyViewProps) {
 								{nodes[id][LABEL]}
 							</option>
 						))}
-						{objects.map(([id], key) => (
+						{objects.map(([id, types], key) => (
 							<option key={key} value={id}>
-								{id}
+								{`${id} (${types.map(t => nodes[t][LABEL]).join(", ")})`}
 							</option>
 						))}
 					</select>

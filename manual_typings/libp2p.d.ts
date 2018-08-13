@@ -66,14 +66,14 @@ declare namespace libp2p {
 	export interface PubSubAPI {
 		subscribe(
 			topic: string,
-			options: Object,
 			handler: (msg: Message) => void,
+			options: Object,
 			callback: VoidCallback
 		)
 		subscribe(
 			topic: string,
-			options: Object,
-			handler: (msg: Message) => void
+			handler: (msg: Message) => void,
+			options: Object
 		): Promise<void>
 
 		unsubscribe(topic: string, handler: (msg: Message) => void)

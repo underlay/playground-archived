@@ -7,7 +7,7 @@ import {
 	CONTEXT,
 	SOURCE,
 	TIME,
-} from "./constants"
+} from "../utils/constants"
 
 type Context = string | { [key: string]: string }
 export type PropertyValue = string | Node<any>

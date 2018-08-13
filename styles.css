@@ -1,3 +1,22 @@
+.log header a {
+	display: block;
+	text-align: end;
+}
+
+.log > header {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.assertion .meta {
+	margin-bottom: 1em;
+}
+
+.inline span {
+	margin-left: 2px;
+	vertical-align: middle;
+}
+
 .table-scroller {
 	overflow-x: scroll;
 	max-width: 100%;
@@ -7,17 +26,8 @@ table {
 	min-width: 100%;
 }
 
-/* td.value > div {
-	width: max-content;
-	min-width: 100%;
-} */
-
 td.value {
 	width: 100%;
-}
-
-input.remove {
-	float: right;
 }
 
 td.remove {
@@ -50,7 +60,7 @@ input.split {
 	vertical-align: top;
 	height: 100%;
 	overflow-y: scroll;
-	padding: 0 0.5em;
+	padding: 0 2px;
 }
 
 .select .description {
@@ -115,7 +125,7 @@ input.split {
 	width: max-content;
 }
 
-.float {
+.float-right {
 	float: right;
 }
 
@@ -167,23 +177,13 @@ h5 {
 	margin: 0;
 }
 
-.max-width {
-	width: max-content;
-}
-
-object.small {
-	width: 320px;
-	height: 320px;
-}
-
-object.medium {
-	width: 640px;
-	height: 480px;
-}
-
 header {
 	max-width: 100%;
 	width: max-content;
+}
+
+.log header {
+	width: 100%;
 }
 
 h4.header.max-width + button.float {

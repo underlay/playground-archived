@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import { Map, List, Record } from "immutable"
-import { LABEL, RANGE, SUBCLASS, SUBPROPERTY } from "./schema/constants"
+import { LABEL, RANGE, SUBCLASS, SUBPROPERTY } from "./utils/constants"
 import {
 	flattenValues,
 	nodes,
@@ -104,7 +104,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 					</Fragment>
 				))}
 				<input
-					className="float"
+					className="float-right"
 					value={label}
 					type="button"
 					onClick={event => {
@@ -239,7 +239,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 	private renderRemove(property: string, index: number) {
 		return (
 			<input
-				className="remove"
+				className="float-right"
 				type="button"
 				value="Remove"
 				onClick={() => this.removeProperty(property, index)}

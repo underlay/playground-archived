@@ -8,7 +8,7 @@ import {
 	thing,
 	property,
 	SUBPROPERTY,
-} from "./constants"
+} from "../utils/constants"
 
 import { PropertyValue, PropertyValues, SchemaGraph, SchemaNode } from "./types"
 

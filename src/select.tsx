@@ -2,7 +2,8 @@ import React, { ChangeEvent, Fragment } from "react"
 import { List } from "immutable"
 import Fuse from "fuse.js"
 import { nodes, flattenValues } from "./schema"
-import { LABEL, COMMENT, RANGE, SUBCLASS } from "./schema/constants"
+import { LABEL, COMMENT, RANGE, SUBCLASS, TYPE } from "./utils/constants"
+import { unstable_renderSubtreeIntoContainer } from "react-dom"
 
 interface Entry {
 	id: string
@@ -164,7 +165,6 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 	}
 	renderContent() {
 		const { roots, results, value, catalog } = this.state
-		// console.log("roots", roots, "results", results)
 		if (!value || !results) return this.renderTrees(roots)
 		if (results.size === 0) return <p>{Select.emptySearch}</p>
 		else
@@ -178,7 +178,6 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 		return results
 	}
 	renderTree(index: number, results: any[], depth: number) {
-		// console.log("rendering", index, this.state.catalog.get(index))
 		const entry = this.state.catalog.get(index)
 		const delta = index - results.length
 		const expanded = this.isExpanded(entry, depth)
@@ -190,7 +189,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 	}
 	renderItem(index: number, entry: Entry, depth?: number) {
 		const className = index === this.state.focus ? "focus mono" : "mono"
-		const handleFocus = event => {
+		const handleFocus = () => {
 			if (this.state.focus !== index) {
 				this.setState({ focus: index })
 			}
@@ -206,10 +205,17 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 					this.handleSubmit(entry.id)
 				}}
 			>
-				{!isNaN(depth) && <span className="spacer">{"  ".repeat(depth)}</span>}
+				{this.renderSpacer(entry, depth)}
 				<span className={className}>{entry.name}</span>
 			</div>
 		)
+	}
+	renderSpacer(entry: Entry, depth?: number) {
+		if (!isNaN(depth)) {
+			const signal = entry.size > 1 ? (entry.expanded ? "○" : "●") : " "
+			const content = "  ".repeat(depth) + signal + " "
+			return <span className="spacer">{content}</span>
+		} else return null
 	}
 	renderDescription() {
 		const { catalog, focus, results } = this.state
@@ -219,30 +225,42 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 			return (
 				<React.Fragment>
 					<h1 className="mono">{entry.name}</h1>
-					{entry.category && (
-						<React.Fragment>
-							<div>
-								Inherited from{" "}
-								<span className="mono">{nodes[entry.category][LABEL]}</span>
-							</div>
-						</React.Fragment>
-					)}
+					{this.renderInheritance(entry)}
 					{this.renderParents(entry)}
 					{this.renderChildren(entry)}
-					<div>
-						Range:{" "}
-						<span className="mono">
-							{flattenValues(nodes[entry.id][RANGE])
-								.filter(id => nodes[id])
-								.map(id => nodes[id][LABEL])
-								.join(", ")}
-						</span>
-					</div>
+					{this.renderRange(entry)}
 					<hr />
 					<div dangerouslySetInnerHTML={{ __html: entry.description }} />
 				</React.Fragment>
 			)
 		}
+	}
+	renderInheritance(entry: Entry) {
+		if (entry.category) {
+			return (
+				<React.Fragment>
+					<div>
+						Inherited from{" "}
+						<span className="mono">{nodes[entry.category][LABEL]}</span>
+					</div>
+				</React.Fragment>
+			)
+		}
+	}
+	renderRange(entry: Entry) {
+		if (nodes[entry.id][TYPE] === "rdf:Property")
+			return (
+				<div>
+					Range:{" "}
+					<span className="mono">
+						{flattenValues(nodes[entry.id][RANGE])
+							.filter(id => nodes[id])
+							.map(id => nodes[id][LABEL])
+							.join(", ")}
+					</span>
+				</div>
+			)
+		else return null
 	}
 	renderParents(entry: Entry) {
 		const { parentDescription, parentProperty } = this.props
@@ -316,12 +334,13 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 			} else {
 				const { expanded, size } = catalog.get(focus)
 				const delta = expanded ? 1 : size
-				if (focus + delta < catalog.size) {
-					this.setState({ focus: focus + delta })
+				const newFocus = focus + delta
+				if (newFocus < catalog.size) {
+					this.setState({ focus: newFocus }, () =>
+						this.scrollIntoView(newFocus)
+					)
 				}
 			}
-			// 	const target = this.results.children[0].children[newFocus]
-			// 	this.scrollIntoView(target as HTMLDivElement)
 		},
 		39: ({ focus, catalog, results }) => {
 			// right arrow
@@ -329,7 +348,10 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 				const entry = catalog.get(focus)
 				if (entry.size > 1) {
 					entry.expanded = true
-					this.setState({ focus: focus + 1 })
+					const newFocus = focus + 1
+					this.setState({ focus: newFocus }, () =>
+						this.scrollIntoView(newFocus)
+					)
 				}
 			}
 		},
@@ -342,7 +364,8 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 				while (!this.isExpanded(previous)) {
 					previous = catalog.get(previous.index - 1)
 				}
-				this.setState({ focus: previous.index })
+				const newFocus = previous.index
+				this.setState({ focus: newFocus }, () => this.scrollIntoView(newFocus))
 			}
 		},
 		37: ({ focus, catalog, results }) => {
@@ -352,20 +375,25 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 				if (entry.index !== entry.parent) {
 					const parent = catalog.get(entry.parent)
 					parent.expanded = false
-					this.setState({ focus: parent.index })
+					const newFocus = parent.index
+					this.setState({ focus: newFocus }, () =>
+						this.scrollIntoView(newFocus)
+					)
 				}
 			}
 		},
 	}
-	private scrollIntoView(target: HTMLDivElement) {
-		const offset = target.offsetTop - this.results.offsetTop
-		const position = offset - this.results.scrollTop
-		const height = this.results.offsetHeight - target.offsetHeight
-		if (position < 0) {
-			this.results.scrollTop = offset
-		} else if (position > height) {
-			this.results.scrollTop = offset - height
-		}
+	private scrollIntoView(newFocus: number) {
+		return
+		// const target = this.results.children[0].children[newFocus] as HTMLDivElement
+		// const offset = target.offsetTop - this.results.offsetTop
+		// const position = offset - this.results.scrollTop
+		// const height = this.results.offsetHeight - target.offsetHeight
+		// if (position < 0) {
+		// 	this.results.scrollTop = offset
+		// } else if (position > height) {
+		// 	this.results.scrollTop = offset - height
+		// }
 	}
 	private isExpanded(entry: Entry, depth?: number): boolean {
 		if (isNaN(depth)) depth = Infinity
