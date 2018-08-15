@@ -1,189 +1,207 @@
-.table-scroller {
-	overflow-x: scroll;
-	max-width: 100%;
+.log header a {
+  display: block;
+  text-align: end;
 }
 
-td.value > div {
-	width: max-content;
+.log > header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.assertion .meta {
+  display: flex;
+  margin-top: 1em;
+}
+
+.inline span {
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+.table-scroller {
+  overflow-x: scroll;
+  max-width: 100%;
+}
+
+table {
+  min-width: 100%;
+}
+
+td.value {
+  width: 100%;
+}
+
+td.remove {
+  vertical-align: middle;
 }
 
 input.split {
-	margin-left: 0.5em;
+  margin-left: 0.5em;
 }
 
 /* Select */
 
 .search {
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 .search + .file-input {
-	flex-grow: 0;
-	margin: 0 1em;
+  flex-grow: 0;
+  margin: 0 1em;
 }
 
 .select {
-	height: 256px;
-	display: flex;
+  height: 256px;
+  display: flex;
 }
 
 .select .results {
-	min-width: 10em;
-	width: 10em;
-	vertical-align: top;
-	height: 100%;
-	overflow-y: scroll;
-	padding: 0 0.5em;
+  min-width: 10em;
+  width: 10em;
+  vertical-align: top;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 0 2px;
 }
 
 .select .description {
-	flex-grow: 1;
-	vertical-align: top;
-	height: 100%;
-	overflow-y: scroll;
-	padding: 0 0.5em;
-	border-left: 1px solid lightgray;
+  flex-grow: 1;
+  vertical-align: top;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 0 0.5em;
+  border-left: 1px solid lightgray;
 }
 
 .select .description > h1 {
-	margin: 0;
+  margin: 0;
 }
 
 .select .results .result {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .select .results .result .focus {
-	font-weight: bold;
-	text-decoration: underline;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 .spacer {
-	font-family: monospace;
-	white-space: pre;
+  font-family: monospace;
+  white-space: pre;
 }
 
 /* -------- */
 
 .mono {
-	font-family: monospace;
+  font-family: monospace;
 }
 
 .form {
-	border: 1px solid #888;
-	border-radius: 1px;
-	display: inline-block;
-	padding: 4px;
-	margin: 4px;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  display: inline-block;
+  padding: 4px;
+  margin: 4px;
 
-	/* Hmmm */
-	min-width: 512px;
-	width: min-content;
+  /* Hmmm */
+  min-width: 512px;
+  width: min-content;
 }
 
 .form .select {
-	max-width: 100%;
+  max-width: 100%;
 }
 
 .object {
-	vertical-align: top;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
+  vertical-align: top;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .form h3 {
-	margin: 0;
-	width: max-content;
+  margin: 0;
+  width: max-content;
 }
 
-.float {
-	float: right;
+.float-right {
+  float: right;
 }
 
 .form label {
-	display: block;
+  display: block;
 }
 
 form .container {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: flex-start;
-	margin: 0.5em 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 0.5em 0;
 }
 
 tbody {
-	vertical-align: baseline;
+  vertical-align: baseline;
 }
 
 .states {
-	fill: #aaa;
+  fill: #aaa;
 }
 
 .state-borders {
-	fill: none;
-	stroke: #eee;
-	stroke-width: 0.5px;
-	stroke-linejoin: round;
-	stroke-linecap: round;
-	pointer-events: none;
+  fill: none;
+  stroke: #eee;
+  stroke-width: 0.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
 }
 
 .carousel {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  overflow-x: scroll;
 }
 
 .carousel div + div {
-	margin-left: 1em;
+  margin-left: 1em;
 }
 
 h4 {
-	padding-top: 1em;
-	margin: 0;
+  padding-top: 1em;
+  margin: 0;
 }
 
 h5 {
-	margin: 0;
-}
-
-.max-width {
-	width: max-content;
-}
-
-object.small {
-	width: 320px;
-	height: 320px;
-}
-
-object.medium {
-	width: 640px;
-	height: 480px;
+  margin: 0;
 }
 
 header {
-	max-width: 100%;
-	width: max-content;
+  max-width: 100%;
+  width: max-content;
+}
+
+.log header {
+  width: 100%;
 }
 
 h4.header.max-width + button.float {
-	margin-top: 1.5em;
+  margin-top: 1.5em;
 }
 
 header .header {
-	display: inline-block;
-	max-width: 100%;
-	/* width: max-content; */
+  display: inline-block;
+  max-width: 100%;
+  /* width: max-content; */
 }
 
 .carousel-item {
-	margin: 0.5em;
-	padding: 0.5em;
-	border: 1px solid #888;
-	border-radius: 1px;
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 1px solid #888;
+  border-radius: 1px;
 }
 
 /* header.opened {
@@ -194,35 +212,35 @@ header .header {
 	} */
 
 .image {
-	max-height: 320px;
-	max-width: 320px;
+  max-height: 320px;
+  max-width: 320px;
 }
 
 .full.image {
-	max-width: 100%;
-	max-height: unset;
+  max-width: 100%;
+  max-height: unset;
 }
 
 .medium.image {
-	max-height: 640px;
-	max-width: 640px;
+  max-height: 640px;
+  max-width: 640px;
 }
 
 .table,
 .table th,
-.table td {
-	border: 1px solid #888;
-	width: max-content;
+.table > {
+  border: 1px solid #888;
+  width: max-content;
 }
 
 .mono a {
-	overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .select-header {
-	display: flex;
+  display: flex;
 }
 
 .select-header :first-child {
-	flex-grow: 1;
+  flex-grow: 1;
 }

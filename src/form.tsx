@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import { Map, List, Record } from "immutable"
-import { LABEL, RANGE, SUBCLASS, SUBPROPERTY } from "./schema/constants"
+import { LABEL, RANGE, SUBCLASS, SUBPROPERTY } from "./utils/constants"
 import {
 	flattenValues,
 	nodes,
@@ -56,7 +56,8 @@ export interface FormProps {
 	form: FormValues
 	createNode: (types: string[]) => string
 	graph: Map<string, string[]>
-	onRemove?: () => void
+	label: string
+	onClick: () => void
 	onChange: (form: FormValues, newId?: string, newForm?: FormValues) => void
 }
 
@@ -91,7 +92,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		this.renderProperty = this.renderProperty.bind(this)
 	}
 	render() {
-		const { id, graph, onChange, onRemove, form } = this.props
+		const { id, label, graph, onChange, onClick, form } = this.props
 		const catalog = FormView.generateProperties(graph.get(id))
 		return (
 			<div className="form">
@@ -102,17 +103,17 @@ export default class FormView extends React.Component<FormProps, FormState> {
 						<span className="mono">{nodes[type][LABEL]}</span>
 					</Fragment>
 				))}
-				{onRemove && (
-					<input
-						className="float"
-						value="Remove"
-						type="button"
-						onClick={onRemove}
-					/>
-				)}
+				<input
+					className="float-right"
+					value={label}
+					type="button"
+					onClick={event => {
+						event.preventDefault()
+						onClick()
+					}}
+				/>
 				<hr />
 				<Select
-					hash=""
 					parentProperty={SUBPROPERTY}
 					parentDescription="Subproperty"
 					childDescription="Children"
@@ -146,7 +147,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		[property, values]: [string, List<FormValue>],
 		key: number
 	) {
-		const label = nodes[property]["rdfs:label"]
+		const label = nodes[property][LABEL]
 		return values.map((formValue, index) => (
 			<tr key={`${key}/${index}`}>
 				{index === 0 && (
@@ -155,19 +156,42 @@ export default class FormView extends React.Component<FormProps, FormState> {
 					</td>
 				)}
 				<td className="type">{this.renderType(property, index, formValue)}</td>
-				<td className="value">
+				<td className="value" colSpan={formValue.value === Constant ? 1 : 2}>
 					{this.renderValue(property, index, formValue)}
 				</td>
-				<td>
-					<input
-						type="button"
-						value="Remove"
-						onClick={() => this.removeProperty(property, index)}
-					/>
-				</td>
+				{formValue.value === Constant && (
+					<td className="remove">{this.renderRemove(property, index)}</td>
+				)}
 			</tr>
 		))
 	}
+	// private renderTypeSelect(
+	// 	property: string,
+	// 	index: number,
+	// 	formValue: FormValue
+	// ) {
+	// 	const range = flattenValues(nodes[property][RANGE])
+	// 	const catalog = List(range.map(type => List([type])))
+	// 	console.log("catalog", catalog.toJS())
+	// 	return (
+	// 		<Select
+	// 			placeholder="Select value type"
+	// 			parentProperty={SUBCLASS}
+	// 			parentDescription="Subclass"
+	// 			childDescription="Children"
+	// 			inheritance={classInheritance}
+	// 			catalog={catalog}
+	// 			onSubmit={value => {
+	// 				if (value !== formValue.type) {
+	// 					const path = [property, index]
+	// 					const formValue = FormView.defaultFormValue(value, this.props.graph)
+	// 					const form = this.props.form.setIn(path, formValue)
+	// 					this.props.onChange(form)
+	// 				}
+	// 			}}
+	// 		/>
+	// 	)
+	// }
 	private renderType(property: string, index: number, formValue: FormValue) {
 		const range = flattenValues(nodes[property][RANGE])
 		return (
@@ -207,6 +231,18 @@ export default class FormView extends React.Component<FormProps, FormState> {
 					const form = this.props.form.setIn(path, value)
 					this.props.onChange(form, newId, newForm)
 				}}
+			>
+				{this.renderRemove(property, index)}
+			</PropertyView>
+		)
+	}
+	private renderRemove(property: string, index: number) {
+		return (
+			<input
+				className="float-right"
+				type="button"
+				value="Remove"
+				onClick={() => this.removeProperty(property, index)}
 			/>
 		)
 	}

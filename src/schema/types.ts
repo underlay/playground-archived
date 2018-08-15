@@ -7,7 +7,7 @@ import {
 	CONTEXT,
 	SOURCE,
 	TIME,
-} from "./constants"
+} from "../utils/constants"
 
 type Context = string | { [key: string]: string }
 export type PropertyValue = string | Node<any>
@@ -63,10 +63,11 @@ export interface Graph<T extends Node<any>> {
 	[GRAPH]: T[]
 }
 
-export interface Assertion extends Graph<AssertionNode> {
-	[SOURCE]: string
-	[TIME]: string
-}
+export type AssertionGraph = Graph<AssertionNode>
+// export interface Assertion extends Graph<AssertionNode> {
+// 	[SOURCE]: string
+// 	[TIME]: string
+// }
 
 export interface SchemaGraph extends Graph<SchemaNode> {
 	[ID]: string

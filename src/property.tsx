@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { List, Map } from "immutable"
 import { things, nodes, enumerations, searchAncestry } from "./schema"
-import { LABEL, SUBCLASS } from "./schema/constants"
+import { LABEL, SUBCLASS } from "./utils/constants"
 import Form, {
 	FormValue,
 	Constant,
@@ -16,30 +16,36 @@ import { constants } from "./constants"
 interface PropertyViewProps {
 	path: string[]
 	formValue: FormValue
+	children: any
 	graph: Map<string, string[]>
 	createNode: (types: string[]) => string
 	onChange: (value: FormValue, newId?: string, newForm?: FormValues) => void
 }
 
-function renderInline(props: PropertyViewProps) {
+function renderInline(props: PropertyViewProps, onClick: () => void) {
 	const { createNode, formValue } = props
 	const id = props.path.join("/")
 	const graph = props.graph.set(id, [formValue.type])
 	const onChange = (inline, newId, newForm) => {
+		// the newId and newForm here are passed up in case a *nested* form
+		// way down the line tries to split into a new object
 		props.onChange(formValue.with({ inline }), newId, newForm)
 	}
 	const form = formValue.inline
-	const formProps: FormProps = { createNode, graph, id, onChange, form }
-	return (
-		<Fragment>
-			<br />
-			<Form {...formProps} />
-		</Fragment>
-	)
+	const formProps: FormProps = {
+		createNode,
+		graph,
+		id,
+		onChange,
+		form,
+		label: "Split into new object",
+		onClick,
+	}
+	return <Form {...formProps} />
 }
 
 export default function PropertyView(props: PropertyViewProps) {
-	const { createNode, formValue, onChange } = props
+	const { formValue, createNode, onChange } = props
 	const { value, type } = formValue
 	if (constants.hasOwnProperty(type) && value === Constant) {
 		const { props, getValue, setValue } = constants[type]
@@ -69,9 +75,10 @@ export default function PropertyView(props: PropertyViewProps) {
 			: hasEnumerations
 				? Array.from(enumerations[type])[0]
 				: ""
+		const name = props.path.join("/")
 		const radio = (valueType: FormValueType) => ({
 			type: "radio",
-			name: props.path.join("/"),
+			name,
 			value: valueType.toString(),
 			checked: value === valueType,
 			onChange({ target: { value } }) {
@@ -85,7 +92,7 @@ export default function PropertyView(props: PropertyViewProps) {
 		})
 		return (
 			<Fragment>
-				<div>
+				<label className="reference">
 					<input {...radio(Reference)} disabled={disabled} />
 					<select
 						disabled={disabled || value !== Reference}
@@ -103,40 +110,25 @@ export default function PropertyView(props: PropertyViewProps) {
 								{nodes[id][LABEL]}
 							</option>
 						))}
-						{objects.map(([id], key) => (
+						{objects.map(([id, types], key) => (
 							<option key={key} value={id}>
-								{id}
+								{`${id} (${types.map(t => nodes[t][LABEL]).join(", ")})`}
 							</option>
 						))}
 					</select>
-				</div>
-				<div>
+					{props.children}
+				</label>
+				<label className="inline">
 					<input {...radio(Inline)} />
-					<select disabled={objects.size === 1 || value === Reference}>
-						{/* {Array.from(inherited).map((subtype, key) => (
-							<option key={key}>{nodes[subtype][LABEL]}</option>
-						))} */}
-						{/* TODO: Get replaced with the new <Select /> */}
-					</select>
-					<input
-						className="split"
-						type="button"
-						value={`Split into new object`}
-						disabled={value === Reference}
-						onClick={event => {
-							event.preventDefault()
-							const reference = createNode([type])
-							const inline: FormValues = Map({})
-							const values = { value: Reference, reference, inline }
-							onChange(
-								formValue.with(values),
-								reference,
-								props.formValue.inline
-							)
-						}}
-					/>
-					{value === Inline && renderInline(props)}
-				</div>
+					<span>Create object inline</span>
+				</label>
+				{value === Inline &&
+					renderInline(props, () => {
+						const reference = createNode([type])
+						const inline: FormValues = Map({})
+						const values = { value: Reference, reference, inline }
+						onChange(formValue.with(values), reference, props.formValue.inline)
+					})}
 			</Fragment>
 		)
 	} else {
