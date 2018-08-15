@@ -1,42 +1,69 @@
-const context = {
-	"@vocab": "http://www.w3.org/ns/prov#",
-	schema: "http://schema.org/",
-	value: { "@type": "@id" },
-	wasAttributedTo: { "@type": "@id" },
-	wasAssociatedWith: { "@type": "@id" },
+import { AssertionGraph } from "./schema/types"
+import { context, topic } from "./utils/constants"
+
+const provContext = {
+  "@context": {
+    ...context,
+    prov: "http://www.w3.org/ns/prov#",
+  },
 }
 
-export default function generateProv(id: string, name: string) {
-	const date = new Date()
-	return {
-		"@context": context,
-		"@graph": [
-			{
-				"@type": "Entity",
-				value: name,
-				wasGeneratedBy: {
-					"@type": "Activity",
-					wasAssociatedWith: ["_:software-agent", "_:person"],
-				},
-				generatedAtTime: date.toISOString(),
-				wasAttributedTo: "_:person",
-			},
-			{
-				"@type": "SoftwareAgent",
-				"@id": "_:software-agent",
-				"schema:name": "Underlay Playground",
-				"schema:url": "https://github.com/underlay/playground-0",
-			},
-			{
-				"@type": "Person",
-				"@id": "_:person",
-				"schema:identifier": {
-					"@type": "schema:PropertyValue",
-					"schema:name": "PeerID",
-					"schema:url": "https://github.com/libp2p/js-peer-id",
-					"schema:value": id,
-				},
-			},
-		],
-	}
+const url = "https://github.com/underlay/playground-0"
+const provAgent = {
+  "@type": ["prov:SoftwareAgent", "SoftwareApplication"],
+  name: "Underlay Playground",
+  url,
+}
+
+export default function generateProv(id: string, graph: AssertionGraph) {
+  const date = new Date()
+  return {
+    ...provContext,
+    "@type": ["prov:Entity", topic],
+    "@graph": graph,
+    "prov:wasGeneratedBy": {
+      "@type": "prov:Activity",
+      "prov:wasAssociatedWith": provAgent,
+    },
+    "prov:generatedAtTime": date.toISOString(),
+    "prov:wasAttributedTo": {
+      "@type": ["prov:Person", "Person"],
+      identifier: {
+        "@type": "PropertyValue",
+        name: "PeerID",
+        url: "https://github.com/libp2p/js-peer-id",
+        value: id,
+      },
+    },
+  }
+}
+
+const s = {
+  "@context": {
+    xsd: "http://www.w3.org/2001/XMLSchema#",
+    prov: "http://www.w3.org/ns/prov#",
+    "@vocab": "http://schema.org/",
+  },
+  "@type": "prov:Entity",
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "prov:wasAssociatedWith": {
+      url: "https://github.com/underlay/playground-0",
+      name: "Underlay Playground",
+      "@type": ["prov:SoftwareAgent", "SoftwareApplication"],
+    },
+  },
+  "prov:generatedAtTime": {
+    "@type": "xsd:dateTime",
+    "@value": "2018-08-15T15:16:44.311Z",
+  },
+  "prov:wasAttributedTo": {
+    "@type": ["prov:Person", "Person"],
+    identifier: {
+      "@type": "PropertyValue",
+      url: "https://github.com/libp2p/js-peer-id",
+      name: "PeerID",
+      value: "QmXRo2KYdjUmDLQMQJsXQ1xWkcTaMB7ZykzWkHK1mjFxPh",
+    },
+  },
 }

@@ -27,7 +27,8 @@
 		"react-json-view": "^1.19.1",
 		"topojson": "^3.0.2",
 		"us-atlas": "^1.0.2",
-		"uuid": "^3.3.2"
+		"uuid": "^3.3.2",
+		"viz.js": "^2.0.0"
 	},
 	"devDependencies": {
 		"babel-core": "^6.26.0",

@@ -19,3 +19,5 @@ export const property = "rdf:Property"
 export const topic = "http://underlay.mit.edu/assertion"
 export const dagOptions = { format: "dag-cbor", hashAlg: "sha2-256" }
 export const pubsubOptions = { discover: true }
+
+export const context = { "@vocab": "http://schema.org/" }
