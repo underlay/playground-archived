@@ -8,10 +8,16 @@ const provContext = {
   },
 }
 
-const url = "https://github.com/underlay/playground-0"
+const url = {
+  "@type": "URL",
+  "@value": "https://github.com/underlay/playground-0",
+}
 const provAgent = {
   "@type": ["prov:SoftwareAgent", "SoftwareApplication"],
-  name: "Underlay Playground",
+  name: {
+    "@value": "Underlay Playground",
+    "@type": "Text",
+  },
   url,
 }
 
@@ -19,20 +25,23 @@ export default function generateProv(id: string, graph: AssertionGraph) {
   const date = new Date()
   return {
     ...provContext,
-    "@type": ["prov:Entity", topic],
+    "@type": ["prov:Entity"],
     "@graph": graph,
     "prov:wasGeneratedBy": {
       "@type": "prov:Activity",
       "prov:wasAssociatedWith": provAgent,
     },
-    "prov:generatedAtTime": date.toISOString(),
+    "prov:generatedAtTime": { "@type": "Date", "@value": date.toISOString() },
     "prov:wasAttributedTo": {
-      "@type": ["prov:Person", "Person"],
+      "@type": ["prov:Person"],
       identifier: {
         "@type": "PropertyValue",
-        name: "PeerID",
-        url: "https://github.com/libp2p/js-peer-id",
-        value: id,
+        name: { "@type": "Text", "@value": "PeerID" },
+        url: {
+          "@type": "URL",
+          "@value": "https://github.com/libp2p/js-peer-id",
+        },
+        value: { "@type": "Text", "@value": id },
       },
     },
   }
@@ -50,7 +59,7 @@ const s = {
     "prov:wasAssociatedWith": {
       url: "https://github.com/underlay/playground-0",
       name: "Underlay Playground",
-      "@type": ["prov:SoftwareAgent", "SoftwareApplication"],
+      "@type": ["prov:SoftwareAgent"],
     },
   },
   "prov:generatedAtTime": {

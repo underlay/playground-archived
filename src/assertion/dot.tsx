@@ -43,6 +43,7 @@ function createNode(node) {
   const lines = []
   const properties = []
   let contentUrl = null
+  console.log("wow", node)
   Object.keys(rest).forEach(key => {
     const v = node[key].hasOwnProperty("@list") ? node[key]["@list"] : node[key]
     const array = Array.isArray(v) ? v : [v]
@@ -63,26 +64,11 @@ function createNode(node) {
         }
         const value =
           type === "URL" || index === "/"
-            ? rawValue
+            ? escapeHtml(rawValue)
             : type === "Text" && rawValue.length > 100
               ? trimText(rawValue)
               : escapeHtml(rawValue)
-        // const value = escapeHtml(
-        //   type === "URL" || index === "/"
-        //     ? rawValue
-        //     : JSON.stringify(
-        //         type === "Text" && rawValue.length > 103
-        //           ? trimText(rawValue)
-        //           : rawValue
-        //       )
-        // )
-        // const value = escapeHtml(
-        //   JSON.stringify(
-        //     type === "Text" && rawValue.length > 103
-        //       ? rawValue.slice(0, 100) + "..."
-        //       : rawValue
-        //   )
-        // )
+
         const cells = [key, index === "/" ? "Link" : type, value].map(
           (cell, i) =>
             `<TD${href(i)}>${Array.isArray(cell) ? cell.join(", ") : cell}</TD>`
@@ -95,9 +81,8 @@ function createNode(node) {
       }
     })
   })
-  const header = `<TR><TD COLSPAN="3"><B>${
-    Array.isArray(type) ? type.join(", ") : type
-  }</B></TD></TR>`
+  const typeArray = Array.isArray(type) ? type : [type]
+  const header = `<TR><TD COLSPAN="3"><B>${typeArray.join(", ")}</B></TD></TR>`
   const href = rawId.slice(0, 2) === "_:" ? "" : ` HREF=${id}`
   // if (contentUrl !== null) {
   //   properties.push(
@@ -106,7 +91,24 @@ function createNode(node) {
   // }
   const props = properties.join("")
   const table = `<TABLE${href} CELLSPACING="0">${header}${props}</TABLE>`
-  lines.push(`${id} [label=<${table}>];`)
+  const style = [`label=<${table}>`]
+  if (typeArray.includes("prov:Entity")) {
+    style.push("style=filled")
+    style.push("shape=oval")
+    style.push('color="#FFFC87"')
+  } else if (
+    typeArray.includes("prov:SoftwareAgent") ||
+    typeArray.includes("prov:Person")
+  ) {
+    style.push("style=filled")
+    style.push("shape=house")
+    style.push('color="#FDB266"')
+  } else if (typeArray.includes("prov:Activity")) {
+    style.push("style=filled")
+    style.push("shape=box")
+    style.push('color="#9FB1FC"')
+  }
+  lines.push(`${id} [${style.join(", ")}];`)
   return lines.join("\n")
 }
 
@@ -138,7 +140,17 @@ export default class DotGraph extends React.Component<DotProps, DotState> {
         if (err) return console.error(err)
         console.log("flattened", flattened)
         const array = Array.isArray(flattened) ? flattened : flattened["@graph"]
-        const nodes = array.map(createNode)
+        const nodes = []
+        array.forEach(({ "@graph": graph, ...n }) => {
+          nodes.push(createNode(n))
+          if (graph) {
+            nodes.push(
+              `\nsubgraph cluster_${n["@id"].slice(2)} {\ncolor=black;\n`
+            )
+            graph.map(createNode).forEach(node => nodes.push(node))
+            nodes.push("\n}\n")
+          }
+        })
         const layout = array.length > 30 ? "fdp" : "dot"
         const prefix = ["node [shape=plain];", `graph [layout=${layout}];`]
         const string = `digraph {\n${prefix.join("\n")}\n${nodes.join("\n")}\n}`

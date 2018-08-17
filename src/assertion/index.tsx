@@ -8,7 +8,6 @@ import Dot from "./dot"
 interface AssertionProps {
   hash: string
   ipfs: ipfs
-  assertion?: AssertionGraph
 }
 interface AssertionState {
   value: AssertionGraph
@@ -21,11 +20,9 @@ export default class Assertion extends React.Component<
 > {
   constructor(props) {
     super(props)
-    const { assertion } = props
-    this.state = { value: assertion, error: null }
+    this.state = { value: null, error: null }
   }
   componentDidMount() {
-    if (this.state.value) return
     const { ipfs, hash } = this.props
     ipfs.dag
       .get(hash)
@@ -36,17 +33,7 @@ export default class Assertion extends React.Component<
     const { value, error } = this.state
     if (value) {
       const { [GRAPH]: graph, [CONTEXT]: context } = value
-      return (
-        <div className="meta">
-          <ReactJson
-            style={{ flexGrow: 1 }}
-            displayDataTypes={false}
-            enableClipboard={false}
-            src={graph}
-          />
-          <Dot context={context} graph={graph} />
-        </div>
-      )
+      return <Dot context={context} graph={value} />
     } else if (error) {
       return <p className="error">{error.toString()}</p>
     } else return null

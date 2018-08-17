@@ -2,6 +2,7 @@ import React, { Fragment } from "react"
 import { Map, List } from "immutable"
 import niceware from "niceware"
 import jsonld from "jsonld"
+import ReactJson from "react-json-view"
 import {
   ID,
   TYPE,
@@ -143,18 +144,30 @@ export default class Underground extends React.Component<
   }
   renderLog() {
     const { assertions } = this.state
-    const { ipfs } = this.props
     const content = assertions.size
       ? assertions.map(([id, time, hash, assertion], key) => (
           <fieldset key={key} className="assertion">
             <legend>
-              <a href={"#" + hash}>{hash}</a>
+              <a href={"#" + hash}>
+                <code>
+                  ...
+                  {hash.slice(-7, -1)}
+                </code>
+              </a>
             </legend>
-            <div>On {new Date(time).toString()}</div>
+            <div>Received on {new Date(time).toLocaleString()}</div>
             <div>
               From <code>{id}</code>
             </div>
-            <Assertion ipfs={ipfs} hash={hash} assertion={assertion} />
+            <div>
+              Via IPFS PubSub topic <code>{topic}</code>
+            </div>
+            <ReactJson
+              collapsed={true}
+              displayDataTypes={false}
+              enableClipboard={false}
+              src={assertion}
+            />
           </fieldset>
         ))
       : "No assertions found"

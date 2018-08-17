@@ -1,0 +1,31 @@
+{
+  "@type": ["prov:Entity", "http://underlay.mit.edu/assertion"],
+  "@graph": {
+    "@id": "_:unhand-might",
+    "name": { "@type": "Text", "@value": "FJKLDS" },
+    "@type": "Thing",
+    "@context": { "@vocab": "http://schema.org/" }
+  },
+  "@context": {
+    "prov": "http://www.w3.org/ns/prov#",
+    "@vocab": "http://schema.org/"
+  },
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "prov:wasAssociatedWith": {
+      "url": "https://github.com/underlay/playground-0",
+      "name": "Underlay Playground",
+      "@type": ["prov:SoftwareAgent", "SoftwareApplication"]
+    }
+  },
+  "prov:generatedAtTime": "2018-08-17T04:46:16.343Z",
+  "prov:wasAttributedTo": {
+    "@type": ["prov:Person", "Person"],
+    "identifier": {
+      "url": "https://github.com/libp2p/js-peer-id",
+      "name": "PeerID",
+      "@type": "PropertyValue",
+      "value": "QmXRo2KYdjUmDLQMQJsXQ1xWkcTaMB7ZykzWkHK1mjFxPh"
+    }
+  }
+}

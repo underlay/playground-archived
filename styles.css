@@ -1,3 +1,7 @@
+.react-json-view {
+  margin-top: 1em;
+}
+
 .error {
   color: darkred;
 }
@@ -8,6 +12,18 @@
 
 .dot svg g .node polygon {
   stroke: #888;
+}
+
+.dot svg g .node ellipse {
+  stroke: rgb(128, 128, 128);
+}
+
+.dot svg g .node polygon[fill="#9fb1fc"] {
+  stroke: rgb(0, 0, 255);
+}
+
+.dot svg g .node polygon[fill="#fdb266"] {
+  stroke: black;
 }
 
 .dot svg g .node text {
