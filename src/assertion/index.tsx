@@ -1,7 +1,7 @@
 import React from "react"
 import ReactJson from "react-json-view"
 import { AssertionGraph } from "../schema/types"
-import { GRAPH } from "../utils/constants"
+import { GRAPH, CONTEXT } from "../utils/constants"
 
 import Dot from "./dot"
 
@@ -35,7 +35,7 @@ export default class Assertion extends React.Component<
   render() {
     const { value, error } = this.state
     if (value) {
-      const { [GRAPH]: graph } = value
+      const { [GRAPH]: graph, [CONTEXT]: context } = value
       return (
         <div className="meta">
           <ReactJson
@@ -44,7 +44,7 @@ export default class Assertion extends React.Component<
             enableClipboard={false}
             src={graph}
           />
-          <Dot graph={graph} />
+          <Dot context={context} graph={graph} />
         </div>
       )
     } else if (error) {
