@@ -55,9 +55,9 @@ function createNode(node) {
         const { "@value": rawValue, "@type": type, "@index": index } = val
         const href = i => {
           if (i === 2) {
-            if (type === "URL") return ` HREF="${rawValue}"`
+            if (type === "URL") return ` HREF='${rawValue}'`
             else if (index === "/")
-              return ` HREF="https://gateway.ipfs.io/ipfs/${rawValue}"`
+              return ` HREF='https://gateway.ipfs.io/ipfs/${rawValue}'`
           }
           return ""
         }
@@ -67,22 +67,6 @@ function createNode(node) {
             : type === "Text" && rawValue.length > 100
               ? trimText(rawValue)
               : escapeHtml(rawValue)
-        // const value = escapeHtml(
-        //   type === "URL" || index === "/"
-        //     ? rawValue
-        //     : JSON.stringify(
-        //         type === "Text" && rawValue.length > 103
-        //           ? trimText(rawValue)
-        //           : rawValue
-        //       )
-        // )
-        // const value = escapeHtml(
-        //   JSON.stringify(
-        //     type === "Text" && rawValue.length > 103
-        //       ? rawValue.slice(0, 100) + "..."
-        //       : rawValue
-        //   )
-        // )
         const cells = [key, index === "/" ? "Link" : type, value].map(
           (cell, i) =>
             `<TD${href(i)}>${Array.isArray(cell) ? cell.join(", ") : cell}</TD>`
@@ -95,18 +79,19 @@ function createNode(node) {
       }
     })
   })
-  const header = `<TR><TD COLSPAN="3"><B>${
+  const header = `<TR><TD COLSPAN='3'><B>${
     Array.isArray(type) ? type.join(", ") : type
   }</B></TD></TR>`
-  const href = rawId.slice(0, 2) === "_:" ? "" : ` HREF=${id}`
+  // const href = rawId.slice(0, 2) === "_:" ? "" : ` HREF=${id}`
+  const href = ""
   // if (contentUrl !== null) {
   //   properties.push(
   //     `<TR><TD COLSPAN="3" HREF="${contentUrl}"><IMG SRC="${contentUrl}"/></TD></TR>`
   //   )
   // }
   const props = properties.join("")
-  const table = `<TABLE${href} CELLSPACING="0">${header}${props}</TABLE>`
-  lines.push(`${id} [label=<${table}>];`)
+  const table = `<TABLE${href} CELLSPACING='0'>${header}${props}</TABLE>`
+  lines.push(`${id} [labelType="html" label="${table}"];`)
   return lines.join("\n")
 }
 
@@ -140,7 +125,10 @@ export default class DotGraph extends React.Component<DotProps, DotState> {
         const array = Array.isArray(flattened) ? flattened : flattened["@graph"]
         const nodes = array.map(createNode)
         const layout = array.length > 30 ? "fdp" : "dot"
-        const prefix = ["node [shape=plain];", `graph [layout=${layout}];`]
+        const prefix = [
+          // "node [shape=plain];",
+          // `graph [layout=${layout}];`
+        ]
         const string = `digraph {\n${prefix.join("\n")}\n${nodes.join("\n")}\n}`
         console.log("string", string)
         this.viz

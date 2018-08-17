@@ -1,0 +1,30 @@
+{
+	"@context": {
+		"@version": 1.1,
+		"prov": "http://www.w3.org/ns/prov#",
+		"schema": "http://schema.org/"
+	},
+	"@graph": [
+		{
+			"@type": "schema:ScholarlyArticle",
+			"@id": "doi:10.7554/eLife.32822",
+			"schema:mainEntity": {
+				"@type": "schema:WebSite",
+				"schema:name": "Sci-Hub",
+				"schema:isAccessibleForFree": true,
+				"schema:mainEntityOfPage": { "@id": "doi:10.7554/eLife.32822" },
+				"schema:url": [
+					"http://sci-hub.tw/",
+					"http://sci-hub.tv/",
+					"http://sci-hub.la/",
+					"http://sci-hub.hk/",
+					"http://sci-hub.cn/",
+					"http://sci-hub.ga/",
+					"http://sci-hub.gq/",
+					"http://sci-hub.nz/",
+					"http://sci-hub.is/"
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,44 @@
+{
+  "@context": { "@vocab": "http://schema.org/" },
+  "@graph": [
+    {
+      "@id": "_:habitue-punkier",
+      "@type": "Volcano",
+      "mainEntityOfPage": {
+        "@id": "_:spieler-avarice",
+        "@type": "NewsArticle"
+      },
+      "name": { "@type": "Text", "@value": "Tesseract Volcano" },
+      "photo": {
+        "@type": "ImageObject",
+        "author": { "@id": "_:rehydrate-amazing", "@type": "Person" },
+        "contentUrl": {
+          "@type": "URL",
+          "@value": "https://upload.wikimedia.org/wikipedia/commons/d/d7/8-cell.gif"
+        }
+      },
+      "smokingAllowed": { "@type": "Boolean", "@value": true }
+    },
+    {
+      "@id": "_:stemmier-twilight",
+      "@type": "Person",
+      "name": { "@type": "Text", "@value": "Joel" },
+      "spouse": { "@id": "_:rehydrate-amazing", "@type": "Person" }
+    },
+    {
+      "@id": "_:rehydrate-amazing",
+      "@type": "Person",
+      "name": { "@type": "Text", "@value": "Joelle" },
+      "spouse": { "@id": "_:stemmier-twilight", "@type": "Person" }
+    },
+    {
+      "@id": "_:spieler-avarice",
+      "@type": "NewsArticle",
+      "author": { "@id": "_:stemmier-twilight", "@type": "Person" },
+      "headline": {
+        "@type": "Text",
+        "@value": "Explorers Discover Tesseract-Shaped Volcano"
+      }
+    }
+  ]
+}

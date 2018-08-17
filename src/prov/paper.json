@@ -1,0 +1,339 @@
+{
+  "@graph": {
+    "@context": {
+      "@vocab": "http://schema.org/",
+      "doi": "http://doi.org/",
+      "ref": "http://doi.org/10.7554/eLife.32822.",
+      "orcid": "https://orcid.org/",
+      "contentUrl": { "@container": "@index" }
+    },
+    "@id": "doi:10.7554/eLife.32822",
+    "@type": "ScholarlyArticle",
+    "datePublished": { "@type": "Date", "@value": "2018-02-09" },
+    "headline": "Sci-Hub provides access to nearly all scholarly literature",
+    "description": {
+      "@type": "Text",
+      "@value": "The website Sci-Hub enables users to download PDF versions of scholarly articles, including many articles that are paywalled at their journal’s site. Sci-Hub has grown rapidly since its creation in 2011, but the extent of its coverage has been unclear. Here we report that, as of March 2017, Sci-Hub’s database contains 68.9% of the 81.6 million scholarly articles registered with Crossref and 85.1% of articles published in toll access journals. We find that coverage varies by discipline and publisher, and that Sci-Hub preferentially covers popular, paywalled content. For toll access articles, we find that Sci-Hub provides greater coverage than the University of Pennsylvania, a major research university in the United States. Green open access to toll access articles via licit services, on the other hand, remains quite limited. Our interactive browser at https://greenelab.github.io/scihub allows users to explore these findings in more detail. For the first time, nearly all scholarly literature is available gratis to anyone with an Internet connection, suggesting the toll access business model may become unsustainable."
+    },
+    "url": {
+      "@type": "URL",
+      "@value": "https://elifesciences.org/articles/32822"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": { "@type": "Text", "@value": "eLife" },
+      "alternateName": {
+        "@type": "Text",
+        "@value": "eLife Sciences Publications, Ltd."
+      },
+      "url": {
+        "@type": "URL",
+        "@value": "https://elifesciences.org/"
+      },
+      "publishingPrinciples": {
+        "@type": "URL",
+        "@value": "https://elifesciences.org/about"
+      }
+    },
+    "license": {
+      "@type": "URL",
+      "@value": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    "author": {
+      "@list": [
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0002-3012-7446",
+          "name": "Daniel S Himmelstein",
+          "email": "daniel.himmelstein@gmail.com"
+        },
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0003-2290-4927",
+          "name": "Ariel Rodriguez Romero"
+        },
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0003-1563-7314",
+          "name": "Jacob G Levernier"
+        },
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0002-3366-7149",
+          "name": "Thomas Anthony Munro"
+        },
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0002-9888-3168",
+          "name": "Stephen Reid McLaughlin"
+        },
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0002-9925-9623",
+          "name": "Bastian Greshake Tzovaras"
+        },
+        {
+          "@type": "Person",
+          "@id": "orcid:0000-0001-8713-9213",
+          "name": "Casey S Greene",
+          "email": "greenescientist@gmail.com"
+        }
+      ]
+    },
+    "funder": {
+      "@type": "Organization",
+      "@id": "doi:10.13039/100000936",
+      "name": "Gordon and Betty Moore Foundation"
+    },
+    "associatedMedia": [
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:002",
+        "name": "Figure 1",
+        "caption": "The history of Sci-Hub.",
+        "description": "Weekly interest from Google Trends is plotted over time for the search terms “Sci-Hub” and “LibGen”. The light green period indicates when Sci-Hub used LibGen as its database for storing articles (Elbakyan, 2017). Light blue indicates the collection period of the Sci-Hub access logs that we analyze throughout this study (Elbakyan and Bohannon, 2016). Based on these logs and newly released logs for 2017, Figure 1—figure supplement 1 shows the number of articles downloaded from Sci-Hub over time, providing an alternative look into Sci-Hub’s growth. The first pink dotted line represents the collection date of the LibGen scimag metadata used in Cabanac’s study (Cabanac, 2016; Cabanac, 2017). The second pink dotted line shows the date of Sci-Hub’s tweeted DOI catalog used in this study. The events indicated by the letters (A), (B), (C) … are explained in the main text.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmdGzmf9KGjWgfanyM8joquSsMpwKS7wXg6XZuW6ifBTh9"
+        },
+        "prov:wasDerivedFrom": [
+          {
+            "@type": ["prov:Entity", "WebPage"],
+            "url": "https://www.reddit.com/comments/2raea8",
+            "prov:atLocation": {
+              "@id": "_:fig1-b",
+              "@type": ["prov:Location", "PropertyValue"],
+              "value": "B"
+            }
+          },
+          {
+            "@type": ["prov:Entity", "ScholarlyArticle"],
+            "prov:value": "Van der Sar, 2015a",
+            "prov:atLocation": {
+              "@id": "_:fig1-c",
+              "@type": ["prov:Location", "PropertyValue"],
+              "value": "C",
+              "description": "Elsevier files a civil suit against Sci-Hub and LibGen — at the respective domains sci-hub.org and libgen.org — in the U.S. District Court for the Southern District of New York (Van der Sar, 2015a; DeMarco et al., 2015a). The complaint seeks a “prayer for relief” that includes domain name seizure, damages, and “an order disgorging Defendants’ profits”."
+            }
+          },
+          {
+            "@type": ["prov:Entity", "ScholarlyArticle"],
+            "prov:value": "DeMarco et al., 2015a",
+            "prov:atLocation": { "@id": "_:fig1-c" }
+          },
+          {
+            "@type": ["prov:Entity", "NewsArticle"],
+            "prov:value": "Oxenham, 2016",
+            "url": "https://bigthink.com/neurobonkers/a-pirate-bay-for-science",
+            "prov:atLocation": {
+              "@id": "_:fig1-e",
+              "@type": ["prov:Location", "PropertyValue"],
+              "value": "E",
+              "description": "The article “Meet the Robin Hood of Science” by Simon Oxenham spurs a wave of attention and news coverage on Sci-Hub and Alexandra Elbakyan (Oxenham, 2016), culminating in The New York Times asking “Should all research papers be free?” (Murphy, 2016)."
+            }
+          },
+          {
+            "@type": ["prov:Entity", "NewsArticle"],
+            "prov:value": "Murphy, 2016",
+            "url": "https://www.nytimes.com/2016/03/13/opinion/sunday/should-all-research-papers-be-free.html",
+            "prov:atLocation": { "@id": "_:fig1-e" }
+          }
+        ]
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:003",
+        "name": "Figure 1—figure supplement 1",
+        "caption": "Downloads per day on Sci-Hub for months with access logs.",
+        "description": "The number of articles downloaded from Sci-Hub is shown over time. Sci-Hub access logs were combined from two releases: (Elbakyan and Bohannon, 2016) covering 27,819,963 downloads from September 2015 to February 2016 and (Tzovaras, 2018) covering 150,875,862 downloads from 2017. The plot shows the average number of downloads per day for months with data. There were 54 days within the collection periods without any logged access events, due presumably to service outages or server misconfiguration. Hence, we ignored days without logs when computing monthly averages. Point color indicates the proportion of days with logs for a given month. For example, November 2015 and October 2017, which were missing logs for 17 and 23 days respectively, are thus lighter. The December 2017 dropoff in downloads likely reflects the effect of domain suspensions that occurred in late November (Silver, 2017). Unlike the Sci-Hub log analyses elsewhere in this study, this plot does not filter for valid articles (i.e. DOIs in our Crossref-derived catalog of scholarly literature).",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmdeCNb8aSNevHByXgfjiGRuWCceStkBxa1mQZubrh2XYX"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:004",
+        "name": "Figure 2",
+        "caption": "Coverage by article type.",
+        "description": "Coverage is plotted for the Crossref work types included by this study. We refer to all of these types as “articles”.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmPJEiACEiL56Az9sak11CSbcDf6bj4REXmqWxwBVDawrU"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:006",
+        "name": "Figure 3",
+        "caption": "Distributions of journal & publisher coverages.",
+        "description": "The histograms show the distribution of Sci-Hub’s coverage for all 23,037 journals (top) and 3,832 publishers (bottom). Each bin spans 2.5 percentage points. For example, the top-left bar indicates Sci-Hub’s coverage is between 0.0%–2.5% for 3,892 journals.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmWkdKgVouxkGiyJEKFEgWdKaZyKbrQRFhnMS4KzPMkzks"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:007",
+        "name": "Figure 4",
+        "caption": "Coverage by journal attributes.",
+        "description": "Each bar represents Sci-Hub’s coverage of articles in journals with the specified attributes, according to Scopus. Active refers to whether a journal still publishes articles. Open refers to whether a journal is open access. Subject area refers to a journal’s discipline. Note that some journals are assigned to multiple subject areas. As an example, we identified 588 neuroscience journals, which contained 1.8 million articles. Sci-Hub possessed 87.7% of these articles.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmaWh2egUiT96iY8ZfsrGQ4tF7WwN7deGfzJhTtPdbWgTk"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:008",
+        "name": "Figure 4—figure supplement 1",
+        "caption": "Coverage by country of publication.",
+        "description": "Scopus assigns each journal a country of publication. Sci-Hub’s coverage is shown for countries with at least 100,000 articles.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmeCEcVSTtBjcNvAKiRydW179VGAZ239KS42boCHUPxfRT"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:010",
+        "name": "Figure 5",
+        "caption": "Coverage by publisher.",
+        "description": "Article coverage is shown for all Scopus publishers with at least 200,000 articles.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmbjUiK5FpNPdBNit2tqKfAXRPTpZtaUAWgjtujVBoudGd"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:011",
+        "name": "Figure 6",
+        "caption": "Coverage of articles by year published.",
+        "description": "Sci-Hub’s article coverage is shown for each year since 1850.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmcxFX2skEehFoFkQKKFtQAPRU9P3tcWTVivKkNBg4Qp4e"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:012",
+        "name": "Figure 6—figure supplement 1",
+        "caption": "Coverage of articles by year published and journal access status.",
+        "description": "Sci-Hub’s coverage is shown separately for articles in open versus toll access journals, for each year since 1950.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmWaVuvKCaJWve7U31aZ6pPeozpWPAbBZfT3orVJbU3rev"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:013",
+        "name": "Figure 7",
+        "caption": "Sci-Hub’s coverage by oaDOI access status.",
+        "description": "Using oaDOI calls from the State of OA study, we show Sci-Hub’s coverage on each access status. Gray indicates articles that were not accessible via oaDOI (referred to as closed). Here, all three State of OA collections were combined, yielding 290,120 articles. Figure 7—figure supplement 1 shows coverage separately for the three State of OA collections.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmSeXEHvPRu1MrAi8bkTiCU3cBzzpC6RJCxediH25MXNMx"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:014",
+        "name": "Figure 7—figure supplement 1",
+        "caption": "Coverage by oaDOI access status on each State of OA collection.",
+        "description": "Coverage by oaDOI access status is shown for Sci-Hub, PennText, and the union of Sci-Hub and PennText. Each panel refers to a different State of OA collection, with Combined referring to the union of the Crossref, Unpaywall, and Web of Science collections. The Sci-Hub section of the Combined panel is the same as Figure 7. Impressively, Sci-Hub’s coverage of the closed articles in the Web of Science collection was 97.8%. This remarkable coverage likely reflects that these articles were published from 2009–2015 and classified as citable items by Web of Science, which is selective when indexing journals (Mongeon and Paul-Hus, 2015). Note that PennText does not have complete coverage of bronze, hybrid, and gold articles, which should be the case were all metadata systems perfect. These anomalies likely result from errors in both PennText (whose accuracy we estimated at 88.2%) and oaDOI (whose accuracy the State of OA study estimated at 90.4%, i.e. Table 1 of (Piwowar et al., 2018) reports 5 false positives and 43 false negatives on oaDOI calls for 500 articles).",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmSeXEHvPRu1MrAi8bkTiCU3cBzzpC6RJCxediH25MXNMx"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:015",
+        "name": "Figure 8",
+        "caption": "Coverage of several access methods and their combinations.",
+        "description": "This figure compares datasets of article coverage corresponding to various access methods. These article sets refer to manually evaluated access via the publisher’s site from outside of an institutional network (labeled None) or from inside Penn’s network (labeled Penn); access according to Penn’s library system (labeled PennText); access via the oaDOI utility (labeled oaDOI); and inclusion in Sci-Hub’s database (labeled Sci-Hub). Each diagram shows the coverage of three access methods and their possible combinations. Within a diagram, each section notes the percent coverage achieved by the corresponding combination of access methods. Contrary to traditional Venn diagrams, each section does not indicate disjoint sets of articles. Instead, each section shows coverage on the same set of articles, whose total number is reported in the diagram’s title. The top two diagrams show coverage on a small set of manually evaluated articles (confidence intervals provided in the main text). The bottom two diagrams show coverage on a larger set of automatically evaluated articles. The two lefthand diagrams show coverage on all articles, whereas the two righthand diagrams show coverage on toll access articles only. Specifically, the top-right diagram assesses coverage on articles that were inaccessible from outside of an institutional network. Similarly, the bottom-right diagram assesses coverage of articles that were classified as closed or green by oaDOI, and thus excludes gold, hybrid, and bronze articles (those available gratis from their publisher).",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmdEErbVNzmV8ScEX5LwChpe8fMkHsvXUo3PcMRenasUri"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:009",
+        "name": "Figure 9",
+        "caption": "Relation to journal impact.",
+        "description": "(A) Average coverage for journals divided into 2015 CiteScore deciles. The CiteScore range defining each decile is shown by the x-axis labels. The ticks represent 99% confidence intervals of the mean. This is the only analysis where “Sci-Hub Coverage” refers to journal-level rather than article-level averages. (B) The association between 2015 CiteScore and average visitors per article is plotted for open and toll access journals. Curves show the 95% confidence band from a Generalized Additive Model.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmXk82VMaF8sdgXvbPhJQQ6ruawWr8sbKnsMM6koMdnFC7"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:016",
+        "name": "Figure 10",
+        "caption": "Number of bitcoin donations per month.",
+        "description": "The number of bitcoin donations to Sci-Hub is shown for each month from June 2015 to December 2017. Since February 2016, Sci-Hub has received over 25 donations per month. Each donation corresponds to an incoming transaction to a known Sci-Hub address. See Figure 10—figure supplement 1 for the amount donated each month, valued in BTC or USD.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmZTkpopb6DToKHJXYMQNvYv2oCfw9RYeQ3du12Hn3AX8s"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:017",
+        "name": "Figure 10—figure supplement 1",
+        "caption": "Bitcoin donations to Sci-Hub per month.",
+        "description": "For months since June 2015, total bitcoin donations (deposits to known Sci-Hub addresses) were assessed. Donations in USD refers to the United States dollar value at time of transaction confirmation.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmTK9U8hMpB7fwp8GXtS7htcVdExaXWEh4jCiU9p23mtc9"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:018",
+        "name": "Figure 11",
+        "caption": "Number of articles in LibGen scimag over time.",
+        "description": "The figure shows the number of articles in LibGen scimag, according to its TimeAdded field, for two database dumps. The number of articles added per day for the January 1, 2014 LibGen database dump was provided by Cabanac and corresponds to Figure 1 of (Cabanac, 2016). Notice the major discrepancy whereby articles from the April 7, 2017 database dump were added at later dates. Accordingly, we hypothesize that the TimeAdded field is replaced upon modification, making it impossible to assess date of first upload.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmYfzxzjKZgZtvuP2ygeGnpGvq1g4wrHDmexmJkNGkeNGs"
+        }
+      },
+      {
+        "@type": ["ImageObject", "prov:Entity"],
+        "@id": "ref:019",
+        "name": "Figure 11—figure supplement 1",
+        "caption": "Lag-time from publication to LibGen upload.",
+        "description": "For each year of publication from 2010–2017, we plot the relationship between lag-time and LibGen scimag’s coverage. For example, this plot shows that 75% of articles published in 2011 were uploaded to LibGen within 60 months. This analysis only considers articles for which a month of publication can reliably be extracted, which excludes all articles allegedly published on January 1. This plot portrays lag-times as decreasing over time, with maximum coverage declining. For example, coverage for 2016 articles exceeded 50% within 6 months, but appears to have reached an asymptote around 60%. Alternatively, coverage for 2014 took 15 months to exceed 50%, but has since reached 75%. However, this signal could result from post-dated LibGen upload timestamps. Therefore, we caution against drawing any conclusions from the TimeAdded field in LibGen scimag until its accuracy can be established more reliably.",
+        "encodingFormat": "image/jpeg",
+        "contentUrl": {
+          "/": "QmaorVStsfAANsUomu9LUkPvzsAgW2UNemJBpsRtjSzRCv"
+        }
+      },
+      {
+        "@type": ["MediaObject", "prov:Entity"],
+        "@id": "ref:005",
+        "name": "Table 1",
+        "caption": "Coverage for the ten journals with the most articles.",
+        "description": "The total number of articles published by each journal is noted in the Crossref column. The table provides the number (Sci-Hub column) and percentage (Coverage column) of these articles that are in Sci-Hub’s repository.",
+        "encodingFormat": "text/csv",
+        "contentUrl": {
+          "/": "QmdB56PNBZocKPAjnMkswiwvcwar534FfiM514ZZEMtTAs"
+        }
+      }
+    ],
+    "encoding": {
+      "@type": ["MediaObject", "prov:Entity"],
+      "encodingFormat": "application/pdf",
+      "contentUrl": {
+        "/": "QmeCUigLuWKYZcg4zGAvm7qPzCMMCVJpJTJma5gwq65spT"
+      }
+    }
+  }
+}

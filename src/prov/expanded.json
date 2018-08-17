@@ -1,0 +1,919 @@
+{
+  "@graph": {
+    "@context": {
+      "@vocab": "http://schema.org/",
+      "doi": "http://doi.org/",
+      "ref": "http://doi.org/10.7554/eLife.32822.",
+      "orcid": "https://orcid.org/",
+      "contentUrl": { "@container": "@index" }
+    },
+    "@id": "http://doi.org/10.7554/eLife.32822",
+    "@type": ["http://schema.org/ScholarlyArticle"],
+    "http://schema.org/associatedMedia": [
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.002",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "The history of Sci-Hub."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmdGzmf9KGjWgfanyM8joquSsMpwKS7wXg6XZuW6ifBTh9",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Weekly interest from Google Trends is plotted over time for the search terms “Sci-Hub” and “LibGen”. The light green period indicates when Sci-Hub used LibGen as its database for storing articles (Elbakyan, 2017). Light blue indicates the collection period of the Sci-Hub access logs that we analyze throughout this study (Elbakyan and Bohannon, 2016). Based on these logs and newly released logs for 2017, Figure 1—figure supplement 1 shows the number of articles downloaded from Sci-Hub over time, providing an alternative look into Sci-Hub’s growth. The first pink dotted line represents the collection date of the LibGen scimag metadata used in Cabanac’s study (Cabanac, 2016; Cabanac, 2017). The second pink dotted line shows the date of Sci-Hub’s tweeted DOI catalog used in this study. The events indicated by the letters (A), (B), (C) … are explained in the main text."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 1"
+          }
+        ],
+        "prov:wasDerivedFrom": [
+          {
+            "@type": ["prov:Entity", "http://schema.org/WebPage"],
+            "prov:atLocation": [
+              {
+                "@id": "_:fig1-b",
+                "@type": ["prov:Location", "http://schema.org/PropertyValue"],
+                "http://schema.org/value": [
+                  {
+                    "@type": "http://schema.org/Text",
+                    "@value": "B"
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/url": [
+              {
+                "@type": "http://schema.org/URL",
+                "@value": "https://www.reddit.com/comments/2raea8"
+              }
+            ]
+          },
+          {
+            "@type": ["prov:Entity", "http://schema.org/ScholarlyArticle"],
+            "prov:atLocation": [
+              {
+                "@id": "_:fig1-c",
+                "@type": ["prov:Location", "http://schema.org/PropertyValue"],
+                "http://schema.org/description": [
+                  {
+                    "@type": "http://schema.org/Text",
+                    "@value": "Elsevier files a civil suit against Sci-Hub and LibGen — at the respective domains sci-hub.org and libgen.org — in the U.S. District Court for the Southern District of New York (Van der Sar, 2015a; DeMarco et al., 2015a). The complaint seeks a “prayer for relief” that includes domain name seizure, damages, and “an order disgorging Defendants’ profits”."
+                  }
+                ],
+                "http://schema.org/value": [
+                  {
+                    "@type": "http://schema.org/Text",
+                    "@value": "C"
+                  }
+                ]
+              }
+            ],
+            "prov:value": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Van der Sar, 2015a"
+              }
+            ]
+          },
+          {
+            "@type": ["prov:Entity", "http://schema.org/ScholarlyArticle"],
+            "prov:atLocation": [
+              {
+                "@id": "_:fig1-c"
+              }
+            ],
+            "prov:value": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "DeMarco et al., 2015a"
+              }
+            ]
+          },
+          {
+            "@type": ["prov:Entity", "http://schema.org/NewsArticle"],
+            "prov:atLocation": [
+              {
+                "@id": "_:fig1-e",
+                "@type": ["prov:Location", "http://schema.org/PropertyValue"],
+                "http://schema.org/description": [
+                  {
+                    "@type": "http://schema.org/Text",
+                    "@value": "The article “Meet the Robin Hood of Science” by Simon Oxenham spurs a wave of attention and news coverage on Sci-Hub and Alexandra Elbakyan (Oxenham, 2016), culminating in The New York Times asking “Should all research papers be free?” (Murphy, 2016)."
+                  }
+                ],
+                "http://schema.org/value": [
+                  {
+                    "@type": "http://schema.org/Text",
+                    "@value": "E"
+                  }
+                ]
+              }
+            ],
+            "prov:value": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Oxenham, 2016"
+              }
+            ],
+            "http://schema.org/url": [
+              {
+                "@type": "http://schema.org/URL",
+                "@value": "https://bigthink.com/neurobonkers/a-pirate-bay-for-science"
+              }
+            ]
+          },
+          {
+            "@type": ["prov:Entity", "http://schema.org/NewsArticle"],
+            "prov:atLocation": [
+              {
+                "@id": "_:fig1-e"
+              }
+            ],
+            "prov:value": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Murphy, 2016"
+              }
+            ],
+            "http://schema.org/url": [
+              {
+                "@type": "http://schema.org/URL",
+                "@value": "https://www.nytimes.com/2016/03/13/opinion/sunday/should-all-research-papers-be-free.html"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.003",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Downloads per day on Sci-Hub for months with access logs."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmdeCNb8aSNevHByXgfjiGRuWCceStkBxa1mQZubrh2XYX",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "The number of articles downloaded from Sci-Hub is shown over time. Sci-Hub access logs were combined from two releases: (Elbakyan and Bohannon, 2016) covering 27,819,963 downloads from September 2015 to February 2016 and (Tzovaras, 2018) covering 150,875,862 downloads from 2017. The plot shows the average number of downloads per day for months with data. There were 54 days within the collection periods without any logged access events, due presumably to service outages or server misconfiguration. Hence, we ignored days without logs when computing monthly averages. Point color indicates the proportion of days with logs for a given month. For example, November 2015 and October 2017, which were missing logs for 17 and 23 days respectively, are thus lighter. The December 2017 dropoff in downloads likely reflects the effect of domain suspensions that occurred in late November (Silver, 2017). Unlike the Sci-Hub log analyses elsewhere in this study, this plot does not filter for valid articles (i.e. DOIs in our Crossref-derived catalog of scholarly literature)."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 1—figure supplement 1"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.004",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage by article type."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmPJEiACEiL56Az9sak11CSbcDf6bj4REXmqWxwBVDawrU",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage is plotted for the Crossref work types included by this study. We refer to all of these types as “articles”."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 2"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.006",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Distributions of journal & publisher coverages."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmWkdKgVouxkGiyJEKFEgWdKaZyKbrQRFhnMS4KzPMkzks",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "The histograms show the distribution of Sci-Hub’s coverage for all 23,037 journals (top) and 3,832 publishers (bottom). Each bin spans 2.5 percentage points. For example, the top-left bar indicates Sci-Hub’s coverage is between 0.0%–2.5% for 3,892 journals."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 3"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.007",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage by journal attributes."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmaWh2egUiT96iY8ZfsrGQ4tF7WwN7deGfzJhTtPdbWgTk",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Each bar represents Sci-Hub’s coverage of articles in journals with the specified attributes, according to Scopus. Active refers to whether a journal still publishes articles. Open refers to whether a journal is open access. Subject area refers to a journal’s discipline. Note that some journals are assigned to multiple subject areas. As an example, we identified 588 neuroscience journals, which contained 1.8 million articles. Sci-Hub possessed 87.7% of these articles."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 4"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.008",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage by country of publication."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmeCEcVSTtBjcNvAKiRydW179VGAZ239KS42boCHUPxfRT",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Scopus assigns each journal a country of publication. Sci-Hub’s coverage is shown for countries with at least 100,000 articles."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 4—figure supplement 1"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.010",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage by publisher."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmbjUiK5FpNPdBNit2tqKfAXRPTpZtaUAWgjtujVBoudGd",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Article coverage is shown for all Scopus publishers with at least 200,000 articles."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 5"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.011",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage of articles by year published."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmcxFX2skEehFoFkQKKFtQAPRU9P3tcWTVivKkNBg4Qp4e",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Sci-Hub’s article coverage is shown for each year since 1850."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 6"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.012",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage of articles by year published and journal access status."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmWaVuvKCaJWve7U31aZ6pPeozpWPAbBZfT3orVJbU3rev",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Sci-Hub’s coverage is shown separately for articles in open versus toll access journals, for each year since 1950."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 6—figure supplement 1"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.013",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Sci-Hub’s coverage by oaDOI access status."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmSeXEHvPRu1MrAi8bkTiCU3cBzzpC6RJCxediH25MXNMx",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Using oaDOI calls from the State of OA study, we show Sci-Hub’s coverage on each access status. Gray indicates articles that were not accessible via oaDOI (referred to as closed). Here, all three State of OA collections were combined, yielding 290,120 articles. Figure 7—figure supplement 1 shows coverage separately for the three State of OA collections."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 7"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.014",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@value": "Coverage by oaDOI access status on each State of OA collection."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmSeXEHvPRu1MrAi8bkTiCU3cBzzpC6RJCxediH25MXNMx",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage by oaDOI access status is shown for Sci-Hub, PennText, and the union of Sci-Hub and PennText. Each panel refers to a different State of OA collection, with Combined referring to the union of the Crossref, Unpaywall, and Web of Science collections. The Sci-Hub section of the Combined panel is the same as Figure 7. Impressively, Sci-Hub’s coverage of the closed articles in the Web of Science collection was 97.8%. This remarkable coverage likely reflects that these articles were published from 2009–2015 and classified as citable items by Web of Science, which is selective when indexing journals (Mongeon and Paul-Hus, 2015). Note that PennText does not have complete coverage of bronze, hybrid, and gold articles, which should be the case were all metadata systems perfect. These anomalies likely result from errors in both PennText (whose accuracy we estimated at 88.2%) and oaDOI (whose accuracy the State of OA study estimated at 90.4%, i.e. Table 1 of (Piwowar et al., 2018) reports 5 false positives and 43 false negatives on oaDOI calls for 500 articles)."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 7—figure supplement 1"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.015",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage of several access methods and their combinations."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmdEErbVNzmV8ScEX5LwChpe8fMkHsvXUo3PcMRenasUri",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "This figure compares datasets of article coverage corresponding to various access methods. These article sets refer to manually evaluated access via the publisher’s site from outside of an institutional network (labeled None) or from inside Penn’s network (labeled Penn); access according to Penn’s library system (labeled PennText); access via the oaDOI utility (labeled oaDOI); and inclusion in Sci-Hub’s database (labeled Sci-Hub). Each diagram shows the coverage of three access methods and their possible combinations. Within a diagram, each section notes the percent coverage achieved by the corresponding combination of access methods. Contrary to traditional Venn diagrams, each section does not indicate disjoint sets of articles. Instead, each section shows coverage on the same set of articles, whose total number is reported in the diagram’s title. The top two diagrams show coverage on a small set of manually evaluated articles (confidence intervals provided in the main text). The bottom two diagrams show coverage on a larger set of automatically evaluated articles. The two lefthand diagrams show coverage on all articles, whereas the two righthand diagrams show coverage on toll access articles only. Specifically, the top-right diagram assesses coverage on articles that were inaccessible from outside of an institutional network. Similarly, the bottom-right diagram assesses coverage of articles that were classified as closed or green by oaDOI, and thus excludes gold, hybrid, and bronze articles (those available gratis from their publisher)."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 8"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.009",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Relation to journal impact."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmXk82VMaF8sdgXvbPhJQQ6ruawWr8sbKnsMM6koMdnFC7",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "(A) Average coverage for journals divided into 2015 CiteScore deciles. The CiteScore range defining each decile is shown by the x-axis labels. The ticks represent 99% confidence intervals of the mean. This is the only analysis where “Sci-Hub Coverage” refers to journal-level rather than article-level averages. (B) The association between 2015 CiteScore and average visitors per article is plotted for open and toll access journals. Curves show the 95% confidence band from a Generalized Additive Model."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 9"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.016",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Number of bitcoin donations per month."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmZTkpopb6DToKHJXYMQNvYv2oCfw9RYeQ3du12Hn3AX8s",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "The number of bitcoin donations to Sci-Hub is shown for each month from June 2015 to December 2017. Since February 2016, Sci-Hub has received over 25 donations per month. Each donation corresponds to an incoming transaction to a known Sci-Hub address. See Figure 10—figure supplement 1 for the amount donated each month, valued in BTC or USD."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 10"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.017",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Bitcoin donations to Sci-Hub per month."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmTK9U8hMpB7fwp8GXtS7htcVdExaXWEh4jCiU9p23mtc9",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "For months since June 2015, total bitcoin donations (deposits to known Sci-Hub addresses) were assessed. Donations in USD refers to the United States dollar value at time of transaction confirmation."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 10—figure supplement 1"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.018",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Number of articles in LibGen scimag over time."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmYfzxzjKZgZtvuP2ygeGnpGvq1g4wrHDmexmJkNGkeNGs",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "The figure shows the number of articles in LibGen scimag, according to its TimeAdded field, for two database dumps. The number of articles added per day for the January 1, 2014 LibGen database dump was provided by Cabanac and corresponds to Figure 1 of (Cabanac, 2016). Notice the major discrepancy whereby articles from the April 7, 2017 database dump were added at later dates. Accordingly, we hypothesize that the TimeAdded field is replaced upon modification, making it impossible to assess date of first upload."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 11"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.019",
+        "@type": ["http://schema.org/ImageObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Lag-time from publication to LibGen upload."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmaorVStsfAANsUomu9LUkPvzsAgW2UNemJBpsRtjSzRCv",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "For each year of publication from 2010–2017, we plot the relationship between lag-time and LibGen scimag’s coverage. For example, this plot shows that 75% of articles published in 2011 were uploaded to LibGen within 60 months. This analysis only considers articles for which a month of publication can reliably be extracted, which excludes all articles allegedly published on January 1. This plot portrays lag-times as decreasing over time, with maximum coverage declining. For example, coverage for 2016 articles exceeded 50% within 6 months, but appears to have reached an asymptote around 60%. Alternatively, coverage for 2014 took 15 months to exceed 50%, but has since reached 75%. However, this signal could result from post-dated LibGen upload timestamps. Therefore, we caution against drawing any conclusions from the TimeAdded field in LibGen scimag until its accuracy can be established more reliably."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "image/jpeg"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Figure 11—figure supplement 1"
+          }
+        ]
+      },
+      {
+        "@id": "http://doi.org/10.7554/eLife.32822.005",
+        "@type": ["http://schema.org/MediaObject", "prov:Entity"],
+        "http://schema.org/caption": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Coverage for the ten journals with the most articles."
+          }
+        ],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmdB56PNBZocKPAjnMkswiwvcwar534FfiM514ZZEMtTAs",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "The total number of articles published by each journal is noted in the Crossref column. The table provides the number (Sci-Hub column) and percentage (Coverage column) of these articles that are in Sci-Hub’s repository."
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "text/csv"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Table 1"
+          }
+        ]
+      }
+    ],
+    "http://schema.org/author": [
+      {
+        "@list": [
+          {
+            "@id": "https://orcid.org/0000-0002-3012-7446",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/email": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "daniel.himmelstein@gmail.com"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Daniel S Himmelstein"
+              }
+            ]
+          },
+          {
+            "@id": "https://orcid.org/0000-0003-2290-4927",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Ariel Rodriguez Romero"
+              }
+            ]
+          },
+          {
+            "@id": "https://orcid.org/0000-0003-1563-7314",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Jacob G Levernier"
+              }
+            ]
+          },
+          {
+            "@id": "https://orcid.org/0000-0002-3366-7149",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Thomas Anthony Munro"
+              }
+            ]
+          },
+          {
+            "@id": "https://orcid.org/0000-0002-9888-3168",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Stephen Reid McLaughlin"
+              }
+            ]
+          },
+          {
+            "@id": "https://orcid.org/0000-0002-9925-9623",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Bastian Greshake Tzovaras"
+              }
+            ]
+          },
+          {
+            "@id": "https://orcid.org/0000-0001-8713-9213",
+            "@type": ["http://schema.org/Person"],
+            "http://schema.org/email": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "greenescientist@gmail.com"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@type": "http://schema.org/Text",
+                "@value": "Casey S Greene"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://schema.org/datePublished": [
+      {
+        "@type": "http://schema.org/Date",
+        "@value": "2018-02-09"
+      }
+    ],
+    "http://schema.org/description": [
+      {
+        "@type": "http://schema.org/Text",
+        "@value": "The website Sci-Hub enables users to download PDF versions of scholarly articles, including many articles that are paywalled at their journal’s site. Sci-Hub has grown rapidly since its creation in 2011, but the extent of its coverage has been unclear. Here we report that, as of March 2017, Sci-Hub’s database contains 68.9% of the 81.6 million scholarly articles registered with Crossref and 85.1% of articles published in toll access journals. We find that coverage varies by discipline and publisher, and that Sci-Hub preferentially covers popular, paywalled content. For toll access articles, we find that Sci-Hub provides greater coverage than the University of Pennsylvania, a major research university in the United States. Green open access to toll access articles via licit services, on the other hand, remains quite limited. Our interactive browser at https://greenelab.github.io/scihub allows users to explore these findings in more detail. For the first time, nearly all scholarly literature is available gratis to anyone with an Internet connection, suggesting the toll access business model may become unsustainable."
+      }
+    ],
+    "http://schema.org/encoding": [
+      {
+        "@type": ["http://schema.org/MediaObject", "prov:Entity"],
+        "http://schema.org/contentUrl": [
+          {
+            "@value": "QmeCUigLuWKYZcg4zGAvm7qPzCMMCVJpJTJma5gwq65spT",
+            "@index": "/"
+          }
+        ],
+        "http://schema.org/encodingFormat": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "application/pdf"
+          }
+        ]
+      }
+    ],
+    "http://schema.org/funder": [
+      {
+        "@id": "http://doi.org/10.13039/100000936",
+        "@type": ["http://schema.org/Organization"],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "Gordon and Betty Moore Foundation"
+          }
+        ]
+      }
+    ],
+    "http://schema.org/headline": [
+      {
+        "@type": "http://schema.org/Text",
+        "@value": "Sci-Hub provides access to nearly all scholarly literature"
+      }
+    ],
+    "http://schema.org/license": [
+      {
+        "@type": "http://schema.org/URL",
+        "@value": "http://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "http://schema.org/publisher": [
+      {
+        "@type": ["http://schema.org/Organization"],
+        "http://schema.org/alternateName": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "eLife Sciences Publications, Ltd."
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@type": "http://schema.org/Text",
+            "@value": "eLife"
+          }
+        ],
+        "http://schema.org/publishingPrinciples": [
+          {
+            "@type": "http://schema.org/URL",
+            "@value": "https://elifesciences.org/about"
+          }
+        ],
+        "http://schema.org/url": [
+          {
+            "@type": "http://schema.org/URL",
+            "@value": "https://elifesciences.org/"
+          }
+        ]
+      }
+    ],
+    "http://schema.org/url": [
+      {
+        "@type": "http://schema.org/URL",
+        "@value": "https://elifesciences.org/articles/32822"
+      }
+    ]
+  }
+}
