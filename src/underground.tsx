@@ -52,7 +52,8 @@ export default class Underground extends React.Component<
   private source: string
   constructor(props) {
     super(props)
-    const hash = window.location.hash.slice(1)
+    const hash = window.location.hash.slice(1) || "new"
+    window.location.hash = hash
     this.state = {
       hash,
       assertions: List(),
@@ -145,7 +146,7 @@ export default class Underground extends React.Component<
     const { ipfs } = this.props
     const content = assertions.size
       ? assertions.map(([id, time, hash, assertion], key) => (
-          <fieldset className="assertion">
+          <fieldset key={key} className="assertion">
             <legend>
               <a href={"#" + hash}>{hash}</a>
             </legend>
