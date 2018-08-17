@@ -26,7 +26,6 @@ function trimText(string) {
   const lines = Array.from({ length }).map((_, i) =>
     string.slice(i * 100, (i + 1) * 100)
   )
-  console.log("lines", lines)
   for (let i = 0; i < length - 1; i++) {
     const index = lines[i].lastIndexOf(" ")
     if (index >= 0) {
