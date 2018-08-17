@@ -72,9 +72,7 @@ export default class Underground extends React.Component<
   componentDidMount() {
     window.addEventListener("hashchange", () => {
       const hash = window.location.hash.slice(1)
-      if (hash === "log" || hash === "new") {
-        if (this.state.hash !== hash) this.setState({ hash })
-      } else window.location.hash = this.state.hash
+      if (this.state.hash !== hash) this.setState({ hash })
     })
     this.props.ipfs.pubsub.subscribe(
       topic,
@@ -140,20 +138,24 @@ export default class Underground extends React.Component<
     const { hash } = this.state
     if (hash === "new") return this.renderForm()
     else if (hash === "log") return this.renderLog()
-    else window.location.hash = "new"
+    else return this.renderAssertion()
   }
   renderLog() {
     const { assertions } = this.state
+    const { ipfs } = this.props
     const content = assertions.size
-      ? assertions
-          .map(([id, time, hash, assertion], key) => ({
-            id,
-            time,
-            hash,
-            assertion,
-            key,
-          }))
-          .map(props => <Assertion {...props} />)
+      ? assertions.map(([id, time, hash, assertion], key) => (
+          <fieldset className="assertion">
+            <legend>
+              <a href={"#" + hash}>{hash}</a>
+            </legend>
+            <div>On {new Date(time).toString()}</div>
+            <div>
+              From <code>{id}</code>
+            </div>
+            <Assertion ipfs={ipfs} hash={hash} assertion={assertion} />
+          </fieldset>
+        ))
       : "No assertions found"
     return (
       <div className="log">
@@ -162,6 +164,23 @@ export default class Underground extends React.Component<
         </header>
         <hr />
         {content}
+      </div>
+    )
+  }
+  renderAssertion() {
+    const { ipfs } = this.props
+    const { hash } = this.state
+    return (
+      <div className="log">
+        <header>
+          <h4>
+            <code>{hash}</code>
+          </h4>
+          <a href="#new">create new assertion</a>
+          <a href="#log">assertion log</a>
+        </header>
+        <hr />
+        <Assertion ipfs={ipfs} hash={hash} />
       </div>
     )
   }

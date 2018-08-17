@@ -2,7 +2,6 @@ import React from "react"
 import jsonld from "jsonld"
 import Viz from "viz.js"
 import { Module, render } from "viz.js/full.render"
-import { AssertionGraph } from "../schema/types"
 
 const context = { "@vocab": "http://schema.org/" }
 
@@ -28,7 +27,7 @@ function createNode(node) {
     }
   })
   const header = `<TR><TD COLSPAN="3"><B>${type}</B></TD></TR>`
-  const table = `<TABLE>${header}${properties.join("")}</TABLE>`
+  const table = `<TABLE CELLSPACING="0">${header}${properties.join("")}</TABLE>`
   lines.push(`${id} [label=<${table}>];`)
   return lines.join("\n")
 }
@@ -53,7 +52,7 @@ export default class DotGraph extends React.Component<DotProps, DotState> {
       jsonld.flatten(this.props.graph, context, (err, flattened) => {
         if (err) return console.error(err)
         const nodes = flattened["@graph"].map(createNode)
-        const string = `digraph {\nnode [shape=none];\n${nodes.join("\n")}\n}`
+        const string = `digraph {\nnode [shape=plain];\n${nodes.join("\n")}\n}`
         this.viz
           .renderSVGElement(string)
           .then(element => this.div.appendChild(element))
