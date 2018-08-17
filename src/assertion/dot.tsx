@@ -21,11 +21,29 @@ function escapeHtml(string) {
   return String(string).replace(/[&<>"'`=\/]/g, s => entityMap[s])
 }
 
+function trimText(string) {
+  const length = Math.ceil(string.length / 100)
+  const lines = Array.from({ length }).map((_, i) =>
+    string.slice(i * 100, (i + 1) * 100)
+  )
+  console.log("lines", lines)
+  for (let i = 0; i < length - 1; i++) {
+    const index = lines[i].lastIndexOf(" ")
+    if (index >= 0) {
+      const rest = lines[i].slice(index + 1)
+      lines[i + 1] = rest + lines[i + 1]
+      lines[i] = lines[i].slice(0, index)
+    }
+  }
+  return lines.map(escapeHtml).join(" <BR /> ")
+}
+
 function createNode(node) {
   const { "@type": type, "@id": rawId, ...rest } = node
   const id = shim(rawId)
   const lines = []
   const properties = []
+  let contentUrl = null
   Object.keys(rest).forEach(key => {
     const v = node[key].hasOwnProperty("@list") ? node[key]["@list"] : node[key]
     const array = Array.isArray(v) ? v : [v]
@@ -44,15 +62,21 @@ function createNode(node) {
           }
           return ""
         }
-        const value = escapeHtml(
+        const value =
           type === "URL" || index === "/"
             ? rawValue
-            : JSON.stringify(
-                type === "Text" && rawValue.length > 103
-                  ? rawValue.slice(0, 100) + "..."
-                  : rawValue
-              )
-        )
+            : type === "Text" && rawValue.length > 100
+              ? trimText(rawValue)
+              : escapeHtml(rawValue)
+        // const value = escapeHtml(
+        //   type === "URL" || index === "/"
+        //     ? rawValue
+        //     : JSON.stringify(
+        //         type === "Text" && rawValue.length > 103
+        //           ? trimText(rawValue)
+        //           : rawValue
+        //       )
+        // )
         // const value = escapeHtml(
         //   JSON.stringify(
         //     type === "Text" && rawValue.length > 103
@@ -64,6 +88,9 @@ function createNode(node) {
           (cell, i) =>
             `<TD${href(i)}>${Array.isArray(cell) ? cell.join(", ") : cell}</TD>`
         )
+        if (key === "contentUrl") {
+          contentUrl = `https://gateway.ipfs.io/ipfs/${rawValue}`
+        }
         const row = `<TR>${cells.join("")}</TR>`
         properties.push(row)
       }
@@ -73,6 +100,11 @@ function createNode(node) {
     Array.isArray(type) ? type.join(", ") : type
   }</B></TD></TR>`
   const href = rawId.slice(0, 2) === "_:" ? "" : ` HREF=${id}`
+  // if (contentUrl !== null) {
+  //   properties.push(
+  //     `<TR><TD COLSPAN="3" HREF="${contentUrl}"><IMG SRC="${contentUrl}"/></TD></TR>`
+  //   )
+  // }
   const props = properties.join("")
   const table = `<TABLE${href} CELLSPACING="0">${header}${props}</TABLE>`
   lines.push(`${id} [label=<${table}>];`)
