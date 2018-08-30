@@ -53,7 +53,12 @@ function createNode(node) {
         const target = shim(val["@id"])
         lines.push(`${id} -> ${target} ${label};`)
       } else {
-        const { "@value": rawValue, "@type": type, "@index": index } = val
+        const {
+          "@value": rawValue,
+          "@type": type,
+          "@index": index,
+          "/": link,
+        } = val
         const href = i => {
           if (i === 2) {
             if (type === "URL") return ` HREF="${rawValue}"`
@@ -63,13 +68,13 @@ function createNode(node) {
           return ""
         }
         const value =
-          type === "URL" || index === "/"
-            ? escapeHtml(rawValue)
+          type === "URL" || index === "/" || link
+            ? escapeHtml(rawValue || link)
             : type === "Text" && rawValue.length > 100
               ? trimText(rawValue)
               : escapeHtml(rawValue)
 
-        const cells = [key, index === "/" ? "Link" : type, value].map(
+        const cells = [key, index ? "Link" : type, value].map(
           (cell, i) =>
             `<TD${href(i)}>${Array.isArray(cell) ? cell.join(", ") : cell}</TD>`
         )
