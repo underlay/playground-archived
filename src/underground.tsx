@@ -2,6 +2,7 @@ import React, { Fragment } from "react"
 import { Map, List } from "immutable"
 import niceware from "niceware"
 import jsonld from "jsonld"
+import ReactJson from "react-json-view"
 import {
   ID,
   TYPE,
@@ -52,7 +53,8 @@ export default class Underground extends React.Component<
   private source: string
   constructor(props) {
     super(props)
-    const hash = window.location.hash.slice(1)
+    const hash = window.location.hash.slice(1) || "new"
+    window.location.hash = hash
     this.state = {
       hash,
       assertions: List(),
@@ -72,9 +74,7 @@ export default class Underground extends React.Component<
   componentDidMount() {
     window.addEventListener("hashchange", () => {
       const hash = window.location.hash.slice(1)
-      if (hash === "log" || hash === "new") {
-        if (this.state.hash !== hash) this.setState({ hash })
-      } else window.location.hash = this.state.hash
+      if (this.state.hash !== hash) this.setState({ hash })
     })
     this.props.ipfs.pubsub.subscribe(
       topic,
@@ -140,20 +140,36 @@ export default class Underground extends React.Component<
     const { hash } = this.state
     if (hash === "new") return this.renderForm()
     else if (hash === "log") return this.renderLog()
-    else window.location.hash = "new"
+    else return this.renderAssertion()
   }
   renderLog() {
     const { assertions } = this.state
     const content = assertions.size
-      ? assertions
-          .map(([id, time, hash, assertion], key) => ({
-            id,
-            time,
-            hash,
-            assertion,
-            key,
-          }))
-          .map(props => <Assertion {...props} />)
+      ? assertions.map(([id, time, hash, assertion], key) => (
+          <fieldset key={key} className="assertion">
+            <legend>
+              <a href={"#" + hash}>
+                <code>
+                  ...
+                  {hash.slice(-7, -1)}
+                </code>
+              </a>
+            </legend>
+            <div>Received on {new Date(time).toLocaleString()}</div>
+            <div>
+              From <code>{id}</code>
+            </div>
+            <div>
+              Via IPFS PubSub topic <code>{topic}</code>
+            </div>
+            <ReactJson
+              collapsed={true}
+              displayDataTypes={false}
+              enableClipboard={false}
+              src={assertion}
+            />
+          </fieldset>
+        ))
       : "No assertions found"
     return (
       <div className="log">
@@ -162,6 +178,23 @@ export default class Underground extends React.Component<
         </header>
         <hr />
         {content}
+      </div>
+    )
+  }
+  renderAssertion() {
+    const { ipfs } = this.props
+    const { hash } = this.state
+    return (
+      <div className="log">
+        <header>
+          <h4>
+            <code>{hash}</code>
+          </h4>
+          <a href="#new">create new assertion</a>
+          <a href="#log">assertion log</a>
+        </header>
+        <hr />
+        <Assertion ipfs={ipfs} hash={hash} />
       </div>
     )
   }

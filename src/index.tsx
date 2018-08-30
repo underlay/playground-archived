@@ -24,11 +24,16 @@ async function handleSubmit(ipfs: ipfs, graph: AssertionGraph) {
   ipfs.pubsub.publish(topic, data)
 }
 
-function onDownload(assertion: AssertionGraph) {
+async function handleDownload(ipfs: ipfs, graph: AssertionGraph) {
+  console.log(graph)
+  const { id } = await ipfs.id()
+  const assertion = generateProv(id, graph)
   const json = JSON.stringify(assertion)
-  const bytes = Buffer.from(json, "utf8")
-  const mhash = multihashing(bytes, "sha2-256")
-  const hash = multihash.toB58String(mhash)
+  const cid = await ipfs.dag.put(assertion, {
+    format: "dag-cbor",
+    hashAlg: "sha2-256",
+  })
+  const hash = cid.toBaseEncodedString()
   console.log("got the hash", hash)
   const element = document.createElement("a")
   element.setAttribute(
@@ -46,7 +51,7 @@ createNode().then(async ipfs => {
   const props: UndergroundProps = {
     ipfs,
     onSubmit: (graph: AssertionGraph) => handleSubmit(ipfs, graph),
-    onDownload,
+    onDownload: (graph: AssertionGraph) => handleDownload(ipfs, graph),
   }
   ReactDOM.render(<Underground {...props} />, main)
 })

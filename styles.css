@@ -1,6 +1,42 @@
+.react-json-view {
+  margin-top: 1em;
+}
+
+.error {
+  color: darkred;
+}
+
+.dot svg g .node polygon:last-child {
+  display: none;
+}
+
+.dot svg g .node polygon {
+  stroke: #888;
+}
+
+.dot svg g .node ellipse {
+  stroke: rgb(128, 128, 128);
+}
+
+.dot svg g .node polygon[fill="#9fb1fc"] {
+  stroke: rgb(0, 0, 255);
+}
+
+.dot svg g .node polygon[fill="#fdb266"] {
+  stroke: black;
+}
+
+.dot svg g .node text {
+  text-anchor: start;
+}
+
+.log header h4 {
+  flex-grow: 1;
+  padding: 0;
+}
+
 .log header a {
-  display: block;
-  text-align: end;
+  margin-left: 0.5em;
 }
 
 .log > header {
@@ -10,7 +46,10 @@
 
 .assertion .meta {
   display: flex;
-  margin-top: 1em;
+}
+
+.meta {
+  margin: 1em 0;
 }
 
 .inline span {

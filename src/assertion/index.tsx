@@ -1,33 +1,41 @@
 import React from "react"
 import ReactJson from "react-json-view"
 import { AssertionGraph } from "../schema/types"
-import { GRAPH } from "../utils/constants"
+import { GRAPH, CONTEXT } from "../utils/constants"
 
 import Dot from "./dot"
 
 interface AssertionProps {
-  id: string
-  time: number
   hash: string
-  assertion: AssertionGraph
+  ipfs: ipfs
 }
-export default function(props: AssertionProps) {
-  const date = new Date(props.time)
-  const string = date.toString()
-  return (
-    <fieldset className="assertion">
-      <legend>{props.hash}</legend>
-      <div>On {string}</div>
-      <div>From {props.id}</div>
-      <div className="meta">
-        <ReactJson
-          style={{ flexGrow: 1 }}
-          displayDataTypes={false}
-          enableClipboard={false}
-          src={props.assertion[GRAPH]}
-        />
-        <Dot graph={props.assertion[GRAPH]} />
-      </div>
-    </fieldset>
-  )
+interface AssertionState {
+  value: AssertionGraph
+  error: string
+}
+
+export default class Assertion extends React.Component<
+  AssertionProps,
+  AssertionState
+> {
+  constructor(props) {
+    super(props)
+    this.state = { value: null, error: null }
+  }
+  componentDidMount() {
+    const { ipfs, hash } = this.props
+    ipfs.dag
+      .get(hash)
+      .then(({ value }) => this.setState({ value }))
+      .catch(error => this.setState({ error }))
+  }
+  render() {
+    const { value, error } = this.state
+    if (value) {
+      const { [GRAPH]: graph, [CONTEXT]: context } = value
+      return <Dot context={context} graph={value} />
+    } else if (error) {
+      return <p className="error">{error.toString()}</p>
+    } else return null
+  }
 }
