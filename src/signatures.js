@@ -58,6 +58,7 @@ export async function sign(document, ipfs) {
 			if (err) return reject(err)
 			const dateTime = new Date().toISOString()
 			const signature = {
+				"@id": "#signature",
 				"@type": type,
 				[creator]: { "@id": makeCreator(id) },
 				[created]: {

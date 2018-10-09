@@ -73,6 +73,9 @@ declare namespace IPFS {
 				peerDiscovery?: {
 					[id: string]: { enabled: boolean; [prop: string]: any }
 				}
+				dht?: {
+					[property: string]: any
+				}
 			}
 		}
 		relay?: {

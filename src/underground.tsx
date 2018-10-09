@@ -14,7 +14,7 @@ import {
 	pubsubOptions,
 	context,
 } from "./utils/constants"
-import Assertion from "./assertion/index2"
+import Assertion from "./assertion"
 import { AssertionGraph, Values, AssertionNode } from "./schema/types"
 import Select from "./select"
 import FormView, {

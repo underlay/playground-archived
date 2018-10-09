@@ -1,20 +1,20 @@
-const IPFS = require("ipfs")
+import IPFS from "ipfs"
+import KadDHT from "libp2p-kad-dht"
 
 const defaultOptions: ipfs.Options = {
 	EXPERIMENTAL: {
 		pubsub: true,
-		// sharding: true,
-		// dht: true,
+		sharding: true,
+		dht: true,
 	},
-	// relay: {
-	// 	enabled: true,
-	// 	hop: { enabled: false },
-	// },
-	// libp2p: {
-	// 	config: {
-	// 		peerDiscovery: {},
-	// 	},
-	// },
+	libp2p: {
+		modules: { dht: KadDHT },
+		config: { dht: { kBucketSize: 20 } },
+	},
+	relay: {
+		enabled: true,
+		hop: { enabled: true },
+	},
 	// config: {
 	// 	Addresses: {
 	// 		API: "",
