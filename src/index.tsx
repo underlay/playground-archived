@@ -16,42 +16,40 @@ const main = document.querySelector("main")
 // const loader = document.querySelector(".loader")
 
 async function handleSubmit(ipfs: ipfs, graph: AssertionGraph) {
-  // The graph has been compacted and already has @context inside
-  console.log(graph)
-  const { id } = await ipfs.id()
-  const assertion = generateProv(id, graph)
-  const data = Buffer.from(JSON.stringify(assertion), "utf8")
-  ipfs.pubsub.publish(topic, data)
+	// The graph has been compacted and already has @context inside
+	const { id } = await ipfs.id()
+	const assertion = await generateProv(id, graph, ipfs)
+	const data = Buffer.from(JSON.stringify(assertion), "utf8")
+	ipfs.pubsub.publish(topic, data)
 }
 
 async function handleDownload(ipfs: ipfs, graph: AssertionGraph) {
-  console.log(graph)
-  const { id } = await ipfs.id()
-  const assertion = generateProv(id, graph)
-  const json = JSON.stringify(assertion)
-  const cid = await ipfs.dag.put(assertion, {
-    format: "dag-cbor",
-    hashAlg: "sha2-256",
-  })
-  const hash = cid.toBaseEncodedString()
-  console.log("got the hash", hash)
-  const element = document.createElement("a")
-  element.setAttribute(
-    "href",
-    "data:application/json;charset=utf-8," + encodeURIComponent(json)
-  )
-  element.setAttribute("download", `${hash}.json`)
-  element.style.display = "none"
-  document.body.appendChild(element)
-  element.click()
-  document.body.removeChild(element)
+	const { id } = await ipfs.id()
+	const assertion = await generateProv(id, graph, ipfs)
+	const json = JSON.stringify(assertion)
+	const cid = await ipfs.dag.put(assertion, {
+		format: "dag-cbor",
+		hashAlg: "sha2-256",
+	})
+	const hash = cid.toBaseEncodedString()
+	console.log("got the hash", hash)
+	const element = document.createElement("a")
+	element.setAttribute(
+		"href",
+		"data:application/json;charset=utf-8," + encodeURIComponent(json)
+	)
+	element.setAttribute("download", `${hash}.json`)
+	element.style.display = "none"
+	document.body.appendChild(element)
+	element.click()
+	document.body.removeChild(element)
 }
 
 createNode().then(async ipfs => {
-  const props: UndergroundProps = {
-    ipfs,
-    onSubmit: (graph: AssertionGraph) => handleSubmit(ipfs, graph),
-    onDownload: (graph: AssertionGraph) => handleDownload(ipfs, graph),
-  }
-  ReactDOM.render(<Underground {...props} />, main)
+	const props: UndergroundProps = {
+		ipfs,
+		onSubmit: (graph: AssertionGraph) => handleSubmit(ipfs, graph),
+		onDownload: (graph: AssertionGraph) => handleDownload(ipfs, graph),
+	}
+	ReactDOM.render(<Underground {...props} />, main)
 })
