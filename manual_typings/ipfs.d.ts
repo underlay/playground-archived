@@ -92,7 +92,10 @@ declare namespace IPFS {
 
 	export interface Types {
 		Buffer: {
-			from(other: string | number[] | Object | Buffer | ArrayBuffer): Buffer
+			from(
+				other: string | number[] | Object | Buffer | ArrayBuffer,
+				format?: string
+			): Buffer
 		}
 		PeerId: libp2p.PeerId
 		PeerInfo: libp2p.PeerInfo

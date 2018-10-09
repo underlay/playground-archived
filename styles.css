@@ -1,246 +1,325 @@
+body,
+html,
+main,
+.log {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
 .react-json-view {
-  margin-top: 1em;
+	margin-top: 1em;
 }
 
 .error {
-  color: darkred;
+	color: darkred;
 }
 
-.dot svg g .node polygon:last-child {
-  display: none;
+main.view {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
 }
 
-.dot svg g .node polygon {
-  stroke: #888;
+#panel {
+	/* background-color: powderblue; */
+	background-color: azure;
+	font-family: monospace;
+	padding: 0 0.5em;
+	border-right: 1px solid darkolivegreen;
 }
 
-.dot svg g .node ellipse {
-  stroke: rgb(128, 128, 128);
+#panel h2 {
+	margin: 0;
 }
 
-.dot svg g .node polygon[fill="#9fb1fc"] {
-  stroke: rgb(0, 0, 255);
+main.view table.signature,
+main.view table.context {
+	display: block;
+	max-width: 360px;
+	overflow-x: scroll;
 }
 
-.dot svg g .node polygon[fill="#fdb266"] {
-  stroke: black;
+main.view table.signature {
+	border: 1px solid darkolivegreen;
 }
 
-.dot svg g .node text {
-  text-anchor: start;
+#content {
+	flex-grow: 1;
+	background-color: ghostwhite;
+	font-family: monospace;
 }
+
+main.view .compound-node-container {
+	margin-left: -10px;
+	margin-top: -10px;
+}
+
+main.view .compound-node-container table.node {
+	border: 1px solid darkolivegreen;
+	border-bottom: none;
+}
+
+main.view table.node {
+	background-color: azure;
+	-webkit-box-shadow: 0px 0px 0px 1px rgba(85, 107, 47, 1);
+	-moz-box-shadow: 0px 0px 0px 1px rgba(85, 107, 47, 1);
+	box-shadow: 0px 0px 0px 1px rgba(85, 107, 47, 1);
+	width: unset;
+}
+
+main.view table.node.entity {
+	background-color: rgb(255, 252, 135);
+}
+
+main.view table.node.agent {
+	background-color: rgb(253, 178, 102);
+}
+
+main.view table.node.activity {
+	background-color: rgb(159, 177, 252);
+}
+
+main.view table.node td {
+	vertical-align: baseline;
+}
+
+main.view table.node td span {
+	opacity: 0.5;
+}
+
+main.view table td hr {
+	margin: 0;
+}
+
+main.view table td.type {
+	opacity: 0.5;
+}
+
+/* ------- fjkdlsjaf ------ */
 
 .log header h4 {
-  flex-grow: 1;
-  padding: 0;
+	flex-grow: 1;
+	padding: 0;
 }
 
 .log header a {
-  margin-left: 0.5em;
+	margin-left: 0.5em;
 }
 
 .log > header {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
+	padding: 8px;
+	background-color: antiquewhite;
 }
 
 .assertion .meta {
-  display: flex;
+	display: flex;
 }
 
 .meta {
-  margin: 1em 0;
+	margin: 1em 0;
 }
 
 .inline span {
-  margin-left: 2px;
-  vertical-align: middle;
+	margin-left: 2px;
+	vertical-align: middle;
 }
 
 .table-scroller {
-  overflow-x: scroll;
-  max-width: 100%;
+	overflow-x: scroll;
+	max-width: 100%;
 }
 
 table {
-  min-width: 100%;
+	min-width: 100%;
 }
 
 td.value {
-  width: 100%;
+	width: 100%;
 }
 
 td.remove {
-  vertical-align: middle;
+	vertical-align: middle;
 }
 
 input.split {
-  margin-left: 0.5em;
+	margin-left: 0.5em;
 }
 
 /* Select */
 
 .search {
-  flex-grow: 1;
+	flex-grow: 1;
 }
 
 .search + .file-input {
-  flex-grow: 0;
-  margin: 0 1em;
+	flex-grow: 0;
+	margin: 0 1em;
 }
 
 .select {
-  height: 256px;
-  display: flex;
+	height: 256px;
+	display: flex;
+	margin: 0 8px;
 }
 
 .select .results {
-  min-width: 10em;
-  width: 10em;
-  vertical-align: top;
-  height: 100%;
-  overflow-y: scroll;
-  padding: 0 2px;
+	min-width: 10em;
+	width: 10em;
+	vertical-align: top;
+	height: 100%;
+	overflow-y: scroll;
+	padding: 0 2px;
 }
 
 .select .description {
-  flex-grow: 1;
-  vertical-align: top;
-  height: 100%;
-  overflow-y: scroll;
-  padding: 0 0.5em;
-  border-left: 1px solid lightgray;
+	flex-grow: 1;
+	vertical-align: top;
+	height: 100%;
+	overflow-y: scroll;
+	padding: 0 0.5em;
+	border-left: 1px solid lightgray;
 }
 
 .select .description > h1 {
-  margin: 0;
+	margin: 0;
 }
 
 .select .results .result {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .select .results .result .focus {
-  font-weight: bold;
-  text-decoration: underline;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 .spacer {
-  font-family: monospace;
-  white-space: pre;
+	font-family: monospace;
+	white-space: pre;
 }
 
 /* -------- */
 
 .mono {
-  font-family: monospace;
+	font-family: monospace;
 }
 
 .form {
-  border: 1px solid #ccc;
-  border-radius: 1px;
-  display: inline-block;
-  padding: 4px;
-  margin: 4px;
+	border: 1px solid #ccc;
+	border-radius: 1px;
+	display: inline-block;
+	padding: 4px;
+	margin: 4px;
 
-  /* Hmmm */
-  min-width: 512px;
-  width: min-content;
+	/* Hmmm */
+	min-width: 512px;
+	width: min-content;
 }
 
 .form .select {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .object {
-  vertical-align: top;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
+	vertical-align: top;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .form h3 {
-  margin: 0;
-  width: max-content;
+	margin: 0;
+	width: max-content;
 }
 
 .float-right {
-  float: right;
+	float: right;
 }
 
 .form label {
-  display: block;
+	display: block;
+}
+
+form {
+	margin: 0 8px;
 }
 
 form .container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  margin: 0.5em 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	margin: 0.5em 0;
 }
 
 tbody {
-  vertical-align: baseline;
+	vertical-align: baseline;
 }
 
 .states {
-  fill: #aaa;
+	fill: #aaa;
 }
 
 .state-borders {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 0.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  pointer-events: none;
+	fill: none;
+	stroke: #eee;
+	stroke-width: 0.5px;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	pointer-events: none;
 }
 
 .carousel {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  overflow-x: scroll;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	overflow-x: scroll;
 }
 
 .carousel div + div {
-  margin-left: 1em;
+	margin-left: 1em;
 }
 
 h4 {
-  padding-top: 1em;
-  margin: 0;
+	padding-top: 1em;
+	margin: 0;
 }
 
 h5 {
-  margin: 0;
+	margin: 0;
 }
 
 header {
-  max-width: 100%;
-  width: max-content;
+	max-width: 100%;
+	width: max-content;
 }
 
 .log header {
-  width: 100%;
+	width: calc(100% - 16px);
+	border-bottom: 1px solid black;
 }
 
 h4.header.max-width + button.float {
-  margin-top: 1.5em;
+	margin-top: 1.5em;
 }
 
 header .header {
-  display: inline-block;
-  max-width: 100%;
-  /* width: max-content; */
+	display: inline-block;
+	max-width: 100%;
+	/* width: max-content; */
 }
 
 .carousel-item {
-  margin: 0.5em;
-  padding: 0.5em;
-  border: 1px solid #888;
-  border-radius: 1px;
+	margin: 0.5em;
+	padding: 0.5em;
+	border: 1px solid #888;
+	border-radius: 1px;
 }
 
 /* header.opened {
@@ -251,35 +330,39 @@ header .header {
 	} */
 
 .image {
-  max-height: 320px;
-  max-width: 320px;
+	max-height: 320px;
+	max-width: 320px;
 }
 
 .full.image {
-  max-width: 100%;
-  max-height: unset;
+	max-width: 100%;
+	max-height: unset;
 }
 
 .medium.image {
-  max-height: 640px;
-  max-width: 640px;
+	max-height: 640px;
+	max-width: 640px;
 }
 
 .table,
 .table th,
 .table > {
-  border: 1px solid #888;
-  width: max-content;
+	border: 1px solid #888;
+	width: max-content;
 }
 
 .mono a {
-  overflow-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 .select-header {
-  display: flex;
+	display: flex;
+}
+
+main > .select-header {
+	margin: 8px;
 }
 
 .select-header :first-child {
-  flex-grow: 1;
+	flex-grow: 1;
 }

@@ -21,7 +21,7 @@ module.exports = {
 	devtool: "source-map",
 
 	resolve: {
-		extensions: [".ts", ".tsx", ".js", ".json"],
+		extensions: [".ts", ".tsx", ".js", "jsx", ".json"],
 	},
 
 	module: {
@@ -35,14 +35,14 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.js$/,
-				exclude: /(node_modules)|(js-ipfs)/,
+				test: /\.jsx?$/,
+				exclude: /(node_modules)|(dist\/.+\.min\.js$)/,
 				use: [{ loader: "babel-loader", options: babelOptions }],
 			},
 			{
 				test: /\.js$/,
 				enforce: "pre",
-				exclude: /(node_modules)|(js-ipfs)/,
+				exclude: /(node_modules)|(dist\/.+\.min\.js$)/,
 				loader: "source-map-loader",
 			},
 		],
