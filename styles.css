@@ -58,10 +58,10 @@ main.view .compound-node-container {
 	margin-top: -10px;
 }
 
-main.view .compound-node-container table.node {
+/* main.view .compound-node-container table.node {
 	border: 1px solid darkolivegreen;
 	border-bottom: none;
-}
+} */
 
 main.view table.node {
 	background-color: azure;
