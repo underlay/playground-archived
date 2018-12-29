@@ -9,22 +9,17 @@ const defaultOptions: ipfs.Options = {
 	},
 	libp2p: {
 		modules: { dht: KadDHT },
-		config: { dht: { kBucketSize: 20 } },
+		config: {
+			dht: { kBucketSize: 20 },
+		},
 	},
 	relay: {
 		enabled: true,
-		hop: { enabled: true },
+		hop: {
+			enabled: true,
+			active: false,
+		},
 	},
-	// config: {
-	// 	Addresses: {
-	// 		API: "",
-	// 		Gateway: "",
-	// 		Swarm: [
-	// 			"/ip4/0.0.0.0/tcp/0",
-	// 			"/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star",
-	// 		],
-	// 	},
-	// },
 }
 
 async function publishKey(ipfs: ipfs) {

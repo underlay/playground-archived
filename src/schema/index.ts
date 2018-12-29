@@ -11,6 +11,9 @@ import {
 } from "../utils/constants"
 
 import { PropertyValue, PropertyValues, SchemaGraph, SchemaNode } from "./types"
+import schemaJSON from "./schema.json"
+
+const schema = schemaJSON as SchemaGraph
 
 function flattenValue(propertyValue: PropertyValue): string {
 	if (typeof propertyValue === "object") {
@@ -30,7 +33,6 @@ export function flattenValues(propertyValues: PropertyValues): string[] {
 	}
 }
 
-export const schema: SchemaGraph = require("./schema.json")
 ;(window as any).schema = schema
 
 export const nodes: { [id: string]: SchemaNode } = {}

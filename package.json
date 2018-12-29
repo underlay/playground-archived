@@ -1,45 +1,57 @@
 {
-	"name": "underground",
-	"description": "The Underlay playground",
-	"version": "0.0.1",
+	"name": "playground",
+	"description": "The Underlay Playground",
+	"version": "0.1.0",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "webpack --mode production",
 		"watch": "webpack --mode development --watch"
 	},
 	"dependencies": {
-		"@types/react": "^16.4.9",
-		"@types/react-dom": "^16.0.7",
-		"buffer": "^5.2.0",
-		"cids": "^0.5.5",
-		"cytoscape": "^3.2.17",
+		"@babel/polyfill": "^7.0.0",
+		"@types/react": "^16.7.17",
+		"@types/react-dom": "^16.0.11",
+		"cytoscape": "^3.3.1",
 		"cytoscape-cose-bilkent": "^4.0.0",
-		"cytoscape-dagre": "^2.2.2",
-		"fuse.js": "^3.2.1",
+		"cytoscape-node-html-label": "^1.1.2",
+		"fuse.js": "^3.3.0",
 		"immutable": "^3.8.2",
-		"ipfs": "^0.31.7",
-		"jsonld": "^1.1.0",
-		"libp2p-kad-dht": "^0.10.5",
+		"ipfs": "^0.33.1",
+		"jsonld": "^1.2.1",
+		"libp2p-kad-dht": "^0.14.1",
 		"multihashes": "^0.4.14",
-		"multihashing": "^0.3.2",
-		"niceware": "^1.0.5",
-		"papaparse": "^4.6.0",
-		"react": "^16.4.2",
-		"react-dom": "^16.4.2",
-		"react-json-view": "^1.19.1",
-		"us-atlas": "^1.0.2"
+		"niceware": "^1.0.6",
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3"
 	},
 	"devDependencies": {
-		"babel-core": "^6.26.0",
-		"babel-loader": "^7.1.5",
-		"babel-plugin-transform-runtime": "^6.23.0",
-		"babel-preset-es2015": "^6.24.1",
-		"babel-preset-react": "^6.24.1",
-		"babel-preset-stage-2": "^6.24.1",
-		"source-map-loader": "^0.2.3",
-		"ts-loader": "^4.5.0",
-		"typescript": "^2.9.2",
-		"webpack": "^4.16.5",
-		"webpack-cli": "^2.0.14"
-	}
+		"@babel/core": "^7.2.2",
+		"@babel/plugin-proposal-class-properties": "^7.2.1",
+		"@babel/preset-env": "^7.2.0",
+		"@babel/preset-react": "^7.0.0",
+		"@babel/preset-typescript": "^7.1.0",
+		"babel-loader": "^8.0.4",
+		"webpack": "^4.28.0",
+		"webpack-cli": "^3.1.2"
+	},
+	"main": "webpack.config.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/underlay/playground.git"
+	},
+	"keywords": [
+		"underlay",
+		"ipfs",
+		"json-ld"
+	],
+	"author": {
+		"name": "The Underlay Project",
+		"email": "underlay@mit.edu",
+		"url": "https://github.com/underlay"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/underlay/playground/issues"
+	},
+	"homepage": "https://github.com/underlay/playground#readme"
 }

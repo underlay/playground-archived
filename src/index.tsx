@@ -2,9 +2,6 @@
 
 import React from "react"
 import ReactDOM from "react-dom"
-import multihashing from "multihashing"
-import multihash from "multihashes"
-import { Buffer } from "buffer"
 
 import Underground, { UndergroundProps } from "./underground"
 import { AssertionGraph } from "./schema/types"
@@ -19,7 +16,7 @@ async function handleSubmit(ipfs: ipfs, graph: AssertionGraph) {
 	// The graph has been compacted and already has @context inside
 	const { id } = await ipfs.id()
 	const assertion = await generateProv(id, graph, ipfs)
-	const data = Buffer.from(JSON.stringify(assertion), "utf8")
+	const data = ipfs.types.Buffer.from(JSON.stringify(assertion), "utf8")
 	ipfs.pubsub.publish(topic, data)
 }
 

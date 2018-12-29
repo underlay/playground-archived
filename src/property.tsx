@@ -46,7 +46,10 @@ function renderInline(props: PropertyViewProps, onClick: () => void) {
 
 export default function PropertyView(props: PropertyViewProps) {
 	const { formValue, createNode, onChange } = props
-	const { value, type } = formValue
+	console.log("formValue!", formValue, formValue.toJS())
+	const value = formValue.get("value")
+	const type = formValue.get("type")
+	console.log({ value, type })
 	if (constants.hasOwnProperty(type) && value === Constant) {
 		const { props, getValue, setValue } = constants[type]
 		return (
@@ -73,8 +76,8 @@ export default function PropertyView(props: PropertyViewProps) {
 		const defaultValue = hasObjects
 			? objects.get(0)[0]
 			: hasEnumerations
-				? Array.from(enumerations[type])[0]
-				: ""
+			? Array.from(enumerations[type])[0]
+			: ""
 		const name = props.path.join("/")
 		const radio = (valueType: FormValueType) => ({
 			type: "radio",
@@ -132,6 +135,7 @@ export default function PropertyView(props: PropertyViewProps) {
 			</Fragment>
 		)
 	} else {
-		return <span>"Cannot enter this kind of value yet"</span>
+		console.error("things does not have", type)
+		return <span>Cannot enter this kind of value yet</span>
 	}
 }

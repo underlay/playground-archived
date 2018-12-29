@@ -29,23 +29,31 @@ interface FormValueParams {
 	inline: FormValues
 }
 
-export class FormValue extends Record({
+const defaultFormValueParams: FormValueParams = {
 	type: null,
 	value: null,
 	constant: null,
 	reference: null,
 	inline: null,
-}) {
-	type: string
-	value: FormValueType
-	constant: string
-	reference: string
-	inline: FormValues
+}
+
+export class FormValue extends Record(defaultFormValueParams)
+	implements FormValueParams {
+	public readonly type: string
+	public readonly value: FormValueType
+	public readonly constant: string
+	public readonly reference: string
+	public readonly inline: FormValues
 	constructor(params?: Partial<FormValueParams>) {
 		params ? super(params) : super()
 	}
+
 	with(values: Partial<FormValueParams>) {
 		return this.merge(values) as this
+	}
+
+	get<T extends keyof FormValueParams>(value: T): FormValueParams[T] {
+		return super.get(value)
 	}
 }
 
@@ -256,7 +264,7 @@ export default class FormView extends React.Component<FormProps, FormState> {
 		}
 	}
 	private static defaultFormValue(type: string, nodes: Map<string, string[]>) {
-		const props: Partial<FormValue> = { type }
+		const props: Partial<FormValueParams> = { type }
 		if (constants.hasOwnProperty(type)) {
 			props.value = Constant
 			props.constant = FormView.defaultValues.hasOwnProperty(type)

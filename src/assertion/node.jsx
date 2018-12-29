@@ -17,6 +17,14 @@ export const classTypes = {
 	"http://www.w3.org/ns/prov#Activity": "activity",
 }
 
+export function getNodeId(node, parent) {
+	const { "@id": id } = node
+	const path = []
+	if (parent) path.push(parent)
+	path.push(id)
+	return path.join("/")
+}
+
 export function getTableId(id) {
 	return `table:${id}`
 }
@@ -37,28 +45,36 @@ const TypeHeader = ({ types }) =>
 		</tr>
 	))
 
-export function NodeView({
-	node: {
-		"@id": id,
+const dwebUriTest = /dweb:\/ipfs\/[a-zA-Z0-9]+$/
+const dwebUriPrefix = "dweb:/ipfs/"
+export function NodeView({ node, parent, nodes, edges, compact }) {
+	const id = getNodeId(node, parent)
+	const {
+		"@id": nodeId,
 		"@type": type,
 		"@graph": graph,
 		"@index": index,
 		...properties
-	},
-	nodes,
-	edges,
-	compact,
-}) {
+	} = node
+	const shouldRenderObject =
+		dwebUriTest.test(nodeId) &&
+		Array.isArray(type) &&
+		type.includes("http://schema.org/DigitalDocument") &&
+		type.includes("http://www.w3.org/ns/prov#Entity") &&
+		properties.hasOwnProperty("http://schema.org/fileFormat")
+	const objectData =
+		shouldRenderObject &&
+		`https://gateway.ipfs.io/ipfs/${nodeId.slice(dwebUriPrefix.length)}`
 	const typeHeader = Array.isArray(type) ? (
 		<TypeHeader types={type.map(t => compact(t, true))} />
 	) : null
-	const isBlankNode = id.indexOf("_:") === 0
+	const isBlankNode = nodeId.indexOf("_:") === 0
 	const idHeader = isBlankNode ? null : (
 		<tr>
 			<td>
 				<strong>@id</strong>
 			</td>
-			<td colSpan="2">{id}</td>
+			<td colSpan="2">{nodeId}</td>
 		</tr>
 	)
 	const rows = []
@@ -156,6 +172,25 @@ export function NodeView({
 				</tr>
 			)}
 			{rows}
+			{shouldRenderObject && (
+				<React.Fragment>
+					<tr>
+						<td colSpan="3">
+							<hr />
+						</td>
+					</tr>
+					<tr className="object">
+						<td colSpan="3">
+							<object
+								width="420"
+								height="420"
+								type={properties["http://schema.org/fileFormat"][0]["@value"]}
+								data={objectData}
+							/>
+						</td>
+					</tr>
+				</React.Fragment>
+			)}
 		</table>
 	)
 }

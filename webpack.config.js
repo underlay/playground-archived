@@ -1,24 +1,20 @@
-const babelOptions = {
-	presets: ["es2015", "react", "stage-2"],
-	plugins: [
-		[
-			"transform-runtime",
-			{
-				polyfill: false,
-				regenerator: true,
-			},
-		],
+const options = {
+	presets: [
+		"@babel/preset-env",
+		"@babel/preset-react",
+		"@babel/preset-typescript",
 	],
+	plugins: ["@babel/plugin-proposal-class-properties"],
 }
 
+const exclude = /(?:node_modules|\.min\.js$|dist\/)/
+
 module.exports = {
-	entry: "./src/index.tsx",
+	entry: ["@babel/polyfill", "./src/index.tsx"],
 	output: {
 		filename: "bundle.js",
 		path: __dirname + "/dist",
 	},
-
-	devtool: "source-map",
 
 	resolve: {
 		extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
@@ -26,24 +22,15 @@ module.exports = {
 
 	module: {
 		rules: [
+			// {
+			// 	test: /\.tsx?$/,
+			// 	exclude: /node_modules/,
+			// 	use: [{ loader: "babel-loader", options }, { loader: "ts-loader" }],
+			// },
 			{
-				test: /\.tsx?$/,
-				exclude: /(node_modules)|(js-ipfs)/,
-				use: [
-					{ loader: "babel-loader", options: babelOptions },
-					{ loader: "ts-loader" },
-				],
-			},
-			{
-				test: /\.jsx?$/,
-				exclude: /(node_modules)|(dist\/.+\.min\.js$)/,
-				use: [{ loader: "babel-loader", options: babelOptions }],
-			},
-			{
-				test: /\.js$/,
-				enforce: "pre",
-				exclude: /(node_modules)|(dist\/.+\.min\.js$)/,
-				loader: "source-map-loader",
+				test: /\.[jt]sx?$/,
+				exclude,
+				use: [{ loader: "babel-loader", options }],
 			},
 		],
 	},
